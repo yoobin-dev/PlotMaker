@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,java,eclipse,gradle,visualstudiocode,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,java,eclipse,gradle,visualstudiocode,react
 
+# security
+application.properties
+
 ### Eclipse ###
 .metadata
 bin/
