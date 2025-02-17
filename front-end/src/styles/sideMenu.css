@@ -1,0 +1,26 @@
+.sideMenu {
+  max-width: 288px;
+  padding: 8px 36px;
+  border-radius: 12px;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.24px;
+  cursor: pointer;
+}
+
+.sideMenu:hover {
+  background-color: #f9f9f9;
+  color: #222;
+}
+
+#sideMenuList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background-color: #222;
+  padding: 180px 18px 35px 18px;
+  color: #f9f9f9;
+  width: 288px;
+  height: calc(100% - 215px);
+}

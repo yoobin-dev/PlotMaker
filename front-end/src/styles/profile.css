@@ -1,0 +1,19 @@
+#userProfile {
+  display: flex;
+  width: 240px;
+  height: 72px;
+  border-radius: 16px;
+  padding: 11px 10px;
+  background-color: #444;
+}
+
+#profileImg {
+  width: 76px;
+  height: 72px;
+  border-radius: 13px;
+}
+
+#profileText {
+  padding: 11px 12px;
+  line-height: 22px;
+}
