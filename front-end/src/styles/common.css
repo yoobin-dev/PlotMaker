@@ -1,13 +1,176 @@
+/* reset.css */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+  min-height: 100vh;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
 /* 폰트 */
 @font-face {
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Black.woff")
+    format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-ExtraBold.woff")
+    format("woff");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
+    format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff")
+    format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff")
+    format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard";
   src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
     format("woff");
   font-weight: 400;
   font-style: normal;
 }
-body {
-  font-family: "Pretendard-Regular";
+
+body * {
+  font-family: "Pretendard", sans-serif;
 }
 /* display */
 .d-flex {
@@ -31,31 +194,262 @@ body {
   width: 50%;
 }
 
-/* 폰트 두께 */
-.fw-100 {
-  font-weight: 100;
-}
-.fw-200 {
-  font-weight: 200;
-}
-.fw-300 {
-  font-weight: 300;
-}
-.fw-400 {
-  font-weight: 400;
-}
-.fw-500 {
-  font-weight: 500;
-}
-.fw-600 {
-  font-weight: 600;
-}
-.fw-700 {
+/* 폰트 */
+.display_1 {
+  font-size: 56px;
   font-weight: 700;
+  line-height: 72px;
+  letter-spacing: -0.032em;
 }
-.fw-800 {
-  font-weight: 800;
+.display_2 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 52px;
+  letter-spacing: -0.028 em;
 }
-.fw-900 {
-  font-weight: 900;
+
+.title_1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 48px;
+  letter-spacing: -0.027 em;
+}
+.title_2 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 38px;
+  letter-spacing: -0.0235 em;
+}
+.title_3 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.023 em;
+}
+
+.heading_1 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: -0.0195 em;
+}
+.heading_2 {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.012 em;
+}
+
+.headline_1 {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+  letter-spacing: -0.002 em;
+}
+.headline_2 {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0 em;
+}
+
+.body_1 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.0055 em;
+}
+.body_2 {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0.0095 em;
+}
+.body_main {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 38px;
+  letter-spacing: 0.0105 em;
+}
+
+.label_1 {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.0145 em;
+}
+.label_2 {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0.019 em;
+}
+
+.caption_1 {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.025 em;
+}
+.caption_2 {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0.03 em;
+}
+
+/* font color 기본 폰트 색상 */
+.ft_waring {
+  color: #ca3737;
+}
+.ft_black_hover {
+  color: rgba(0, 0, 0, 0.2);
+}
+.ft_black {
+  color: #000000;
+}
+.ft_white {
+  color: #ffffff;
+}
+.ft_gray_94 {
+  color: #949494;
+}
+.ft_gray_9 {
+  color: #999999;
+}
+.ft_gray_8 {
+  color: #888888;
+}
+.ft_gray_7 {
+  color: #777777;
+}
+.ft_gray_6 {
+  color: #666666;
+}
+.ft_gray_5 {
+  color: #555555;
+}
+.ft_gray_4 {
+  color: #444444;
+}
+.ft_gray_3 {
+  color: #333333;
+}
+.ft_gray_2 {
+  color: #222222;
+}
+.ft_gray_1 {
+  color: #111111;
+}
+.ft_gray_a {
+  color: #aaaaaa;
+}
+.ft_gray_b {
+  color: #bbbbbb;
+}
+.ft_gray_c {
+  color: #cccccc;
+}
+.ft_gray_d {
+  color: #dddddd;
+}
+.ft_gray_e {
+  color: #eeeeee;
+}
+.ft_gray_f3 {
+  color: #f3f3f3;
+}
+.ft_gray_f5 {
+  color: #f5f5f5;
+}
+.ft_gray_f7 {
+  color: #f7f7f7;
+}
+.ft_gray_f9 {
+  color: #f9f9f9;
+}
+
+/* color 기본 배경 색상 */
+.bg_waring {
+  background-color: #ca3737;
+}
+.bg_black_hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.bg_black {
+  background-color: #000000;
+}
+.bg_white {
+  background-color: #ffffff;
+}
+.bg_gray_94 {
+  background-color: #949494;
+}
+.bg_gray_9 {
+  background-color: #999999;
+}
+.bg_gray_8 {
+  background-color: #888888;
+}
+.bg_gray_7 {
+  background-color: #777777;
+}
+.bg_gray_6 {
+  background-color: #666666;
+}
+.bg_gray_5 {
+  background-color: #555555;
+}
+.bg_gray_4 {
+  background-color: #444444;
+}
+.bg_gray_3 {
+  background-color: #333333;
+}
+.bg_gray_2 {
+  background-color: #222222;
+}
+.bg_gray_1 {
+  background-color: #111111;
+}
+.bg_gray_a {
+  background-color: #aaaaaa;
+}
+.bg_gray_b {
+  background-color: #bbbbbb;
+}
+.bg_gray_c {
+  background-color: #cccccc;
+}
+.bg_gray_d {
+  background-color: #dddddd;
+}
+.bg_gray_e {
+  background-color: #eeeeee;
+}
+.bg_gray_f3 {
+  background-color: #f3f3f3;
+}
+.bg_gray_f5 {
+  background-color: #f5f5f5;
+}
+.bg_gray_f7 {
+  background-color: #f7f7f7;
+}
+.bg_gray_f9 {
+  background-color: #f9f9f9;
+}
+
+/* shadow 그림자 */
+.shadow_black_10 {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+.shadow_black_30 {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+.shadow_gray_10 {
+  box-shadow: 0px 4px 4px 0px rgba(102, 102, 102, 0.1);
+}
+.shadow_gray_30 {
+  box-shadow: 0px 4px 4px 0px rgba(102, 102, 102, 0.3);
 }

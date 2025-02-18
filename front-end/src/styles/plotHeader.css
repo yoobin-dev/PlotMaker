@@ -1,0 +1,49 @@
+.active {
+  background-color: #f9f9f9;
+  color: #000000 !important;
+}
+.clicked {
+  filter: brightness(1) invert(1);
+}
+#plotCount {
+  padding: 0 15px;
+  margin-left: 20px;
+  border-radius: 8px;
+}
+
+#plotFilter {
+  margin-top: 24px;
+  gap: 8px;
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+#filterButton {
+  padding: 4px 8px;
+  border-radius: 12px;
+  gap: 20px;
+}
+
+#filterButton div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 16px;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+#searchKeyword,
+#searchKeyword img,
+#sorting,
+#sorting img {
+  width: 44px;
+  height: 44px;
+}
+.circle_filter {
+  border-radius: 50%;
+}
