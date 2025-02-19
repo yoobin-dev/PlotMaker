@@ -38,7 +38,7 @@ function PlotCardList() {
 
   return (
     <>
-      {Array.from({ length: 32 }).map((_, i) => (
+      {Array.from({ length: 32 }).map((d, i) => (
         <PlotCard
           key={i}
           title="제목입니다."
@@ -56,7 +56,7 @@ function PlotCard({ title, contents, tags }) {
     <div className="plotCard">
       <div className="plotCardTitle">
         <div className="heading_1 ft_gray_4">{title}</div>
-        <div className="plotCardTitleImg">
+        <div className="plotCardTitleToggle">
           <img src="/burger.png"></img>
         </div>
       </div>

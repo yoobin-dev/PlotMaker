@@ -49,5 +49,51 @@
 }
 .circle_filter {
   border-radius: 50%;
+}
+
+/* 정렬 메뉴 */
+#sortMenuBox {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  align-items: start;
+  border: 0.5px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+
+  position: absolute;
+  left: 235px;
+  top: 130px;
+}
+#sortMenuHeader {
+  padding: 8px 12px;
+}
+#sortMenuBody {
+  border-top: 0.5px solid #ccc;
+}
+.sortMenuItem {
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
   cursor: pointer;
+}
+.sortMenuItem:hover {
+  background-color: #cccccc;
+}
+
+.sortIconBox {
+  display: flex;
+  width: 32px;
+  height: 28px;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+.sortIcon {
+  width: 17.5px;
+  height: 17.083px;
+}
+.orderIcon {
+  width: 7.364px;
+  height: 15.729px;
 }
