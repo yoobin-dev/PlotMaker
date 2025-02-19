@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "../styles/common.css";
 import "../styles/plotHeader.css";
+import { SortingMenu } from "./ToggleMenu";
 
 // 플롯 헤더
 function PlotHeader({ plotCount = 0 }) {
   const [count, setCount] = useState(0);
-  const [searchingOn, setSearchingOn] = useState(false);
-  const [sortingOn, setSortingOn] = useState(false);
+  const [toggleOn, setToggleOn] = useState(false);
+  const buttonRef = useRef(null);
 
   // 필터 버튼 배열
   const filterButtonArr = [
@@ -44,35 +45,56 @@ function PlotHeader({ plotCount = 0 }) {
     target.classList.add("active");
   };
 
-  // 검색 및 정렬 버튼 선택
+  // 검색 및 정렬 버튼 클릭
   const clickCircleFilterButton = (id) => {
     const target = document.getElementById(id);
     const circles = document.getElementsByClassName("circle_filter");
-    const className = target.className;
 
     // clicked 초기화
-    setSortingOn(false);
     for (let t of circles) {
       t.classList.remove("clicked");
     }
 
-    if (className.includes("clicked")) {
+    if (!toggleOn) {
       // 이미 클릭되어 있는 경우 취소
       target.classList.remove("clicked");
+      if (buttonRef.current.id === id) setToggleOn(true);
     } else {
       // 클릭되지 않은 경우 clicked 적용
       target.classList.add("clicked");
-      setSortingOn(true);
+      if (buttonRef.current.id === id) setToggleOn(false);
     }
   };
 
   // 렌더시 전체 필터 선택
   useEffect(() => {
+    // 전체 필터 선택
     activeFilterButton("filterAll");
-  }, [sortingOn]);
+
+    // 토글(정렬) 메뉴 외부 클릭 시 메뉴 닫기
+    const handleClickOutside = (event) => {
+      const toggleMenu = document.querySelector(".toggleMenuBox");
+      const isClickInside = Array.from(toggleMenu).some(
+        (menu) =>
+          menu.contains(event.target) &&
+          buttonRef.current.contains(event.target)
+      );
+
+      if (!isClickInside) {
+        setToggleOn(false);
+        buttonRef.current.classList.remove("clicked");
+      }
+    };
+    if (toggleOn) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [toggleOn]);
 
   return (
-    <div>
+    <div id="plotHeader">
       <div className="d-flex">
         <div className="display_2">내가 작성한 플롯</div>
         <div id="plotCount" className="display_2 ft_white bg_gray_2">
@@ -90,15 +112,17 @@ function PlotHeader({ plotCount = 0 }) {
             ></FilterButton>
           ))}
         </div>
-        {CircleFilterButtonArr.map((d) => (
-          <CircleFilterButton
-            key={d}
-            id={d}
-            onClick={clickCircleFilterButton}
-          ></CircleFilterButton>
-        ))}
+        <SearchFilterButton
+          id="searching"
+          onClick={clickCircleFilterButton}
+        ></SearchFilterButton>
+        <SortingFilterButton
+          id="sorting"
+          toggleOn={toggleOn}
+          onClick={clickCircleFilterButton}
+          buttonRef={buttonRef}
+        ></SortingFilterButton>
       </div>
-      <SortingMenu sortingOn={sortingOn}></SortingMenu>
     </div>
   );
 }
@@ -114,73 +138,33 @@ function FilterButton({ id, text, onClick }) {
   );
 }
 
-// 검색 및 정렬 버튼
-function CircleFilterButton({ id, onClick }) {
+// 검색 버튼
+function SearchFilterButton({ id, onClick }) {
   return (
-    <div
-      id={id}
-      className="circle_filter bg_gray_e"
-      onClick={() => onClick(id)}
-    >
-      <img src={`/${id}.png`}></img>
-    </div>
+    <>
+      <div
+        id={id}
+        className="circle_filter bg_gray_e"
+        onClick={() => onClick(id)}
+      >
+        <img src={`/${id}.png`}></img>
+      </div>
+    </>
   );
 }
-
-// 정렬 토글 메뉴
-function SortingMenu({ sortingOn }) {
-  const sortingArr = [
-    {
-      sort: "created",
-      order: "asc",
-      text: "작성일 최신 순 정렬",
-    },
-    {
-      sort: "created",
-      order: "desc",
-      text: "작성일 오래된 순 정렬",
-    },
-    {
-      sort: "view",
-      order: "asc",
-      text: "조회수 높은 순 정렬",
-    },
-    {
-      sort: "view",
-      order: "desc",
-      text: "조회수 낮은 순 정렬",
-    },
-    {
-      sort: "like",
-      order: "asc",
-      text: "좋아요 많은 순 정렬",
-    },
-    {
-      sort: "like",
-      order: "desc",
-      text: "좋아요 낮은 순 정렬",
-    },
-  ];
-
+// 정렬 버튼
+function SortingFilterButton({ id, toggleOn, buttonRef, menuRef, onClick }) {
   return (
-    <div
-      id="sortMenuBox"
-      className={`shadow_black_10 ${sortingOn ? "" : "d-none"}`}
-    >
-      <div id="sortMenuHeader" className="heading_1 ft_gray_5">
-        작품 정렬
+    <>
+      <div
+        id={id}
+        className="circle_filter bg_gray_e"
+        ref={buttonRef}
+        onClick={() => onClick(id)}
+      >
+        <img src={`/${id}.png`}></img>
       </div>
-      <div id="sortMenuBody" className="w-100">
-        {sortingArr.map((d) => (
-          <div key={`${d.sort}_${d.order}`} className="d-flex sortMenuItem">
-            <div className="sortIconBox">
-              <img className="sortIcon" src={`sort_${d.sort}.png`}></img>
-              <img className="orderIcon" src={`sort_${d.order}.png`}></img>
-            </div>
-            <span className="body_1 ft_gray_5">{d.text}</span>
-          </div>
-        ))}
-      </div>
-    </div>
+      <SortingMenu toggleOn={toggleOn}></SortingMenu>
+    </>
   );
 }

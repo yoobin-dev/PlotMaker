@@ -1,0 +1,90 @@
+.plotCard {
+  width: 288px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 0.5px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 4px 4px 0px rgba(102, 102, 102, 0.1);
+  padding: 4px 0;
+}
+.plotCardAdd {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 288px;
+  border-radius: 8px;
+  padding: 52px 0;
+  cursor: pointer;
+}
+.plotCardAdd > img {
+  width: 104px;
+  height: 104px;
+}
+
+.plotCardTitle {
+  display: flex;
+  height: 48px;
+  width: calc(100% - 24px);
+  border-bottom: 0.5px solid var(--Grayscale-Gr_C, #ccc);
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+}
+.plotCardTitle > div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.plotCardTitleImg {
+  cursor: pointer;
+}
+.plotCardTitle img {
+  width: 16px;
+  height: 12px;
+}
+
+.plotCardContents {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  padding: 14px 12px 2px 12px;
+  height: 60px;
+
+  /* 초과된 텍스트 ellipsis 처리 */
+  display: -webkit-box; /* Orientation of the box */
+  -webkit-box-orient: vertical; /* Vertical orientation */
+  -webkit-line-clamp: 2; /* Number oflines to show before cutting off */
+  overflow: hidden; /* Hide the content that exceeds the box */
+  text-overflow: ellipsis; /* Show ellipsis when content is cut off */
+}
+
+.plotCardTagBox {
+  display: flex;
+  justify-content: flex-start;
+  padding: 14px 12px 12px 12px;
+  gap: 4px;
+  max-width: calc(100% - 36px);
+  overflow: auto;
+}
+
+/* 카드 풋터 */
+.plotCardFooter {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 24px);
+  padding: 8px 12px;
+}
+.plotCardFooterCount {
+  display: flex;
+  gap: 8px;
+}
+.plotCardFooterCount > div {
+  display: flex;
+  gap: 4px;
+}
+.plotCardFooterCount img {
+  width: 12px;
+  height: 10px;
+}
