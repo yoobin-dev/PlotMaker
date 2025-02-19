@@ -176,6 +176,9 @@ body * {
 .d-flex {
   display: flex;
 }
+.d-none {
+  display: none !important;
+}
 
 /* 가로 세로 */
 .h-100 {
