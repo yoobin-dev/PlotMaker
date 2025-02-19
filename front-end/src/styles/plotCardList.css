@@ -1,4 +1,5 @@
 .plotCard {
+  position: relative;
   width: 288px;
   background-color: #ffffff;
   display: flex;

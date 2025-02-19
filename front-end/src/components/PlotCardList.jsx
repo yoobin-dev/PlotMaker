@@ -1,8 +1,10 @@
 import { useState, useRef } from "react";
 import "../styles/plotCardList.css";
 import PlotTag from "./PlotTag";
-
+import { PlotCardTitleToggle } from "./ToggleMenu";
 function PlotCardList() {
+  const [toggleOn, setToggleOn] = useState(false);
+
   const tagArr = [
     {
       id: 1,
@@ -41,9 +43,12 @@ function PlotCardList() {
       {Array.from({ length: 32 }).map((d, i) => (
         <PlotCard
           key={i}
+          id={i}
           title="제목입니다."
           contents="내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다..."
           tags={tagArr}
+          toggleOn={toggleOn}
+          setToggleOn={setToggleOn}
         ></PlotCard>
       ))}
       <PlotCardAdd></PlotCardAdd>
@@ -51,14 +56,17 @@ function PlotCardList() {
   );
 }
 
-function PlotCard({ title, contents, tags }) {
+function PlotCard({ id, title, contents, tags, toggleOn, setToggleOn }) {
   return (
     <div className="plotCard">
       <div className="plotCardTitle">
         <div className="heading_1 ft_gray_4">{title}</div>
-        <div className="plotCardTitleToggle">
-          <img src="/burger.png"></img>
-        </div>
+        <PlotCardTitleToggle
+          id={id}
+          title={title}
+          toggleOn={toggleOn}
+          setToggleOn={setToggleOn}
+        ></PlotCardTitleToggle>
       </div>
       <div className="plotCardContents body_1 ft_gray_2">{contents}</div>
       <div className="plotCardTagBox no_scroll">
