@@ -22,10 +22,12 @@ function PlotHeader({ plotCount = 0 }) {
       id: "filterPrivate",
       text: "비공개",
     },
+    /*고도화로 변경
     {
       id: "filterFolder",
       text: "폴더",
     },
+    */
   ];
 
   // 검색 및 정렬 버튼 배열
@@ -109,13 +111,16 @@ function PlotHeader({ plotCount = 0 }) {
             ></FilterButton>
           ))}
         </div>
-        {CircleFilterButtonArr.map((d) => (
-          <CircleFilterButton
-            key={d}
-            id={d}
+        <div className="d-flex" style={{ gap: "8px" }}>
+          <SearchFilterButton
+            id={"searching"}
             onClick={clickCircleFilterButton}
-          ></CircleFilterButton>
-        ))}
+          ></SearchFilterButton>
+          <SortingFilterButton
+            id={"sorting"}
+            onClick={clickCircleFilterButton}
+          ></SortingFilterButton>
+        </div>
       </div>
       <SortingMenu sortingOn={sortingOn}></SortingMenu>
     </div>
@@ -133,8 +138,73 @@ function FilterButton({ id, text, onClick }) {
   );
 }
 
-// 검색 및 정렬 버튼
-function CircleFilterButton({ id, onClick }) {
+// 검색 버튼
+function SearchFilterButton({ id }) {
+  function searchToggleOn(evt) {
+    evt.preventDefault();
+    const searchInput = document.querySelector("#search_input");
+    const searchClose = document.querySelector("#search_close");
+    const sortBtn = document.querySelector("#sorting");
+    const container = evt.currentTarget.closest(".search-wrapper");
+
+    if (!container.classList.contains("active")) {
+      container.classList.add("active");
+      // 정렬 버튼 숨기기
+      sortBtn.classList.add("d-none");
+      // placeholer 추가
+      setTimeout(() => {
+        searchInput.placeholder = "제목";
+        searchClose.classList.remove("d-none");
+      }, 550);
+    } else {
+      // 검색 함수 추가
+      console.log("검색 함수 실행");
+    }
+  }
+
+  function searchToggleOff(evt) {
+    evt.preventDefault();
+
+    const searchInput = document.querySelector("#search_input");
+    const searchClose = document.querySelector("#search_close");
+    const sortBtn = document.querySelector("#sorting");
+    const container = evt.currentTarget.closest(".search-wrapper");
+
+    container.classList.remove("active");
+    container.querySelector(".search-input").value = ""; // 입력값 초기화
+    // 정렬 버튼 보여주기
+    setTimeout(() => {
+      sortBtn.classList.remove("d-none");
+    }, 300);
+    // placeholer 제거
+    searchInput.placeholder = "";
+    searchClose.classList.add("d-none");
+  }
+
+  return (
+    <div className="search-wrapper">
+      <div className="input-holder">
+        <input
+          id="search_input"
+          type="text"
+          className="search-input headline_2"
+        ></input>
+        <div className="search-icon" onClick={(evt) => searchToggleOn(evt)}>
+          <img src="searching.png"></img>
+        </div>
+      </div>
+      <span
+        id="search_close"
+        className="close headline_1 ft_black d-none"
+        onClick={(evt) => searchToggleOff(evt)}
+      >
+        취소
+      </span>
+    </div>
+  );
+}
+// 정렬 버튼
+function SortingFilterButton({ id, onClick }) {
   return (
     <div
       id={id}

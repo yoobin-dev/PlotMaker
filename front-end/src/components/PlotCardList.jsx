@@ -1,8 +1,11 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "../styles/plotCardList.css";
 import PlotTag from "./PlotTag";
 import { PlotCardTitleToggle } from "./ToggleMenu";
+import plotApi from "../api/plotApi";
+
 function PlotCardList() {
+  const [plotList, setPlotList] = useState([]);
   const [toggleOn, setToggleOn] = useState(false);
 
   const tagArr = [
@@ -38,6 +41,46 @@ function PlotCardList() {
     },
   ];
 
+  const PlotCardTagBoxScroll = () => {
+    const tagBoxs = document.querySelectorAll(".plotCardTagBox");
+
+    tagBoxs.forEach((tagBox) => {
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      tagBox.addEventListener("mousedown", (e) => {
+        isDown = true;
+        tagBox.classList.add("active");
+        startX = e.pageX - tagBox.offsetLeft;
+        scrollLeft = tagBox.scrollLeft;
+        tagBox.style.cursor = "grabbing";
+      });
+
+      tagBox.addEventListener("mouseleave", () => {
+        isDown = false;
+        tagBox.style.cursor = "grab";
+      });
+
+      tagBox.addEventListener("mouseup", () => {
+        isDown = false;
+        tagBox.style.cursor = "grab";
+      });
+
+      tagBox.addEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - tagBox.offsetLeft;
+        const walk = (x - startX) * 1; // 속도 조절
+        tagBox.scrollLeft = scrollLeft - walk;
+      });
+    });
+  };
+
+  useEffect(() => {
+    PlotCardTagBoxScroll();
+  }, []);
+
   return (
     <>
       {Array.from({ length: 32 }).map((d, i) => (
@@ -69,17 +112,25 @@ function PlotCard({ id, title, contents, tags, toggleOn, setToggleOn }) {
         ></PlotCardTitleToggle>
       </div>
       <div className="plotCardContents body_1 ft_gray_2">{contents}</div>
-      <div className="plotCardTagBox no_scroll">
-        {tags.map((d) => (
-          <PlotTag key={d.id} name={d.name} color={d.color}></PlotTag>
-        ))}
-      </div>
+
+      <PlotCardTagBox tags={tags}></PlotCardTagBox>
+
       <PlotCardFooter
         view="12"
         like="34"
         comment="56"
         createdDt=" 90분 전"
       ></PlotCardFooter>
+    </div>
+  );
+}
+
+function PlotCardTagBox({ tags }) {
+  return (
+    <div className="plotCardTagBox no_scroll">
+      {tags.map((d) => (
+        <PlotTag key={d.id} name={d.name} color={d.color}></PlotTag>
+      ))}
     </div>
   );
 }

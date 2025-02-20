@@ -1,6 +1,7 @@
 .plotCard {
   position: relative;
   width: 288px;
+  height: 208px;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -15,6 +16,7 @@
   justify-content: center;
   align-items: center;
   width: 288px;
+  height: 208px;
   border-radius: 8px;
   padding: 52px 0;
   cursor: pointer;
@@ -67,7 +69,9 @@
   padding: 14px 12px 12px 12px;
   gap: 4px;
   max-width: calc(100% - 36px);
-  overflow: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
+  cursor: grab;
 }
 
 /* 카드 풋터 */
