@@ -1,0 +1,48 @@
+/* 토글 메뉴 */
+.toggleMenuBox {
+  display: flex;
+  flex-direction: column;
+  width: 208px;
+  height: 228px;
+  align-items: start;
+  border: 0.5px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+
+  position: absolute;
+  left: 80px;
+  top: 50px;
+  z-index: 999;
+}
+.toggleMenuHeader {
+  padding: 8px 12px;
+}
+.toggleMenuBody {
+  border-top: 0.5px solid #ccc;
+}
+.toggleMenuItem {
+  padding: 8px 12px;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+.toggleMenuItem:hover {
+  background-color: #cccccc;
+}
+
+.toggleIconBox {
+  display: flex;
+  width: 32px;
+  height: 28px;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+.toggleIcon {
+  width: 17.5px;
+  height: 17.083px;
+}
+
+.plotCardTitleToggle {
+  background-image: "/burger.png";
+}

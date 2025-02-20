@@ -180,6 +180,15 @@ body * {
   display: none !important;
 }
 
+/* 스크롤바 숨기기 */
+.no_scroll {
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
+}
+/* 스크롤바 숨기기 */
+.no_scroll::-webkit-scrollbar {
+  display: none;
+}
 /* 가로 세로 */
 .h-100 {
   height: 100%;
@@ -371,6 +380,54 @@ body * {
 .ft_gray_f9 {
   color: #f9f9f9;
 }
+.ft_blue_m {
+  color: #72a5bd;
+}
+.ft_blue_s {
+  color: #ecf6fd;
+}
+.ft_yellow_m {
+  color: #ddc190;
+}
+.ft_yellow_s {
+  color: #fef4eb;
+}
+.ft_green_m {
+  color: #86b69c;
+}
+.ft_green_s {
+  color: #effdf1;
+}
+.ft_red_m {
+  color: #bd7272;
+}
+.ft_red_s {
+  color: #fdecec;
+}
+.ft_purple_m {
+  color: #8e86b6;
+}
+.ft_purple_s {
+  color: #f1effd;
+}
+.ft_pink_m {
+  color: #dd90d5;
+}
+.ft_pink_s {
+  color: #f7ebfe;
+}
+.ft_mustard_m {
+  color: #bcbd72;
+}
+.ft_mustard_s {
+  color: #fefff4;
+}
+.ft_mint_m {
+  color: #86b6b6;
+}
+.ft_mint_s {
+  color: #effdfd;
+}
 
 /* color 기본 배경 색상 */
 .bg_waring {
@@ -441,6 +498,54 @@ body * {
 }
 .bg_gray_f9 {
   background-color: #f9f9f9;
+}
+.bg_blue_m {
+  background-color: #72a5bd;
+}
+.bg_blue_s {
+  background-color: #ecf6fd;
+}
+.bg_yellow_m {
+  background-color: #ddc190;
+}
+.bg_yellow_s {
+  background-color: #fef4eb;
+}
+.bg_green_m {
+  background-color: #86b69c;
+}
+.bg_green_s {
+  background-color: #effdf1;
+}
+.bg_red_m {
+  background-color: #bd7272;
+}
+.bg_red_s {
+  background-color: #fdecec;
+}
+.bg_purple_m {
+  background-color: #8e86b6;
+}
+.bg_purple_s {
+  background-color: #f1effd;
+}
+.bg_pink_m {
+  background-color: #dd90d5;
+}
+.bg_pink_s {
+  background-color: #f7ebfe;
+}
+.bg_mustard_m {
+  background-color: #bcbd72;
+}
+.bg_mustard_s {
+  background-color: #fefff4;
+}
+.bg_mint_m {
+  background-color: #86b6b6;
+}
+.bg_mint_s {
+  background-color: #effdfd;
 }
 
 /* shadow 그림자 */

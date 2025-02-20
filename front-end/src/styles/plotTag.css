@@ -1,0 +1,12 @@
+.plotTag {
+  display: flex;
+  height: 28px;
+  padding: 4px 8px;
+  align-items: center;
+  border-radius: 999px;
+  white-space: nowrap;
+  user-select: none; /* 모든 브라우저에서 텍스트 선택 방지 */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
+}

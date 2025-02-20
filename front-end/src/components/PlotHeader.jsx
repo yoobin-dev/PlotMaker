@@ -22,10 +22,12 @@ function PlotHeader({ plotCount = 0 }) {
       id: "filterPrivate",
       text: "비공개",
     },
+    /*고도화로 변경
     {
       id: "filterFolder",
       text: "폴더",
     },
+    */
   ];
 
   // 검색 및 정렬 버튼 배열
@@ -51,10 +53,11 @@ function PlotHeader({ plotCount = 0 }) {
     const className = target.className;
 
     // clicked 초기화
-    setSortingOn(false);
     for (let t of circles) {
       t.classList.remove("clicked");
     }
+    // 정렬 토글 메뉴 숨기기
+    if (id === "sorting") setSortingOn(false);
 
     if (className.includes("clicked")) {
       // 이미 클릭되어 있는 경우 취소
@@ -62,17 +65,35 @@ function PlotHeader({ plotCount = 0 }) {
     } else {
       // 클릭되지 않은 경우 clicked 적용
       target.classList.add("clicked");
-      setSortingOn(true);
+      if (id === "sorting") setSortingOn(true);
     }
   };
 
   // 렌더시 전체 필터 선택
   useEffect(() => {
+    // 전체 필터 선택
     activeFilterButton("filterAll");
+
+    // 정렬 메뉴 외부 클릭 시 메뉴 닫기
+    const handleClickOutside = (event) => {
+      if (
+        !document.getElementById("sortMenuBox").contains(event.target) &&
+        !document.getElementById("sorting").contains(event.target)
+      ) {
+        setSortingOn(false);
+        document.getElementById("sorting").classList.remove("clicked");
+      }
+    };
+    if (sortingOn) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [sortingOn]);
 
   return (
-    <div>
+    <div id="plotHeader">
       <div className="d-flex">
         <div className="display_2">내가 작성한 플롯</div>
         <div id="plotCount" className="display_2 ft_white bg_gray_2">
@@ -90,13 +111,16 @@ function PlotHeader({ plotCount = 0 }) {
             ></FilterButton>
           ))}
         </div>
-        {CircleFilterButtonArr.map((d) => (
-          <CircleFilterButton
-            key={d}
-            id={d}
+        <div className="d-flex" style={{ gap: "8px" }}>
+          <SearchFilterButton
+            id={"searching"}
             onClick={clickCircleFilterButton}
-          ></CircleFilterButton>
-        ))}
+          ></SearchFilterButton>
+          <SortingFilterButton
+            id={"sorting"}
+            onClick={clickCircleFilterButton}
+          ></SortingFilterButton>
+        </div>
       </div>
       <SortingMenu sortingOn={sortingOn}></SortingMenu>
     </div>
@@ -114,8 +138,73 @@ function FilterButton({ id, text, onClick }) {
   );
 }
 
-// 검색 및 정렬 버튼
-function CircleFilterButton({ id, onClick }) {
+// 검색 버튼
+function SearchFilterButton({ id }) {
+  function searchToggleOn(evt) {
+    evt.preventDefault();
+    const searchInput = document.querySelector("#search_input");
+    const searchClose = document.querySelector("#search_close");
+    const sortBtn = document.querySelector("#sorting");
+    const container = evt.currentTarget.closest(".search-wrapper");
+
+    if (!container.classList.contains("active")) {
+      container.classList.add("active");
+      // 정렬 버튼 숨기기
+      sortBtn.classList.add("d-none");
+      // placeholer 추가
+      setTimeout(() => {
+        searchInput.placeholder = "제목";
+        searchClose.classList.remove("d-none");
+      }, 550);
+    } else {
+      // 검색 함수 추가
+      console.log("검색 함수 실행");
+    }
+  }
+
+  function searchToggleOff(evt) {
+    evt.preventDefault();
+
+    const searchInput = document.querySelector("#search_input");
+    const searchClose = document.querySelector("#search_close");
+    const sortBtn = document.querySelector("#sorting");
+    const container = evt.currentTarget.closest(".search-wrapper");
+
+    container.classList.remove("active");
+    container.querySelector(".search-input").value = ""; // 입력값 초기화
+    // 정렬 버튼 보여주기
+    setTimeout(() => {
+      sortBtn.classList.remove("d-none");
+    }, 300);
+    // placeholer 제거
+    searchInput.placeholder = "";
+    searchClose.classList.add("d-none");
+  }
+
+  return (
+    <div className="search-wrapper">
+      <div className="input-holder">
+        <input
+          id="search_input"
+          type="text"
+          className="search-input headline_2"
+        ></input>
+        <div className="search-icon" onClick={(evt) => searchToggleOn(evt)}>
+          <img src="searching.png"></img>
+        </div>
+      </div>
+      <span
+        id="search_close"
+        className="close headline_1 ft_black d-none"
+        onClick={(evt) => searchToggleOff(evt)}
+      >
+        취소
+      </span>
+    </div>
+  );
+}
+// 정렬 버튼
+function SortingFilterButton({ id, onClick }) {
   return (
     <div
       id={id}
