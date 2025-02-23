@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 /* mapper 패키지 수정해야 함 */
 @RequiredArgsConstructor
-@MapperScan(basePackages = {"org.ohap.plotmaker.temporary"})
+@MapperScan(basePackages = {"org.ohap.plotmaker.mapper"})
 @PropertySource(value = {"classpath:application.properties"})
 @EnableTransactionManagement
 @Configuration

@@ -11,5 +11,6 @@
 
   <typeAliases>
     <typeAlias alias="TempDTO"        type="org.ohap.plotmaker.temporary.TempDTO" />
+    <typeAlias alias="UserDTO"        type="org.ohap.plotmaker.login.UserDTO" />
   </typeAliases>
 </configuration>
