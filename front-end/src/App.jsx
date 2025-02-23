@@ -1,18 +1,11 @@
-import { useState } from "react";
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { RouterProvider, useRoutes } from "react-router-dom";
+import root from "./routes/root.jsx";
 import "./styles/common.css";
-import SideMenuList from "./components/SideMenuList";
-import PlotHeader from "./components/PlotHeader";
-import LoginPage from "./pages/LoginPage";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [plotCount, setPlotCount] = useState(0);
 
   return (
-    <>
-      <LoginPage />
-    </>
+      <RouterProvider router={root} />
   );
 }
 

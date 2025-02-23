@@ -96,6 +96,7 @@ public class LoginServiceImpl implements LoginService {
       loginMapper.updateLastLogin(userInfo.getSocialId());
       return userInfo;
     } else {
+      log.fatal("새로운 USER");
       loginMapper.insertUser(userInfo);
       return userInfo;
     }

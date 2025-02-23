@@ -2,25 +2,29 @@ package org.ohap.plotmaker.login;
 
 import java.sql.Timestamp;
 
+import org.springframework.lang.Nullable;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
   
   private String loginType;
   private String socialId;
-  private String email;
-  private String nickname;
-  private String profile;
+  @Nullable private String email;
+  @Nullable private String nickname;
+  @Nullable private String profile;
   private String gender;
   private String age;
   private String birthyear;
-  private Timestamp createAt;
-  private Timestamp modifyAt;
-  private Timestamp lastLogin;
+  @Nullable private Timestamp createAt;
+  @Nullable private Timestamp modifyAt;
+  @Nullable private Timestamp lastLogin;
 
 }
