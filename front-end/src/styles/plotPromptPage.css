@@ -1,0 +1,7 @@
+#plotPromptPage {
+  width: calc(100% - 288px);
+  padding: 31px 32px 31px 22px;
+  display: flex;
+  gap: 22px;
+  position: relative;
+}

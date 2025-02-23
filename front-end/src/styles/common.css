@@ -561,3 +561,11 @@ body * {
 .shadow_gray_30 {
   box-shadow: 0px 4px 4px 0px rgba(102, 102, 102, 0.3);
 }
+
+#modalBackground.modalOn {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+}

@@ -1,9 +1,13 @@
-#plotBox {
+#plotListPage {
   width: calc(100% - 288px);
   padding: 68px 12px;
 }
 
-#plotBoxBottom {
+#plotListPageTop {
+  padding-bottom: 32px;
+}
+
+#plotListPageBottom {
   height: calc(100% - 120px);
   display: flex;
   flex-wrap: wrap;

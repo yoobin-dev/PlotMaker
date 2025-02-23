@@ -1,0 +1,88 @@
+#plotPromptLeftBox {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+#progressBox {
+  height: 48px;
+  width: 100%;
+  background-color: #eee;
+  border-radius: 12px;
+}
+#progressBar {
+  height: 48px;
+  width: 18%;
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+  border-radius: 12px 0px 0px 12px;
+  background: linear-gradient(
+    90deg,
+    #a487ee 0%,
+    rgba(150, 200, 223, 0.82) 51.67%,
+    var(--Grayscale-Gr_E, #eee) 100%
+  );
+}
+
+#plotPromptBox {
+  width: calc(100% - 80px);
+  height: calc(100% - 120px);
+  padding: 32px 40px;
+  border-radius: 12px;
+  border-top: 0.5px solid var(--Grayscale-Gr_E, #eee);
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.plotPromptBoxInner {
+  display: flex;
+  flex-direction: column;
+}
+
+.promptTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.promptTitleSkip {
+  height: 32px;
+  width: 95px;
+  background: url("skip.png") no-repeat 95% 50%/68px auto;
+}
+.promptInputSelect {
+  height: 72px;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 20px 0 8px 0;
+  border-radius: 8px;
+  border: 0.5px solid var(--Grayscale-Gr_2, #222);
+  background: var(--Grayscale-WHITE, #fff);
+  background: url("arrow_down.png") no-repeat 95% 50%/25px auto;
+  -webkit-appearance: none; /* for chrome */
+  -moz-appearance: none; /*for firefox*/
+  appearance: none;
+}
+select::-ms-expand {
+  display: none; /*for IE10,11*/
+}
+
+.lengthGuide {
+  margin-left: auto;
+}
+.addPrompt {
+  width: 24px;
+  height: 24px;
+  font-size: 48px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--Grayscale-BLACK, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
