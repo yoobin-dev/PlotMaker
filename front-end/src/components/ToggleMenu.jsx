@@ -69,8 +69,9 @@ export function PlotCardTitleToggle({ id, title }) {
         id={id}
         className={`toggleMenuBox shadow_black_10 ${toggleOn ? "" : "d-none"}`}
       >
-        <div className="toggleMenuHeader toggleElement heading_1 ft_gray_5">
-          {title}
+        <div className="toggleMenuHeader d-flex ft_gray_5">
+          <div className="toggleElement headline_1">{title}</div>
+          <div className="toggleElement body_1">선택</div>
         </div>
         <div className="toggleMenuBody w-100">
           {menuArr.map((d) => (

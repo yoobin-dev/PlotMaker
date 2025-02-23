@@ -1,11 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import "../styles/plotCardList.css";
 import PlotTag from "./PlotTag";
 import { PlotCardTitleToggle } from "./ToggleMenu";
-import plotApi from "../api/plotApi";
+import LocaleContext from "../context/LocaleContext"; // LocaleContext import
 
 function PlotCardList() {
-  const [plotList, setPlotList] = useState([]);
+  const { plotList, setPlotList } = useContext(LocaleContext);
   const [toggleOn, setToggleOn] = useState(false);
 
   const tagArr = [
@@ -41,6 +41,7 @@ function PlotCardList() {
     },
   ];
 
+  // 태그박스 스크롤 기능
   const PlotCardTagBoxScroll = () => {
     const tagBoxs = document.querySelectorAll(".plotCardTagBox");
 
@@ -77,18 +78,20 @@ function PlotCardList() {
     });
   };
 
+  // plotList가 업데이트 될 때마다 드래그 기능 적용
   useEffect(() => {
     PlotCardTagBoxScroll();
-  }, []);
+  }, [plotList]);
 
   return (
     <>
-      {Array.from({ length: 32 }).map((d, i) => (
+      {plotList.map((d, i) => (
         <PlotCard
           key={i}
+          info={d}
           id={i}
-          title="제목입니다."
-          contents="내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다..."
+          title={d.email}
+          contents={d.body}
           tags={tagArr}
           toggleOn={toggleOn}
           setToggleOn={setToggleOn}
@@ -99,16 +102,14 @@ function PlotCardList() {
   );
 }
 
-function PlotCard({ id, title, contents, tags, toggleOn, setToggleOn }) {
+function PlotCard({ info, id, title, contents, tags, toggleOn, setToggleOn }) {
   return (
     <div className="plotCard">
       <div className="plotCardTitle">
-        <div className="heading_1 ft_gray_4">{title}</div>
+        <div className="title heading_1 ft_gray_4">{info.email}</div>
         <PlotCardTitleToggle
-          id={id}
-          title={title}
-          toggleOn={toggleOn}
-          setToggleOn={setToggleOn}
+          id={info.id}
+          title={info.email}
         ></PlotCardTitleToggle>
       </div>
       <div className="plotCardContents body_1 ft_gray_2">{contents}</div>
@@ -116,10 +117,10 @@ function PlotCard({ id, title, contents, tags, toggleOn, setToggleOn }) {
       <PlotCardTagBox tags={tags}></PlotCardTagBox>
 
       <PlotCardFooter
-        view="12"
-        like="34"
-        comment="56"
-        createdDt=" 90분 전"
+        view={info.id * 23}
+        like={info.id * 34}
+        comment={info.id * 3}
+        createdDt={`${info.postId * 20}분 전`}
       ></PlotCardFooter>
     </div>
   );
