@@ -1,0 +1,42 @@
+#loginBackground {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#container {
+  position: fixed;
+  top: 404px;
+}
+#title {
+  text-align: center;
+}
+
+.main_1 {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 80px;
+  letter-spacing: -1.28px;
+}
+
+.main_2 {
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 80px;
+  letter-spacing: -1.28px;
+}
+
+#naverLogin {
+  display: flex;
+  width: 260px;
+  height: 52px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #762662;
+}
+
+svg {
+  padding-right: 4px;
+}
