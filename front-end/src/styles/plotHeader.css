@@ -5,6 +5,9 @@
 .clicked {
   filter: brightness(1) invert(1);
 }
+#plotHeader {
+  position: relative;
+}
 #plotCount {
   padding: 0 15px;
   margin-left: 20px;
@@ -56,6 +59,12 @@
   align-items: start;
   border: 0.5px solid #ccc;
   border-radius: 8px;
+  background-color: #ffffff;
+
+  position: absolute;
+  left: 145px;
+  top: 130px;
+  z-index: 999;
 }
 #sortMenuHeader {
   padding: 8px 12px;
@@ -88,4 +97,115 @@
 .orderIcon {
   width: 7.364px;
   height: 15.729px;
+}
+
+/* 검색 버튼 css */
+.search-wrapper {
+  transform: translate(0%, 0%);
+}
+
+.search-wrapper .input-holder {
+  height: 44px;
+  width: 44px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0);
+  border-radius: 6px;
+  /* position: relative; */
+  transition: all 0.3s ease-in-out;
+}
+.search-wrapper.active .input-holder {
+  width: 280px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--Grayscale-BLACK, #000);
+  transition: all 0.5s cubic-bezier(0, 0.6, 0.035, 1);
+}
+.search-wrapper .input-holder .search-input {
+  width: 100%;
+  height: 44px;
+  opacity: 0;
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: transparent;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  transform: translate(0, 60px);
+  transition: all 0.3s cubic-bezier(0, 0.6, 0.035, 1);
+  transition-delay: 0.3s;
+}
+.search-wrapper.active .input-holder .search-input {
+  opacity: 1;
+  transform: translate(0, 10px);
+}
+.search-wrapper .input-holder .search-icon {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 999px;
+  padding: 0px;
+  outline: none;
+  position: relative;
+  z-index: 2;
+  float: right;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.search-wrapper.active .input-holder .search-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 30px;
+}
+.search-wrapper .input-holder .search-icon span {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  transform: rotate(45deg);
+  transition: all 0.4s cubic-bezier(0.65, -0.6, 0.24, 1.65);
+}
+.search-wrapper.active .input-holder .search-icon span {
+  transform: rotate(-45deg);
+}
+.search-wrapper .input-holder .search-icon span::before,
+.search-wrapper .input-holder .search-icon span::after {
+  position: absolute;
+  content: "";
+}
+.search-wrapper .input-holder .search-icon span::before {
+  width: 4px;
+  height: 11px;
+  left: 9px;
+  top: 18px;
+  border-radius: 2px;
+  background: #fe5f55;
+}
+.search-wrapper .input-holder .search-icon span::after {
+  width: 14px;
+  height: 14px;
+  left: 0px;
+  top: 0px;
+  border-radius: 16px;
+  border: 4px solid #fe5f55;
+}
+.search-wrapper .close {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  right: 9px;
+  cursor: pointer;
+  /* transition: all 0.3s cubic-bezier(0.285, -0.45, 0.935, 0.11);
+  transition-delay: 0.2s; */
+}
+.search-wrapper.active .close {
+  right: -40px;
+  /* transition: all 0.6s cubic-bezier(0, 0.105, 0.035, 1.57);
+  transition-delay: 0.5s; */
+}
+
+.search-icon img {
+  width: 44px;
+  height: 44px;
 }
