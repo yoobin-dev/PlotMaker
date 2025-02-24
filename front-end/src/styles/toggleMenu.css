@@ -15,7 +15,20 @@
   z-index: 999;
 }
 .toggleMenuHeader {
-  padding: 8px 12px;
+  width: 100%;
+}
+.toggleMenuHeader .headline_1 {
+  width: 90%;
+  padding: 8px 0 8px 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+.toggleMenuHeader .body_1 {
+  width: 40px;
+  padding: 8px 12px 8px 0;
 }
 .toggleMenuBody {
   border-top: 0.5px solid #ccc;
