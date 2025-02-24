@@ -19,13 +19,12 @@ public class LoginController {
   private final LoginService loginService;
   
   @PostMapping("/naver")
-  public ResponseEntity<ApiResponse<?>> naverLogin(@RequestBody Map<String, String> request){
+  public ResponseEntity<ApiResponse<UserDTO>> naverLogin(@RequestBody Map<String, String> request){
     String code = request.get("code");
     String state = request.get("state");
 
     if(code == null || state == null){
-      ApiResponse<String> response = ApiResponse.<String>builder().isSuccess(false).message("잘못된 요청입니다.").build();
-      return ResponseEntity.badRequest().body(response);
+      throw new IllegalArgumentException("잘못된 요청입니다.");
     }
 
     String accessToken = loginService.getAccessToken(code, state);
