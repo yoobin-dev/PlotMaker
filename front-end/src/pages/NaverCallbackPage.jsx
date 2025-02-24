@@ -15,13 +15,17 @@ const NaverCallbackPage = () => {
       if(!code || !state){
         console.error("잘못된 네이버 로그인 요청");
         navigate("/login");
-        return
+        return;
       }
 
       try {
         const userData = await naverLogin(code, state);
-        console.log(userData);
-        //localStorage.setItem("userInfo", JSON.stringify(userData.user));
+        localStorage.setItem("userInfo", JSON.stringify(userData));
+        if(userData.nickname == null) {
+          navigate("/login/nickname");
+        } else {
+          navigate("/prompt");
+        }
       } catch(error){
         console.error("error: ", error);
         console.error("로그인 실패: ", error.message);
@@ -32,9 +36,7 @@ const NaverCallbackPage = () => {
 
   }, [navigate, location.key])
 
-  return (
-    <>이걸 해야하나..</>
-  )
+  return null;
 }
 
 export default NaverCallbackPage;

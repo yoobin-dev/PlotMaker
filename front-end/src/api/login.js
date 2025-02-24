@@ -6,7 +6,6 @@ const prefix = `${API_SERVER}/login`;
 export const naverLogin = async (code, state) => {
   try {
     const response = await axios.post(`${prefix}/naver`, {code, state});
-    console.log("response 확인: ", response.data);
     if(response.data.success){
       return response.data.data;
     } else {
