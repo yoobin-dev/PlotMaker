@@ -15,8 +15,14 @@ const root = createBrowserRouter([
     element: <NaverCallbackPage />,
   },
   {
-    path: "/prompt",
-    element: <PlotPromptPage />,
+    path: "",
+    element: <Layout />,
+    children: [
+      {
+        path: "/prompt",
+        element: <PlotPromptPage />,
+      },
+    ],
   },
 ]);
 
