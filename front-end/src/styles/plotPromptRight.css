@@ -8,15 +8,14 @@
 #plotPromptResult {
   width: calc(100% - 80px);
   display: flex;
-  padding: 18.5px 40px;
+  padding: 70px 40px 18.5px 40px;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: flex-start;
   border-radius: 12px;
   background: var(--Grayscale-WHITE, #fff);
-
-  /* Gray-30 */
+  overflow-y: auto;
   box-shadow: 0px 4px 4px 0px rgba(102, 102, 102, 0.3);
+  margin-top: -50px;
 }
 
 #promptBtnBox {
@@ -39,4 +38,5 @@
 
   border-radius: 12px;
   border: 1px solid var(--Grayscale-BLACK, #000);
+  cursor: pointer;
 }

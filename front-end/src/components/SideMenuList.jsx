@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, NavLink, useNavigate } from "react-router-dom";
 import Profile from "../components/Profile";
 import "../styles/sideMenu.css";
 
@@ -16,7 +16,7 @@ function SideMenuList({ nickName = "" }) {
   const menuObj = [
     {
       idx: "1",
-      path: "/myStorage",
+      path: "/plotList",
       icon: "/menu_1.png",
       title: "나의 작성글",
     },
@@ -35,7 +35,7 @@ function SideMenuList({ nickName = "" }) {
   ];
 
   // 메뉴 선택 이벤트
-  function activeMenu(idx) {
+  function activeMenu(idx, path) {
     // 기존 active 해제
     const menuList = document.getElementsByClassName("sideMenu");
     for (let menu of menuList) {
@@ -64,20 +64,23 @@ function SideMenuList({ nickName = "" }) {
         ))}
         </Routes> */}
       <div id="sideMenuList">
-        {
-          /* 우측 구현 전까지 사용 */
-          menuObj.map((d) => (
-            <SideMenu
-              key={d.idx}
-              id={`menu_${d.idx}`}
-              icon={d.icon}
-              title={d.title}
-              onClick={() => {
-                activeMenu(d.idx);
-              }}
-            ></SideMenu>
-          ))
-        }
+        <nav>
+          {
+            /* 우측 구현 전까지 사용 */
+            menuObj.map((d) => (
+              <NavLink key={d.idx} to={d.path}>
+                <SideMenu
+                  id={`menu_${d.idx}`}
+                  icon={d.icon}
+                  title={d.title}
+                  onClick={() => {
+                    activeMenu(d.idx, d.path);
+                  }}
+                ></SideMenu>
+              </NavLink>
+            ))
+          }
+        </nav>
       </div>
       <div className="w-100 d-flex" style={{ justifyContent: "center" }}>
         <Profile name={nickName}></Profile>
