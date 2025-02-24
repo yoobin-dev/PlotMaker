@@ -38,12 +38,12 @@ public class LoginServiceImpl implements LoginService {
   @Override
   public String getAccessToken(String code, String state) {
     StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code");
-    stringBuilder.append("&client_id=" + clientId);
-    stringBuilder.append("&client_secret=" + clientSecret);
-    stringBuilder.append("&redirect_uri=" + redirectUri);
-    stringBuilder.append("&code=" + code);
-    stringBuilder.append("&state=" + state);
+    stringBuilder.append("https://nid.naver.com/oauth2.0/token?grant_type=authorization_code")
+      .append("&client_id=").append(clientId)
+      .append("&client_secret=").append(clientSecret)
+      .append("&redirect_uri=").append(redirectUri)
+      .append("&code=").append(code)
+      .append("&state=").append(state);
 
     RestTemplate restTemplate = new RestTemplate();
     ResponseEntity<String> response = restTemplate.getForEntity(stringBuilder.toString(), String.class);
@@ -52,8 +52,7 @@ public class LoginServiceImpl implements LoginService {
     return element.getAsJsonObject().get("access_token").getAsString();
   }
 
-  @Override
-  public UserDTO getUserInfo(String accessToken) {
+  private UserDTO getUserInfo(String accessToken) {
     String userInfoUrl = "https://openapi.naver.com/v1/nid/me";
     RestTemplate restTemplate = new RestTemplate();
     HttpHeaders headers = new HttpHeaders();
@@ -68,11 +67,11 @@ public class LoginServiceImpl implements LoginService {
     }
 
     JsonObject responseObj = element.getAsJsonObject().get("response").getAsJsonObject();
-
     UserDTO userInfo = UserDTO.builder()
                         .loginType("N")
                         .socialId(responseObj.get("id").getAsString())
                         .email(responseObj.has("email")? responseObj.get("email").getAsString() : null)
+                        .nickname(responseObj.has("nickname")? responseObj.get("nickname").getAsString() : null)
                         .gender(responseObj.has("gender")? responseObj.get("gender").getAsString() : null)
                         .age(responseObj.has("age")? responseObj.get("age").getAsString() : null)
                         .birthyear(responseObj.has("birthyear")? responseObj.get("birthyear").getAsString() : null)
@@ -94,13 +93,13 @@ public class LoginServiceImpl implements LoginService {
     if(existingUser != null){
       log.debug(userInfo.getSocialId());
       loginMapper.updateLastLogin(userInfo.getSocialId());
+      userInfo = existingUser;
       return userInfo;
     } else {
       log.fatal("새로운 USER");
       loginMapper.insertUser(userInfo);
       return userInfo;
     }
-
   }
 
 }

@@ -1,0 +1,8 @@
+#spanNickname {
+  text-decoration-line: underline;
+text-decoration-style: solid;
+text-decoration-skip-ink: auto;
+text-decoration-thickness: 5%;
+text-underline-offset: 25%;
+text-underline-position: from-font;
+}
