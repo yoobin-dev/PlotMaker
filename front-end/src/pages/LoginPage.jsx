@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import NaverLoginButton from "../components/NaverLoginButton";
 
@@ -7,6 +8,12 @@ import "../styles/common.css"
 
 const LoginPage = () => {
   
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/prompt");
+  }
+
   return (
     <div className="h-100 w-100 bg_black" id="loginBackground">
       <div id="title">
@@ -21,7 +28,7 @@ const LoginPage = () => {
 
       <NaverLoginButton />
 
-      <div id="guest" className="label_1 ft_gray_9">
+      <div id="guest" className="label_1 ft_gray_9" onClick={handleClick}>
         비회원으로 이용하기
       </div>
 
