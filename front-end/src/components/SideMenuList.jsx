@@ -5,14 +5,14 @@ import "../styles/sideMenu.css";
 
 function SideMenu({ id, icon, title, onClick }) {
   return (
-    <div id={id} className="sideMenu d-flex" onClick={onClick}>
+    <div id={id} className="sideMenu" onClick={onClick}>
       <img src={icon}></img>
       <span className="heading_2">{title}</span>
     </div>
   );
 }
 
-function SideMenuList({ nickName = "" }) {
+function SideMenuList({ nickName = "떠오르는 신예 작가" }) {
   const menuObj = [
     {
       idx: "1",
@@ -22,7 +22,7 @@ function SideMenuList({ nickName = "" }) {
     },
     {
       idx: "2",
-      path: "/newPlot",
+      path: "/prompt",
       icon: "/menu_2.png",
       title: "새로운 글 작성하기",
     },
@@ -53,34 +53,19 @@ function SideMenuList({ nickName = "" }) {
 
   return (
     <div id="sideMenuContainer" className="bg_gray_2">
-      {/* 우측 메뉴 구현 시 사용
-       <Routes>
-       {menuObj.map((d) => (
-        <Route
-        key={d.idx}  
-        path={d.path}
-        element={<SideMenu icon={d.icon} title={d.title}></SideMenu>}
-        ></Route>
-        ))}
-        </Routes> */}
       <div id="sideMenuList">
-        <nav>
-          {
-            /* 우측 구현 전까지 사용 */
-            menuObj.map((d) => (
-              <NavLink key={d.idx} to={d.path}>
-                <SideMenu
-                  id={`menu_${d.idx}`}
-                  icon={d.icon}
-                  title={d.title}
-                  onClick={() => {
-                    activeMenu(d.idx, d.path);
-                  }}
-                ></SideMenu>
-              </NavLink>
-            ))
-          }
-        </nav>
+        {menuObj.map((d) => (
+          <NavLink key={d.idx} to={d.path} className="sideMenu">
+            <SideMenu
+              id={`menu_${d.idx}`}
+              icon={d.icon}
+              title={d.title}
+              onClick={() => {
+                activeMenu(d.idx, d.path);
+              }}
+            ></SideMenu>
+          </NavLink>
+        ))}
       </div>
       <div className="w-100 d-flex" style={{ justifyContent: "center" }}>
         <Profile name={nickName}></Profile>

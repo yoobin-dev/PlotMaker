@@ -24,12 +24,10 @@ function PlotHeader({ plotCount = 0 }) {
       id: "filterPrivate",
       text: "비공개",
     },
-    /*고도화로 변경
-    {
-      id: "filterFolder",
-      text: "폴더",
-    },
-    */
+    // {
+    //   id: "filterFolder",
+    //   text: "폴더",
+    // },
   ];
 
   // 검색 및 정렬 버튼 배열

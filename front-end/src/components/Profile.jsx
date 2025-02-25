@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "../styles/profile.css";
-function Profile({ img = "", name = "" }) {
+function Profile({ img = "", name }) {
   return (
     <div id="userProfile" className="bg_gray_4">
       <div id="profileImg">

@@ -65,7 +65,9 @@ function PlotPromptButton({ icon, name, caption, color }) {
   }
 
   return (
-    <div className={`promptBtn  ${bgColor}`}>
+    <div
+      className={`promptBtn ${bgColor} ${name === "내보내기" ? "dashed" : ""}`}
+    >
       <div className="promptBtnIcon"></div>
       <div className={`promptBtnText ${ftColor}`}>
         <div className="promptBtnName heading_1">{name}</div>

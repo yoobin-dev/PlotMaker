@@ -18,12 +18,15 @@
   margin-top: -50px;
 }
 
+#plotPromptResultContents {
+  text-align: justify;
+}
+
 #promptBtnBox {
   display: flex;
   gap: 16px;
   margin-top: 48px;
   margin-bottom: 20px;
-
   width: calc(100% - 30px);
 }
 
@@ -39,4 +42,8 @@
   border-radius: 12px;
   border: 1px solid var(--Grayscale-BLACK, #000);
   cursor: pointer;
+}
+
+.promptBtn.dashed {
+  border: 1.5px dashed var(--Grayscale-BLACK, #222);
 }
