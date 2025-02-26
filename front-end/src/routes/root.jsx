@@ -33,16 +33,10 @@ const root = createBrowserRouter([
         path: "/prompt",
         element: <PlotPromptPage />,
       },
-    ],
-  },
-  {
-    path: "",
-    element: <Layout />,
-    children: [
       {
         path: "/plotList",
-        element: <PlotListPage />,
-      },
+        element: <PlotListPage />
+      }
     ],
   },
 ]);

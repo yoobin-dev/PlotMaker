@@ -10,7 +10,8 @@
   </settings>
 
   <typeAliases>
-    <typeAlias alias="TempDTO"        type="org.ohap.plotmaker.temporary.TempDTO" />
-    <typeAlias alias="UserDTO"        type="org.ohap.plotmaker.login.UserDTO" />
+    <typeAlias alias="TempDTO"          type="org.ohap.plotmaker.temporary.TempDTO" />
+    <typeAlias alias="UserDTO"          type="org.ohap.plotmaker.login.UserDTO" />
+    <typeAlias alias="PlotResponseDTO"  type="org.ohap.plotmaker.plot.PlotResponseDTO" />
   </typeAliases>
 </configuration>
