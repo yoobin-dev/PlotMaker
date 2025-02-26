@@ -1,4 +1,4 @@
-import "../styles/common.css";
+import "../../styles/common.css";
 
 const GuestModal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
