@@ -36,7 +36,11 @@ const NaverCallbackPage = () => {
 
   }, [navigate, location.key])
 
-  return null;
+  return (
+    <div className="w-100 h-100 bg_black">
+      ???
+    </div>
+  )
 }
 
 export default NaverCallbackPage;
