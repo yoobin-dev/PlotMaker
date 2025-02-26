@@ -1,12 +1,16 @@
-.sideMenu {
-  max-width: 288px;
-  padding: 8px 36px;
+a.sideMenu {
   border-radius: 12px;
-  cursor: pointer;
+  color: #f9f9f9;
+}
+div.sideMenu {
+  display: flex;
+  padding: 10px 36px;
+  border-radius: 12px;
+  color: #f9f9f9;
 }
 
 .active,
-.sideMenu:hover {
+div.sideMenu:hover {
   background-color: #f9f9f9;
   color: #222;
 }

@@ -10,9 +10,11 @@
   width: 100%;
   background-color: #eee;
   border-radius: 12px;
+  overflow: hidden;
 }
 #progressBar {
   height: 48px;
+  width: calc(100% - 16px);
   display: flex;
   align-items: center;
   padding-left: 16px;
@@ -46,7 +48,7 @@
 }
 
 .promptColor {
-  width: 10px;
+  min-width: 10px;
   height: 10px;
   border-radius: 50%;
 }
@@ -66,7 +68,7 @@
 
 .promptTitleSkip {
   height: 32px;
-  width: 95px;
+  min-width: 69px;
   background: url("skip.png") no-repeat 95% 50%/68px auto;
   cursor: pointer;
 }
@@ -94,6 +96,13 @@
   appearance: none;
   background: url("arrow_down.png") no-repeat 95% 50%/25px auto;
   cursor: pointer;
+}
+.promptInputSelect textarea {
+  width: 100%;
+  height: calc(100% - 24px);
+
+  border-radius: 8px;
+  padding: 12px 20px;
 }
 
 .promptInputOptionBox {
@@ -156,4 +165,12 @@ select::-ms-expand {
   height: 48px;
   padding: 16px 44px;
   cursor: pointer;
+}
+#makePlotBtn.activation {
+  background: linear-gradient(
+    90deg,
+    #a487ee 5%,
+    rgba(150, 200, 223, 0.82) 90.67%,
+    var(--Grayscale-Gr_E, #eee) 100%
+  );
 }

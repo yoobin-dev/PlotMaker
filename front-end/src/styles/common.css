@@ -120,6 +120,9 @@ q:after {
   content: "";
   content: none;
 }
+a {
+  text-decoration: none;
+}
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -568,4 +571,28 @@ body * {
   height: 100%;
   top: 0;
   left: 0;
+}
+
+/* Select2 Css */
+.css-13cymwt-control {
+  padding: 10px;
+}
+.css-t3ipsp-control:hover {
+  padding: 10px;
+  border-color: #222 !important;
+}
+.css-t3ipsp-control {
+  padding: 10px;
+  border-color: #222 !important;
+  box-shadow: 0 0 0 1px #222 !important;
+}
+/* heading_1 */
+.css-1dimb5e-singleValue {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: -0.0195 em;
+}
+
+.css-1nmdiq5-menu * {
 }
