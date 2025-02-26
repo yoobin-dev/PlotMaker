@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import NaverLoginButton from "../components/NaverLoginButton";
-import GuestModal from "../components/GuestModal";
+import GuestModal from "../components/modal/GuestModal";
 
 import "../styles/loginPage.css";
 import "../styles/common.css";
@@ -19,8 +19,7 @@ const LoginPage = () => {
           onClose={() => setIsGuestModalOpen(false)}
           onConfirm={() => {
             setIsGuestModalOpen(false);
-            console.log("비회원이용");
-            navigate("/prompt");
+            navigate("/login/nickname");
           }}
         />
         <div id="loginTop">

@@ -574,27 +574,44 @@ body * {
 }
 
 /* Select2 Css */
-.css-13cymwt-control {
-  padding: 10px;
+.react-select-container {
+  border-radius: 8px;
 }
-.css-t3ipsp-control:hover {
+.react-select__control {
+  width: 100%;
   padding: 10px;
+  border-radius: 8px;
   border-color: #222 !important;
+  box-shadow: 0 0 0.5px #222 !important;
 }
-.css-t3ipsp-control {
-  padding: 10px;
-  border-color: #222 !important;
-  box-shadow: 0 0 0 1px #222 !important;
-}
-/* heading_1 */
-.css-1dimb5e-singleValue {
+.react-select__value-container {
   font-size: 22px;
   font-weight: 600;
   line-height: 30px;
   letter-spacing: -0.0195 em;
 }
 
-.css-1nmdiq5-menu * {
+.react-select__indicator-separator {
+  display: none;
+}
+
+.react-select__menu-list {
+  border: 0.5px solid #222;
+}
+
+.react-select__option {
+  padding: 10px !important;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 30px;
+  letter-spacing: -0.0195 em;
+}
+.react-select__option:hover,
+.react-select__option--is-focused {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+.react-select__option--is-selected {
+  background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .fade-container {

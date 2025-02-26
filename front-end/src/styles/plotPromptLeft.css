@@ -97,12 +97,12 @@
   background: url("arrow_down.png") no-repeat 95% 50%/25px auto;
   cursor: pointer;
 }
-.promptInputSelect textarea {
-  width: 100%;
+.promptTextarea {
+  min-width: calc(100% - 40px);
   height: calc(100% - 24px);
-
   border-radius: 8px;
   padding: 12px 20px;
+  margin-top: 5px;
 }
 
 .promptInputOptionBox {

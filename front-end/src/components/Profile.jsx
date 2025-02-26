@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "../styles/profile.css";
-function Profile({ img = "", name }) {
+function Profile({ img = "", nickname }) {
   return (
     <div id="userProfile" className="bg_gray_4">
       <div id="profileImg">
@@ -10,7 +10,7 @@ function Profile({ img = "", name }) {
         ></img>
       </div>
       <div id="profileText">
-        <span className="headline2 ft_white">{name}</span> <br />
+        <span className="headline2 ft_white">{nickname}</span> <br />
         <span className="body_2 ft_gray_b">Lv.1 플롯 메이커</span>
       </div>
     </div>
