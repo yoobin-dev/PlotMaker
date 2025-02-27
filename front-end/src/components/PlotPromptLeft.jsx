@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import { getPromptCode } from "../api/plotApi";
 
+// 직접 입력할 프롬프트
+const textPrpt = ["speech", "tellType", "custom"];
+
 function PlotPromptProgressBar({ percent }) {
   return (
     <div id="progressBox">
@@ -25,27 +28,39 @@ function PlotPromptSelect({
   handleSelect,
   handleTextarea,
 }) {
-  const options = [
-    { id: plotDetail.id, value: "chocolate", label: "Chocolate" },
-    { id: plotDetail.id, value: "strawberry", label: "Strawberry" },
-    { id: plotDetail.id, value: "vanilla", label: "Vanilla" },
-    { id: plotDetail.id, value: "직접 입력", label: "+ 직접 입력" },
-  ];
   const prptValue = promptValues[plotDetail.id];
+  let options = [];
+  // select2에 사용하기 위한 options 객체로 만들기
+  for (let opt of plotDetail.contents) {
+    let optObj = {
+      id: plotDetail.id,
+      value: opt.value,
+      label: opt.label,
+    };
+    options.push(optObj);
+  }
+
   return (
     <>
       <Select
         id={`select_${plotDetail.id}`}
         values={prptValue}
         options={options}
-        className="react-select-container"
+        className={`react-select-container ${
+          // 문체, 성격, 고유 설정은 select없이 textarea 노출
+          textPrpt.includes(plotDetail.id) ? "d-none" : ""
+        }`}
         classNamePrefix="react-select"
         placeholder="(분류)"
         onChange={(e) => handleSelect(e)}
       ></Select>
+
       <textarea
         id={`textarea_${plotDetail.id}`}
-        className="promptTextarea heading_1 d-none"
+        className={`promptTextarea heading_1 ${
+          // 문체, 성격, 고유 설정은 select없이 textarea 노출
+          textPrpt.includes(plotDetail.id) ? "" : "d-none"
+        }`}
         value={prptValue}
         maxLength={100}
         onChange={(e) => {
@@ -54,9 +69,12 @@ function PlotPromptSelect({
       ></textarea>
       <div
         id={`textarea_${plotDetail.id}_length`}
-        className="lengthGuide label_1 ft_gray_94"
+        className={`lengthGuide label_1 ft_gray_94 ${
+          // 문체, 성격, 고유 설정은 select없이 textarea 노출
+          textPrpt.includes(plotDetail.id) ? "" : "d-none"
+        }`}
       >
-        {plotDetail.id.length}/100자
+        {prptValue.length}/100자
       </div>
     </>
   );
@@ -138,54 +156,35 @@ function PlotPromptLeft() {
       title: "작품의 분류",
       extra: "를 선택해주세요.",
       color: "bg_gray_6",
-      contents: ["시놉시스(줄거리)", "소설", "대본", "시나리오"],
+      contents: [],
     },
     {
       id: "genre",
       title: "작품의 장르",
       extra: "를 선택하거나 입력해주세요.",
       color: "bg_blue_m",
-      contents: [
-        "로맨스",
-        "스릴러",
-        "판타지",
-        "무협",
-        "범죄/추리",
-        "+ 직접 입력",
-      ],
+      contents: [],
     },
     {
-      id: "timeFrame",
+      id: "timeframe",
       title: "작품의 시대, 배경",
       extra: "을 선택하거나 입력해주세요.",
       color: "bg_yellow_m",
-      contents: [
-        "SF",
-        "아포칼립스",
-        "현대 오피스",
-        "서양중세물",
-        "+ 직접 입력",
-      ],
+      contents: [],
     },
     {
       id: "theme",
       title: "작품의 테마",
       extra: "를 선택하거나 입력해주세요.",
       color: "bg_red_m",
-      contents: ["일상", "회귀", "빙의", "환생", "시간여행", "+ 직접 입력"],
+      contents: [],
     },
     {
       id: "speech",
       title: "작품의 문체",
       extra: "를 선택하거나 입력해주세요.",
       color: "bg_green_m",
-      contents: [
-        "1인칭",
-        "3인칭",
-        "유행어를 많이 사용",
-        "고어를 많이 사용",
-        "+ 직접 입력",
-      ],
+      contents: [{ value: "999", label: "+ 직접 입력" }],
     },
     {
       id: "character",
@@ -193,16 +192,16 @@ function PlotPromptLeft() {
       extra: "를 선택해주세요.",
       color: "bg_blue_m",
       contents: [
-        "1명",
-        "2명",
-        "3명",
-        "4명",
-        "5명",
-        "6명",
-        "7명",
-        "8명",
-        "9명",
-        "10명",
+        { value: 1, label: "1명" },
+        { value: 2, label: "2명" },
+        { value: 3, label: "3명" },
+        { value: 4, label: "4명" },
+        { value: 5, label: "5명" },
+        { value: 6, label: "6명" },
+        { value: 7, label: "7명" },
+        { value: 8, label: "8명" },
+        { value: 9, label: "9명" },
+        { value: 10, label: "10명" },
       ],
     },
     {
@@ -210,14 +209,14 @@ function PlotPromptLeft() {
       title: "플롯메이커의 성격",
       extra: "을 선택하거나 입력해주세요.",
       color: "bg_mustard_m",
-      contents: ["트렌디한", "창의적인", "안정적인"],
+      contents: [{ value: "999", label: "+ 직접 입력" }],
     },
     {
       id: "custom",
       title: "작품 고유한 설정",
       extra: "을 추가할 수 있어요.",
       color: "bg_mint_m",
-      contents: [],
+      contents: [{ value: "999", label: "+ 직접 입력" }],
     },
   ];
 
@@ -226,13 +225,14 @@ function PlotPromptLeft() {
   // 선택된 프롬프트 기록 (프로그레스바)
   const [selectedPrompt, setSelectedPrompt] = useState([]);
   const [promptValues, setPromptValues] = useState({
-    category: undefined,
-    genre: undefined,
-    timeFrame: undefined,
-    theme: undefined,
-    speech: undefined,
-    character: undefined,
-    tellType: undefined,
+    category: "",
+    genre: "",
+    timeframe: "",
+    theme: "",
+    speech: "",
+    character: "",
+    tellType: "",
+    custom: "",
   });
 
   // 스킵 버튼 클릭
@@ -257,7 +257,7 @@ function PlotPromptLeft() {
         // 스킵 시 옵션 선택한걸로 간주함 (고유설정 제외)
         if (
           percent <= 100 &&
-          !selectedPrompt.includes(btnId) &&
+          !promptInput.classList.contains("selected") &&
           btnId !== "custom"
         ) {
           setPercent((prev) => Math.min(prev + 100 / 7, 100));
@@ -265,7 +265,7 @@ function PlotPromptLeft() {
           // 불변성을 유지하여 promptValues 업데이트
           setPromptValues((prev) => ({
             ...prev,
-            [btnId]: prev[btnId] + "_skip",
+            [btnId]: prev[btnId],
           }));
         }
       }
@@ -276,12 +276,11 @@ function PlotPromptLeft() {
         writeBtn.classList.add("d-none");
         writeTitle.classList.remove("d-none");
         skipTitle.classList.add("d-none");
-        // 스킵 취소 시 옵션 선택 안한 걸로 간주함
+        // 스킵 취소 시 선택한 옵션 유지함
         if (
           percent <= 100 &&
-          selectedPrompt.includes(btnId) &&
-          !promptInput.classList.contains("selected") &&
-          btnId !== "custom"
+          btnId !== "custom" &&
+          !promptInput.classList.contains("selected")
         ) {
           setPercent((prev) => Math.min(prev - 100 / 7, 100));
           setSelectedPrompt((prev) => prev.filter((prpt) => prpt !== btnId));
@@ -296,38 +295,81 @@ function PlotPromptLeft() {
 
   // 셀렉트 클릭
   const handleSelect = (e) => {
+    console.log(e);
     const target = document.getElementById(`prompt_${e.id}`);
     const text = document.getElementById(`textarea_${e.id}`);
-    // 선택한 프롬프트 체크하기(프로그레스바)
-    target.classList.add("selected");
+    const length = document.getElementById(`textarea_${e.id}_length`);
+
     // 직접 입력 선택한 경우 textarea 노출
-    if (e.value === "직접 입력") {
+    if (e.value.includes("999")) {
       text.classList.remove("d-none");
+      length.classList.remove("d-none");
     } else {
       text.classList.add("d-none");
+      length.classList.add("d-none");
     }
 
-    // 커스텀을 제외한
-    if (e.id !== "custom") {
+    // 직접 입력하는 프롬프트를 제외한
+    if (!textPrpt.includes(e.value)) {
       // 선택되어 있지 않은 경우 진행상태 증가
-      if (percent <= 100 && !selectedPrompt.includes(e.id)) {
+      console.log(target.classList);
+      console.log(!target.classList.contains("selected"));
+      if (percent <= 100 && !target.classList.contains("selected")) {
         setPercent((prev) => Math.min(prev + 100 / 7, 100));
       }
-      setSelectedPrompt((prev) => [...prev, e.id]);
-      setPromptValues((prev) => ({ ...prev, [e.id]: e.value }));
+      setSelectedPrompt((prev) => [...prev, e.value]);
+      setPromptValues((prev) => ({ ...prev, [e.value]: e.value }));
     }
+
+    // 선택한 프롬프트 체크하기(프로그레스바)
+    target.classList.add("selected");
   };
 
   // 사용자 직접 입력 이벤트
   const handleTextarea = (e) => {
+    const id = e.target.id.replace("textarea_", ""); // ID에서 "textarea_" 제거하여 키 값 추출
+    const value = e.target.value;
+
+    setPromptValues((prev) => ({
+      ...prev, // 기존 데이터 유지
+      [id]: value, // 특정 id 값만 업데이트
+    }));
+
+    // 글자 수 업데이트
     const length = document.getElementById(`${e.target.id}_length`);
-    setPromptValues(e.target.value);
-    length.innerText = e.target.value.length + "/100자";
+    if (length) {
+      length.innerText = `${value.length}/100자`;
+    }
+
+    if (textPrpt.includes(id)) {
+      // 직접 입력 시 진행률 증가/감소
+      const prevLength = promptValues[id] ? promptValues[id].length : 0;
+      const newLength = value.length;
+
+      if (prevLength === 0 && newLength > 0) {
+        // 처음 입력 시 진행률 증가
+        setPercent((prev) => Math.min(prev + 100 / 7, 100));
+      } else if (prevLength > 0 && newLength === 0) {
+        // 내용 삭제 시 진행률 감소
+        setPercent((prev) => Math.max(prev - 100 / 7, 0));
+      }
+    }
   };
 
   useEffect(() => {
     const getCodeData = async () => {
-      const data = await getPromptCode("1");
+      const prptdata = await getPromptCode("1");
+
+      setPromptDetail((prevState) =>
+        prevState.map((e) => ({
+          ...e,
+          contents: e.contents.concat(
+            prptdata
+              .filter((d) => d.codeType === e.id)
+              .map((d) => ({ value: d.code, label: d.codeName }))
+          ),
+        }))
+      );
     };
 
     getCodeData();

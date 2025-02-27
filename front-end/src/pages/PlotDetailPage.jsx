@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import PlotHeader from "../components/PlotHeader";
-import PlotCardList from "../components/PlotCardList";
+import PlotDetailList from "../components/PlotDetailList";
 import { getPlotList } from "../api/plotApi";
-import "../styles/plotListPage.css";
+import "../styles/plotDetailPage.css";
 import LocaleContext from "../context/LocaleContext";
 
-function PlotListPage() {
+function PlotDetailPage() {
   const [plotCount, setPlotCount] = useState(0);
   const [plotList, setPlotList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,17 +26,23 @@ function PlotListPage() {
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <div id="plotListPage">
-          <div id="plotListPageTop">
-            <PlotHeader plotCount={plotCount} isDetail={false}></PlotHeader>
+        <div id="plotDetailPage">
+          <div id="plotDetailLeft">
+            <div id="plotDetailLeftTop">
+              <PlotHeader plotCount={plotCount} isDetail={true}></PlotHeader>
+            </div>
+            <div
+              id="plotDetailLeftBottom"
+              className="no_scroll h-100 bg_gray_f9"
+            >
+              <PlotDetailList></PlotDetailList>
+            </div>
           </div>
-          <div id="plotListPageBottom" className="no_scroll h-100 bg_gray_f9">
-            <PlotCardList></PlotCardList>
-          </div>
+          <div id="plotDetailRight"></div>
         </div>
       )}
     </LocaleContext.Provider>
   );
 }
 
-export default PlotListPage;
+export default PlotDetailPage;

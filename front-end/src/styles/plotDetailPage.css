@@ -1,0 +1,49 @@
+#plotDetailPage {
+  width: calc(100% - 288px);
+}
+#plotDetailLeft {
+  width: 420px;
+  height: calc(100% - 68px);
+  background-color: #f9f9f9;
+  padding: 68px 10px 0 10px;
+  overflow: auto;
+  position: relative;
+}
+#plotHeader {
+  position: fixed;
+}
+#plotDetailRight {
+}
+
+.plotDetailCard {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 12px 2px 12px;
+  border-bottom: 0.5px solid var(--Grayscale-Gr_B, #bbb);
+}
+.plotDetailCard .header {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.plotDetailCard .body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plotDetailCard .tag {
+  width: max-content;
+  background-color: #eee;
+  padding: 4px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.plotDetailCard .title,
+.plotDetailCard .contents {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
