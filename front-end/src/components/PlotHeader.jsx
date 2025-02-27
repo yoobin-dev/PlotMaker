@@ -4,7 +4,7 @@ import "../styles/plotHeader.css";
 import LocaleContext from "../context/LocaleContext";
 
 // 플롯 헤더
-function PlotHeader({ plotCount = 0 }) {
+function PlotHeader({ plotCount = 0, isDetail }) {
   const [count, setCount] = useState(0);
   const [sortingOn, setSortingOn] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -87,18 +87,24 @@ function PlotHeader({ plotCount = 0 }) {
   };
 
   // 검색 버튼 (비)활성화 시키기
-  const activeSearchToggle = (evt, isActive) => {
+  const activeSearchToggle = (evt, isActive, isDetail) => {
     evt.preventDefault();
     const searchInput = document.querySelector("#search_input");
     const searchClose = document.querySelector("#search_close");
     const sortBtn = document.querySelector("#sorting");
     const container = evt.currentTarget.closest(".search-wrapper");
+    const filterButtons = document.getElementById("filterButton");
 
     if (isActive) {
       if (!container.classList.contains("active")) {
         container.classList.add("active");
         // 정렬 버튼 숨기기
         sortBtn.classList.add("d-none");
+        // 상세일 경우 필터(전체, 공개, 비공개) 숨기기
+        console.log(isDetail);
+        if (isDetail) {
+          filterButtons.classList.add("d-none");
+        }
         // placeholer 추가
         setTimeout(() => {
           searchInput.placeholder = "제목";
@@ -110,9 +116,13 @@ function PlotHeader({ plotCount = 0 }) {
     } else {
       container.classList.remove("active");
       container.querySelector(".search-input").value = ""; // 입력값 초기화
-      // 정렬 버튼 보여주기
       setTimeout(() => {
+        // 정렬 버튼 보여주기
         sortBtn.classList.remove("d-none");
+        // 상세일 경우 필터(전체, 공개, 비공개) 보여주기
+        if (isDetail) {
+          filterButtons.classList.remove("d-none");
+        }
       }, 300);
       // placeholer 제거
       searchInput.placeholder = "";
@@ -167,6 +177,7 @@ function PlotHeader({ plotCount = 0 }) {
             id={"searching"}
             plotList={plotList}
             setPlotList={setPlotList}
+            isDetail={isDetail}
             activeSearchToggle={activeSearchToggle}
             getSearchKeyDown={getSearchKeyDown}
             onClick={clickCircleFilterButton}
@@ -208,6 +219,7 @@ function SearchFilterButton({
   keyword,
   getSearchKeyDown,
   activeSearchToggle,
+  isDetail,
 }) {
   return (
     <div className="search-wrapper">
@@ -220,7 +232,7 @@ function SearchFilterButton({
         ></input>
         <div
           className="search-icon"
-          onClick={(evt) => activeSearchToggle(evt, true)}
+          onClick={(evt) => activeSearchToggle(evt, true, isDetail)}
         >
           <img src="searching.png"></img>
         </div>
@@ -228,7 +240,7 @@ function SearchFilterButton({
       <span
         id="search_close"
         className="close headline_1 ft_black d-none"
-        onClick={(evt) => activeSearchToggle(evt, false)}
+        onClick={(evt) => activeSearchToggle(evt, false, isDetail)}
       >
         취소
       </span>

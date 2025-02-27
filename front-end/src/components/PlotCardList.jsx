@@ -3,10 +3,12 @@ import "../styles/plotCardList.css";
 import PlotTag from "./PlotTag";
 import { PlotCardTitleToggle } from "./ToggleMenu";
 import LocaleContext from "../context/LocaleContext"; // LocaleContext import
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 function PlotCardList() {
   const { plotList, setPlotList } = useContext(LocaleContext);
   const [toggleOn, setToggleOn] = useState(false);
+  const navigate = useNavigate();
 
   const tagArr = [
     {
@@ -78,6 +80,11 @@ function PlotCardList() {
     });
   };
 
+  // 상세로 이동하기
+  const goToDetail = () => {
+    navigate("/plotDetail");
+  };
+
   // plotList가 업데이트 될 때마다 드래그 기능 적용
   useEffect(() => {
     PlotCardTagBoxScroll();
@@ -95,6 +102,7 @@ function PlotCardList() {
           tags={tagArr}
           toggleOn={toggleOn}
           setToggleOn={setToggleOn}
+          goToDetail={goToDetail}
         ></PlotCard>
       ))}
       <PlotCardAdd></PlotCardAdd>
@@ -102,17 +110,30 @@ function PlotCardList() {
   );
 }
 
-function PlotCard({ info, id, title, contents, tags, toggleOn, setToggleOn }) {
+function PlotCard({
+  info,
+  id,
+  title,
+  contents,
+  tags,
+  toggleOn,
+  setToggleOn,
+  goToDetail,
+}) {
   return (
     <div className="plotCard">
       <div className="plotCardTitle">
-        <div className="title heading_1 ft_gray_4">{info.email}</div>
+        <div className="title heading_1 ft_gray_4" onClick={goToDetail}>
+          {info.email}
+        </div>
         <PlotCardTitleToggle
           id={info.id}
           title={info.email}
         ></PlotCardTitleToggle>
       </div>
-      <div className="plotCardContents body_1 ft_gray_2">{contents}</div>
+      <div className="plotCardContents body_1 ft_gray_2" onClick={goToDetail}>
+        {contents}
+      </div>
 
       <PlotCardTagBox tags={tags}></PlotCardTagBox>
 

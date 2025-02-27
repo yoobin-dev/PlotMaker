@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_SERVER } from "./apiSetting";
 
-const prefix = `${API_SERVER}/api/plot`;
+const prefix = `${API_SERVER}`;
 
 // 플롯 가져오기
 export const getPlotList = async () => {
@@ -21,14 +21,14 @@ export const getPlotList = async () => {
 
 export const getPromptCode = async (socialId) => {
   try {
-    const response = await axios.get(`${prefix}`, { socialId });
+    const response = await axios.get(`${prefix}/code`);
     if (response.data.success) {
       return response.data.data;
     } else {
       throw new Error(response.data.message);
     }
   } catch (error) {
-    console.error("네이버 로그인 실패: ", error);
+    console.error("프롬프트 코드 불러오기 실패 : ", error);
     throw error;
   }
 };
