@@ -48,7 +48,7 @@ function SideMenuList({ nickName = "떠오르는 신예 작가" }) {
 
   // 렌더 시 첫번째 메뉴 선택
   useEffect(() => {
-    activeMenu("1");
+    activeMenu("2");
   }, []);
 
   return (

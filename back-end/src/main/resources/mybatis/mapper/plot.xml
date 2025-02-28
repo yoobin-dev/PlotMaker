@@ -5,6 +5,16 @@
 
 <mapper namespace="org.ohap.plotmaker.mapper.PlotMapper">
 
+  <insert id="insertPromptMST" parameterType="PlotRequestDTO" useGeneratedKeys="true" keyProperty="promptSeq">
+    INSERT INTO TBL_PROMPT ( SOCIAL_ID, TYPE_CODE, GENRE_CODE, TIMEFRAME_CODE, THEME_CODE, SPEECH, CHARACTERS, TELL_TYPE, CUSTOM, TITLE )
+    VALUES ( #{socialId}, #{typeCode}, #{genreCode}, #{timeframeCode}, #{themeCode}, #{speech}, #{characters}, #{tellType}, #{custom}, #{title} )
+  </insert>
+
+  <insert id="insertPromptDTL" parameterType="PlotRequestDTO">
+    INSERT INTO TBL_PROMPT_DETAIL ( GENRE, TIMEFRAME, THEME, PROMPT_SEQ )
+    VALUES ( #{genre}, #{timeframe}, #{theme}, #{promptSeq} )
+  </insert>
+
   <select id="selectPlotListBySocialId" parameterType="String" resultType="PlotResponseDTO">
     SELECT PR.PROMPT_SEQ                   AS PROMPT_SEQ,
           PR.TYPE_CODE                     AS TYPE_CODE,
@@ -21,7 +31,7 @@
           END                              AS TIMEFRAME,
           PR.THEME_CODE                    AS THEME_CODE,
           CASE
-            WHEN PR.THEME_CODE = 'M999' THEN PRD.GENRE
+            WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
             ELSE C_M.CODE_NAME
           END                              AS THEME,
           PR.SPEECH                        AS SPEECH,
@@ -39,6 +49,42 @@
       LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
       LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
     WHERE PR.SOCIAL_ID = #{socialId}
+  </select>
+
+  <select id="selectPlotListByPromptSeq" parameterType="String" resultType="PlotResponseDTO">
+    SELECT PR.PROMPT_SEQ                   AS PROMPT_SEQ,
+          PR.TYPE_CODE                     AS TYPE_CODE,
+          C_T.CODE_NAME                    AS TYPE,
+          PR.GENRE_CODE                    AS GENRE_CODE,
+          CASE
+            WHEN PR.GENRE_CODE = 'G999' THEN PRD.GENRE
+            ELSE C_G.CODE_NAME
+          END                              AS GENRE,
+          PR.TIMEFRAME_CODE                AS TIMEFRAME_CODE,
+          CASE
+            WHEN PR.TIMEFRAME_CODE = 'F999' THEN PRD.TIMEFRAME
+            ELSE C_F.CODE_NAME
+          END                              AS TIMEFRAME,
+          PR.THEME_CODE                    AS THEME_CODE,
+          CASE
+            WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
+            ELSE C_M.CODE_NAME
+          END                              AS THEME,
+          PR.SPEECH                        AS SPEECH,
+          PR.CHARACTERS                    AS CHARACTERS,
+          PR.TELL_TYPE                     AS TELL_TYPE,
+          PR.CUSTOM                        AS CUSTOM,
+          PR.TITLE                         AS TITLE,
+          PL.PLOT_SEQ                      AS PLOT_SEQ,
+          PL.PLOT_CONTENT                  AS PLOT_CONTENT
+    FROM TBL_PROMPT PR
+      LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
+      LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
+      LEFT JOIN TBL_CODE C_F ON PR.TIMEFRAME_CODE = C_F.CODE
+      LEFT JOIN TBL_CODE C_M ON PR.THEME_CODE = C_M.CODE
+      LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
+      LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
+    WHERE PR.PROMPT_SEQ = #{promptSeq}
   </select>
 
 </mapper>
