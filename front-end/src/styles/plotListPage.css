@@ -15,4 +15,5 @@
   padding: 14px 11px;
   gap: 26px 24px;
   overflow: auto;
+  align-content: flex-start;
 }

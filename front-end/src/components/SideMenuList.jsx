@@ -16,15 +16,15 @@ function SideMenuList({ nickName = "떠오르는 신예 작가" }) {
   const menuObj = [
     {
       idx: "1",
-      path: "/plotList",
-      icon: "/menu_1.png",
-      title: "나의 작성글",
-    },
-    {
-      idx: "2",
       path: "/prompt",
       icon: "/menu_2.png",
       title: "새로운 글 작성하기",
+    },
+    {
+      idx: "2",
+      path: "/plotList",
+      icon: "/menu_1.png",
+      title: "나의 작성글",
     },
     {
       idx: "3",
@@ -48,7 +48,7 @@ function SideMenuList({ nickName = "떠오르는 신예 작가" }) {
 
   // 렌더 시 첫번째 메뉴 선택
   useEffect(() => {
-    activeMenu("2");
+    activeMenu("1");
   }, []);
 
   return (

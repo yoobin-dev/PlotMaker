@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import "../styles/toggleMenu.css";
+import { replace } from "../../node_modules/stylis/src/Utility";
 
 // 플롯 카드 리스트 햄버거
 export function PlotCardTitleToggle({ id, title }) {
   const [toggleOn, setToggleOn] = useState(false);
+  const [shareToggleOn, setShareToggleOn] = useState(false);
+  const [nameToggleOn, setNameToggleOn] = useState(false);
 
   const menuArr = [
     {
@@ -17,7 +20,7 @@ export function PlotCardTitleToggle({ id, title }) {
     //   text: "폴더에 저장",
     // },
     {
-      id: "edit_name",
+      id: "name",
       icon: "edit_name",
       text: "이름 바꾸기",
     },
@@ -37,6 +40,25 @@ export function PlotCardTitleToggle({ id, title }) {
     setToggleOn((prev) => !prev);
   };
 
+  // titleToggle 메뉴 클릭 시
+  const clickToggleItem = (e, id) => {
+    const titleTg = document.getElementsByClassName("titleToggle");
+
+    // titleToggle 숨기기
+    for (let t of titleTg) {
+      t.classList.add("d-none");
+    }
+
+    if (id === "share") {
+      setShareToggleOn(true);
+    } else if (id === "name") {
+      setNameToggleOn(true);
+    } else if (id === "delete") {
+      alert("삭제됨");
+      // 삭제하는 API
+    }
+  };
+
   useEffect(() => {
     // 메뉴 외부 클릭 시 메뉴 닫기
     const handleClickOutside = (event) => {
@@ -57,25 +79,28 @@ export function PlotCardTitleToggle({ id, title }) {
   }, [toggleOn]);
 
   return (
-    <div>
-      <div
-        id="plotCardTitleToggle"
-        className="plotCardTitleToggle"
-        onClick={() => toggleButtonClick()}
-      >
+    <div className="toggleBackground">
+      <div className="plotCardTitleToggle" onClick={() => toggleButtonClick()}>
         <img className="toggleElement" src="/burger.png"></img>
       </div>
       <div
         id={id}
-        className={`toggleMenuBox shadow_black_10 ${toggleOn ? "" : "d-none"}`}
+        className={`titleToggle toggleMenuBox shadow_black_10 ${
+          toggleOn ? "" : "d-none"
+        }`}
       >
         <div className="toggleMenuHeader d-flex ft_gray_5">
           <div className="toggleElement headline_1">{title}</div>
           <div className="toggleElement body_1">선택</div>
         </div>
         <div className="toggleMenuBody w-100">
-          {menuArr.map((d) => (
-            <div key={d.id} className="d-flex toggleMenuItem">
+          {menuArr.map((d, i) => (
+            <div
+              key={i}
+              id={d.id}
+              className="d-flex toggleMenuItem"
+              onClick={(e) => clickToggleItem(e, d.id)}
+            >
               <div className="toggleElement toggleIconBox">
                 <img
                   className="toggleElement toggleIcon"
@@ -85,70 +110,84 @@ export function PlotCardTitleToggle({ id, title }) {
               <span className="toggleElement body_1 ft_gray_5">{d.text}</span>
             </div>
           ))}
-          {/* <PlotCardShareToggle></PlotCardShareToggle> */}
         </div>
       </div>
+      <PlotCardShareToggle
+        id={id}
+        shareToggleOn={shareToggleOn}
+        setShareToggleOn={setShareToggleOn}
+      ></PlotCardShareToggle>
+      <PlotCardNameToggle
+        id={id}
+        nameToggleOn={nameToggleOn}
+        setNameToggleOn={setNameToggleOn}
+      ></PlotCardNameToggle>
     </div>
   );
 }
 
 // 플롯 카드 공개 비공개
-export function PlotCardNameToggle({ id }) {
-  const [toggleOn, setToggleOn] = useState(false);
-
+export function PlotCardShareToggle({ id, shareToggleOn, setShareToggleOn }) {
   const menuArr = [
     {
       id: "share",
-      icon: "",
       text: "공개",
     },
     {
       id: "unShare",
-      icon: "",
       text: "비공개",
     },
   ];
+  const handleSharePlot = (isShare) => {
+    const plotSeq = id.replace("burger_", "");
 
-  // 토글 이벤트
-  const toggleButtonClick = () => {
-    const toggles = document.getElementsByClassName("toggleMenuBox");
-    for (let t of toggles) {
-      t.classList.add("d-none");
+    if (isShare === "share") {
+      // 공개로 변경하는 API
+      alert("공개됨");
+    } else {
+      // 비공개로 변경하는 API
+      alert("비공개됨");
     }
-    setToggleOn((prev) => !prev);
+    setShareToggleOn(false);
   };
 
   useEffect(() => {
     // 메뉴 외부 클릭 시 메뉴 닫기
-    const handleClickOutside = (event) => {
+    const handleSubOutside = (event) => {
       if (
         !event.target.classList.contains("toggleMenuBox") &&
         !event.target.classList.contains("toggleMenuItem") &&
         !event.target.classList.contains("toggleElement")
       ) {
-        setToggleOn(false);
+        setShareToggleOn(false);
       }
     };
-    if (toggleOn) {
-      document.addEventListener("mousedown", handleClickOutside);
+    if (shareToggleOn) {
+      document.addEventListener("mousedown", handleSubOutside);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleSubOutside);
     };
-  }, [toggleOn]);
+  }, [shareToggleOn]);
 
   return (
     <div>
       <div
-        id={id}
-        className={`toggleMenuBox shadow_black_10 ${toggleOn ? "" : "d-none"}`}
+        id={`${id}_share`}
+        className={`toggleMenuBox shadow_black_10 ${
+          shareToggleOn ? "" : "d-none"
+        }`}
       >
-        <div className="toggleMenuHeader d-flex ft_gray_5">
+        <div className="subMenuHeader d-flex ft_gray_5">
           <div className="toggleElement heading_1">공개 설정</div>
         </div>
         <div className="toggleMenuBody w-100">
           {menuArr.map((d) => (
-            <div key={d.id} className="d-flex toggleMenuItem">
+            <div
+              key={d.id}
+              className="d-flex toggleMenuItem"
+              onClick={() => handleSharePlot(d.id)}
+            >
               <span className="toggleElement body_1 ft_gray_5">{d.text}</span>
             </div>
           ))}
@@ -157,53 +196,80 @@ export function PlotCardNameToggle({ id }) {
     </div>
   );
 }
-// 플롯 카드 이름 바꾸기
-export function PlotCardShareToggle({ id }) {
-  const [toggleOn, setToggleOn] = useState(false);
 
-  // 토글 이벤트
-  const toggleButtonClick = () => {
-    const toggles = document.getElementsByClassName("toggleMenuBox");
-    for (let t of toggles) {
-      t.classList.add("d-none");
-    }
-    setToggleOn((prev) => !prev);
+// 플롯 카드 이름 바꾸기
+export function PlotCardNameToggle({ id, nameToggleOn, setNameToggleOn }) {
+  const [nameLength, setNameLength] = useState(0);
+  const [newName, setNewName] = useState("");
+
+  const handleNamePlot = () => {
+    const plotSeq = id.replace("burger_", "");
+    console.log(plotSeq);
+    // 이름 변경하는 API
+    alert("변경됨");
+    setNameToggleOn(false);
+  };
+
+  // 새로운 이름 입력 시
+  const handleNewName = (e) => {
+    setNewName(e.target.value);
+    setNameLength(e.target.value.length);
   };
 
   useEffect(() => {
     // 메뉴 외부 클릭 시 메뉴 닫기
-    const handleClickOutside = (event) => {
+    const handleSubOutside = (event) => {
       if (
         !event.target.classList.contains("toggleMenuBox") &&
         !event.target.classList.contains("toggleMenuItem") &&
         !event.target.classList.contains("toggleElement")
       ) {
-        setToggleOn(false);
+        setNameToggleOn(false);
       }
     };
-    if (toggleOn) {
-      document.addEventListener("mousedown", handleClickOutside);
+    if (nameToggleOn) {
+      document.addEventListener("mousedown", handleSubOutside);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleSubOutside);
     };
-  }, [toggleOn]);
+  }, [nameToggleOn]);
 
   return (
     <div>
       <div
-        id={id}
-        className={`toggleMenuBox shadow_black_10 ${toggleOn ? "" : "d-none"}`}
+        id={`${id}_name`}
+        className={`toggleMenuBox shadow_black_10 ${
+          nameToggleOn ? "" : "d-none"
+        }`}
       >
-        <div className="toggleMenuHeader d-flex ft_gray_5">
-          <div className="toggleElement heading_1">공개 설정</div>
+        <div className="subMenuHeader d-flex ft_gray_5">
+          <div className="toggleElement heading_1">이름 바꾸기</div>
         </div>
         <div className="toggleMenuBody w-100">
-          {menuArr.map((d) => (
-            <div key={d.id} className="d-flex toggleMenuItem">
-              <span className="toggleElement body_1 ft_gray_5">{d.text}</span>
+          <div className="w-100 d-flex toggleElement">
+            <div className=" w-100 toggleElement">
+              <div className="toggleElement nameToggleBody">
+                <input
+                  value={newName}
+                  className="nameToggleInput toggleElement label_1 ft_black"
+                  onChange={(e) => handleNewName(e)}
+                  maxLength="50"
+                ></input>
+              </div>
+              <div className="nameToggleFooter toggleElement">
+                <span className="toggleElement caption_1 ft_gray_94">
+                  <span className="nameToggleLength">{nameLength}</span>/50
+                </span>
+                <button
+                  className="nameToggleButton toggleElement caption_1"
+                  onClick={handleNamePlot}
+                >
+                  변경
+                </button>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>

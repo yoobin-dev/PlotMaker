@@ -2,11 +2,12 @@ import "../styles/common.css";
 import "../styles/welcomePage.css";
 
 import Profile from "../components/Profile";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const WelcomePage = () => {
-  const nickname = "이거 언제 다 해";
+  const location = useLocation();
+  const nickname = location.state.nickname;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,11 +17,11 @@ const WelcomePage = () => {
       const children = welcome.querySelectorAll("*");
       welcome.classList.add("fade-out");
       children.forEach((child) => child.classList.add("fade-out"));
-    }, 1000);
+    }, 2000);
 
     setTimeout(() => {
       navigate("/prompt"); // 페이드아웃 후 페이지 이동
-    }, 1500); // 페이드아웃 시간 (2초) + 딜레이 포함
+    }, 3000);
   }, [navigate]);
 
   return (

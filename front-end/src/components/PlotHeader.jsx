@@ -5,8 +5,7 @@ import "../styles/plotHeader.css";
 import LocaleContext from "../context/LocaleContext";
 
 // 플롯 헤더
-function PlotHeader({ plotCount = 0, isDetail }) {
-  const [count, setCount] = useState(0);
+function PlotHeader({ isDetail }) {
   const [sortingOn, setSortingOn] = useState(false);
   const [keyword, setKeyword] = useState("");
   const { plotList, setPlotList } = useContext(LocaleContext);
@@ -164,7 +163,7 @@ function PlotHeader({ plotCount = 0, isDetail }) {
       <div className="d-flex">
         <div className="display_2">내가 작성한 플롯</div>
         <div id="plotCount" className="display_2 ft_white bg_gray_2">
-          {count}
+          {plotList.length}
         </div>
         <div
           id="backToList"
@@ -278,13 +277,13 @@ function SortingMenu({ sortingOn, plotList, setPlotList }) {
   const sortingArr = [
     {
       id: 1,
-      sort: "created",
+      sort: "createAt",
       order: "asc",
       text: "작성일 최신 순 정렬",
     },
     {
       id: 2,
-      sort: "created",
+      sort: "createAt",
       order: "desc",
       text: "작성일 오래된 순 정렬",
     },
@@ -326,12 +325,15 @@ function SortingMenu({ sortingOn, plotList, setPlotList }) {
     const target = document.getElementById(id);
     target.classList.add("bg_gray_c");
 
+    console.log(sort);
+    console.log(order);
+
     const sortedList = plotList.sort((a, b) => {
       // 오름차순일 경우 b - a, 내림차순일 경우 a - b로 비교
       if (order === "asc") {
-        return a.id - b.id;
+        return a[sort] - b[sort];
       } else {
-        return b.id - a.id;
+        return b[sort] - a[sort];
       }
     });
     setPlotList((prev) => [...sortedList]);
@@ -346,11 +348,11 @@ function SortingMenu({ sortingOn, plotList, setPlotList }) {
         작품 정렬
       </div>
       <div id="sortMenuBody" className="w-100">
-        {sortingArr.map((d) => (
+        {sortingArr.map((d, i) => (
           <div
-            key={d.id}
+            key={i}
             id={`${d.sort}_${d.order}`}
-            className="d-flex sortMenuItem"
+            className={`d-flex sortMenuItem ${d.id == 1 ? "bg_gray_c" : ""}`}
             onClick={() => {
               sortPlotList(d.sort, d.order, `${d.sort}_${d.order}`);
             }}

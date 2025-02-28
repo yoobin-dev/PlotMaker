@@ -19,6 +19,7 @@
   height: 208px;
   border-radius: 8px;
   cursor: pointer;
+  padding: 4px 0;
 }
 .plotCardAdd > img {
   width: 104px;
