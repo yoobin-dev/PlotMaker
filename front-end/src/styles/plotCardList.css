@@ -41,6 +41,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   word-break: break-all;
+  cursor: pointer;
 }
 .plotCardTitleToggle {
   cursor: pointer;
@@ -56,6 +57,7 @@
   align-self: stretch;
   padding: 14px 12px 2px 12px;
   height: 60px;
+  cursor: pointer;
   /* 초과된 텍스트 ellipsis 처리 */
   display: -webkit-box; /* Orientation of the box */
   -webkit-box-orient: vertical; /* Vertical orientation */

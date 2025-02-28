@@ -1,6 +1,7 @@
 .plotTag {
   display: flex;
   height: 28px;
+  width: fit-content;
   padding: 4px 8px;
   align-items: center;
   border-radius: 999px;

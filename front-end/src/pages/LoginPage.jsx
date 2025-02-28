@@ -19,7 +19,7 @@ const LoginPage = () => {
           onClose={() => setIsGuestModalOpen(false)}
           onConfirm={() => {
             setIsGuestModalOpen(false);
-            navigate("/login/nickname");
+            navigate("/prompt");
           }}
         />
         <div id="loginTop">

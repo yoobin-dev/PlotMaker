@@ -1,25 +1,28 @@
 import "../styles/plotPromptRight.css";
 import "../styles/common.css";
+import "../styles/plotButton.css";
+import PlotButton from "./PlotButton";
+
 function PlotPromptRight() {
   return (
     <div id="plotPromptRightBox">
       <PlotPromptResult></PlotPromptResult>
       <div id="promptBtnBox">
-        <PlotPromptButton
+        <PlotButton
           name="다시쓰기"
           caption="작품을 다시 써볼래요."
           color="black"
-        ></PlotPromptButton>
-        <PlotPromptButton
+        ></PlotButton>
+        <PlotButton
           name="저장하기"
           caption="플롯메이커에 저장하기"
           color="white"
-        ></PlotPromptButton>
-        <PlotPromptButton
+        ></PlotButton>
+        <PlotButton
           name="내보내기"
           caption="작품을 파일로 저장하기"
           color="white"
-        ></PlotPromptButton>
+        ></PlotButton>
       </div>
     </div>
   );
@@ -47,31 +50,6 @@ function PlotPromptResult() {
         내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
         내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
         내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-      </div>
-    </div>
-  );
-}
-
-function PlotPromptButton({ icon, name, caption, color }) {
-  let bgColor = "";
-  let ftColor = "";
-
-  if (color === "white") {
-    bgColor = "bg_white";
-    ftColor = "ft_black";
-  } else {
-    bgColor = "bg_gray_1";
-    ftColor = "ft_white";
-  }
-
-  return (
-    <div
-      className={`promptBtn ${bgColor} ${name === "내보내기" ? "dashed" : ""}`}
-    >
-      <div className="promptBtnIcon"></div>
-      <div className={`promptBtnText ${ftColor}`}>
-        <div className="promptBtnName heading_1">{name}</div>
-        <div className="promptBtnCaption body_1">{caption}</div>
       </div>
     </div>
   );

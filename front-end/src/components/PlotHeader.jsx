@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/common.css";
 import "../styles/plotHeader.css";
 import LocaleContext from "../context/LocaleContext";
@@ -9,6 +10,7 @@ function PlotHeader({ plotCount = 0, isDetail }) {
   const [sortingOn, setSortingOn] = useState(false);
   const [keyword, setKeyword] = useState("");
   const { plotList, setPlotList } = useContext(LocaleContext);
+  const navigate = useNavigate();
 
   // 필터 버튼 배열
   const filterButtonArr = [
@@ -130,6 +132,10 @@ function PlotHeader({ plotCount = 0, isDetail }) {
     }
   };
 
+  const backToList = () => {
+    navigate("/plotList");
+  };
+
   // 렌더시 전체 필터 선택
   useEffect(() => {
     // 전체 필터 선택
@@ -154,11 +160,18 @@ function PlotHeader({ plotCount = 0, isDetail }) {
   }, [sortingOn]);
 
   return (
-    <div id="plotHeader">
+    <div id="plotHeader" className={`${isDetail ? "onDetail" : ""}`}>
       <div className="d-flex">
         <div className="display_2">내가 작성한 플롯</div>
         <div id="plotCount" className="display_2 ft_white bg_gray_2">
           {count}
+        </div>
+        <div
+          id="backToList"
+          className={`${isDetail ? "" : "d-none"}`}
+          onClick={backToList}
+        >
+          <img src="/arrow_back.png"></img>
         </div>
       </div>
       <div id="plotFilter">
