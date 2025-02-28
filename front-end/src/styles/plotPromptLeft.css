@@ -157,7 +157,8 @@ select::-ms-expand {
 }
 
 #makePlotBtn {
-  background-color: #333;
+  background-color: #eee;
+  color: #bbb;
   border-radius: 999px;
   display: flex;
   justify-content: center;
@@ -165,7 +166,7 @@ select::-ms-expand {
   width: 192px;
   height: 48px;
   padding: 16px 44px;
-  cursor: pointer;
+  cursor: not-allowed;
 }
 #makePlotBtn.activation {
   background: linear-gradient(
@@ -173,5 +174,7 @@ select::-ms-expand {
     #a487ee 5%,
     rgba(150, 200, 223, 0.82) 90.67%,
     var(--Grayscale-Gr_E, #eee) 100%
-  );
+  ) !important;
+  color: white !important;
+  cursor: pointer !important;
 }

@@ -18,3 +18,8 @@
 .promptBtn.dashed {
   border: 1.5px dashed var(--Grayscale-BLACK, #222);
 }
+
+.promptBtnIcon img {
+  width: 62px;
+  height: 62px;
+}

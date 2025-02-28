@@ -12,16 +12,19 @@ function PlotPromptRight() {
           name="다시쓰기"
           caption="작품을 다시 써볼래요."
           color="black"
+          icon="recycle_white.png"
         ></PlotButton>
         <PlotButton
           name="저장하기"
           caption="플롯메이커에 저장하기"
           color="white"
+          icon="save_black.svg"
         ></PlotButton>
         <PlotButton
           name="내보내기"
           caption="작품을 파일로 저장하기"
           color="white"
+          icon="export_medium.svg"
         ></PlotButton>
       </div>
     </div>
@@ -30,28 +33,23 @@ function PlotPromptRight() {
 
 function PlotPromptResult() {
   return (
-    <div
-      id="plotPromptResult"
-      className="shadow_gray_30 body_main ft_black h-100 no_scroll"
-    >
-      <div id="plotPromptResultTitle">소설 01</div>
-      <div id="plotPromptResultContents">
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-        내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
+    <>
+      <div
+        id="plotPromptResult"
+        className="shadow_gray_30 body_main ft_black h-100 no_scroll"
+      >
+        <div id="plotPromptResultTitle">소설 01</div>
+        <div id="plotPromptResultContents">
+          내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
+          내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
+          내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.니다.내용입니다.내용입니다.내용입니다.
+        </div>
       </div>
-    </div>
+      <div id="plotPromptLoadingAccess">
+        <img src="loading_prompt_acess.gif"></img>
+        <img src="loading_prompt_waiting.gif" className="d-none"></img>
+      </div>
+    </>
   );
 }
 

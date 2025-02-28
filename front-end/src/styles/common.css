@@ -383,6 +383,12 @@ body * {
 .ft_gray_f9 {
   color: #f9f9f9;
 }
+.ft_gray_m {
+  color: #666666;
+}
+.ft_gray_s {
+  color: #eeeeee;
+}
 .ft_blue_m {
   color: #72a5bd;
 }
