@@ -20,7 +20,7 @@ public class PlotResponseDTO {
   private String timeframe;
   private String themeCode;
   private String theme;
-  private String speech;
+  private String event;
   private int characters;
   private String tellType;
   private String custom;

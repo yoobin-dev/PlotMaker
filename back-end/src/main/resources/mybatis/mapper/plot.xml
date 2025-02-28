@@ -6,8 +6,8 @@
 <mapper namespace="org.ohap.plotmaker.mapper.PlotMapper">
 
   <insert id="insertPromptMST" parameterType="PlotRequestDTO" useGeneratedKeys="true" keyProperty="promptSeq">
-    INSERT INTO TBL_PROMPT ( SOCIAL_ID, TYPE_CODE, GENRE_CODE, TIMEFRAME_CODE, THEME_CODE, SPEECH, CHARACTERS, TELL_TYPE, CUSTOM, TITLE )
-    VALUES ( #{socialId}, #{typeCode}, #{genreCode}, #{timeframeCode}, #{themeCode}, #{speech}, #{characters}, #{tellType}, #{custom}, #{title} )
+    INSERT INTO TBL_PROMPT ( SOCIAL_ID, TYPE_CODE, GENRE_CODE, TIMEFRAME_CODE, THEME_CODE, EVENT, CHARACTERS, TELL_TYPE, CUSTOM, TITLE )
+    VALUES ( #{socialId}, #{typeCode}, #{genreCode}, #{timeframeCode}, #{themeCode}, #{event}, #{characters}, #{tellType}, #{custom}, #{title} )
   </insert>
 
   <insert id="insertPromptDTL" parameterType="PlotRequestDTO">
@@ -34,7 +34,7 @@
             WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
             ELSE C_M.CODE_NAME
           END                              AS THEME,
-          PR.SPEECH                        AS SPEECH,
+          PR.EVENT                        AS EVENT,
           PR.CHARACTERS                    AS CHARACTERS,
           PR.TELL_TYPE                     AS TELL_TYPE,
           PR.CUSTOM                        AS CUSTOM,
@@ -70,7 +70,7 @@
             WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
             ELSE C_M.CODE_NAME
           END                              AS THEME,
-          PR.SPEECH                        AS SPEECH,
+          PR.EVENT                        AS EVENT,
           PR.CHARACTERS                    AS CHARACTERS,
           PR.TELL_TYPE                     AS TELL_TYPE,
           PR.CUSTOM                        AS CUSTOM,

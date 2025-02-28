@@ -22,8 +22,8 @@ public class PlotRequestDTO {
   private String timeframe;
   private String themeCode;
   private String theme;
-  private String speech;
-  private int characters;
+  private String event;
+  // private int characters;
   private String tellType;
   private String custom;
   private String title;
