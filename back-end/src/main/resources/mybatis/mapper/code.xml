@@ -10,4 +10,10 @@
     FROM TBL_CODE
   </select>
 
+  <select id="selectCodeNameByCode" parameterType="String" resultType="String">
+    SELECT CODE_NAME
+    FROM TBL_CODE
+    WHERE CODE = #{code}
+  </select>
+
 </mapper>

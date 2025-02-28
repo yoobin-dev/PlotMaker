@@ -1,5 +1,9 @@
 package org.ohap.plotmaker.plot;
 
+import java.sql.Timestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,9 +31,12 @@ public class PlotResponseDTO {
   private String title;
   private long plotSeq;
   private String plotContent;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+  private Timestamp createAt;
 
   @Builder.Default private int view = 0;
   @Builder.Default private int like = 1;
+  @Builder.Default private int comment = 3;
   @Builder.Default private boolean isPublic = false;
 
 }

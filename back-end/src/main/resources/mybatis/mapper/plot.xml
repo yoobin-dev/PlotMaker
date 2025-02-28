@@ -6,8 +6,8 @@
 <mapper namespace="org.ohap.plotmaker.mapper.PlotMapper">
 
   <insert id="insertPromptMST" parameterType="PlotRequestDTO" useGeneratedKeys="true" keyProperty="promptSeq">
-    INSERT INTO TBL_PROMPT ( SOCIAL_ID, TYPE_CODE, GENRE_CODE, TIMEFRAME_CODE, THEME_CODE, EVENT, CHARACTERS, TELL_TYPE, CUSTOM, TITLE )
-    VALUES ( #{socialId}, #{typeCode}, #{genreCode}, #{timeframeCode}, #{themeCode}, #{event}, #{characters}, #{tellType}, #{custom}, #{title} )
+    INSERT INTO TBL_PROMPT ( SOCIAL_ID, TYPE_CODE, GENRE_CODE, TIMEFRAME_CODE, THEME_CODE, EVENT, TELL_TYPE, CUSTOM )
+    VALUES ( #{socialId}, #{typeCode}, #{genreCode}, #{timeframeCode}, #{themeCode}, #{event}, #{tellType}, #{custom} )
   </insert>
 
   <insert id="insertPromptDTL" parameterType="PlotRequestDTO">
@@ -40,7 +40,8 @@
           PR.CUSTOM                        AS CUSTOM,
           PR.TITLE                         AS TITLE,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
-          PL.PLOT_CONTENT                  AS PLOT_CONTENT
+          PL.PLOT_CONTENT                  AS PLOT_CONTENT,
+          PR.CREATE_AT                     AS CREATE_AT
     FROM TBL_PROMPT PR
       LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
       LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
@@ -51,7 +52,7 @@
     WHERE PR.SOCIAL_ID = #{socialId}
   </select>
 
-  <select id="selectPlotListByPromptSeq" parameterType="String" resultType="PlotResponseDTO">
+  <select id="selectPlotByPromptSeq" parameterType="Long" resultType="PlotResponseDTO">
     SELECT PR.PROMPT_SEQ                   AS PROMPT_SEQ,
           PR.TYPE_CODE                     AS TYPE_CODE,
           C_T.CODE_NAME                    AS TYPE,
@@ -76,7 +77,8 @@
           PR.CUSTOM                        AS CUSTOM,
           PR.TITLE                         AS TITLE,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
-          PL.PLOT_CONTENT                  AS PLOT_CONTENT
+          PL.PLOT_CONTENT                  AS PLOT_CONTENT,
+          PR.CREATE_AT                     AS CREATE_AT
     FROM TBL_PROMPT PR
       LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
       LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
@@ -86,5 +88,10 @@
       LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
     WHERE PR.PROMPT_SEQ = #{promptSeq}
   </select>
+
+  <insert id="insertPlotResult" parameterType="PlotDTO" useGeneratedKeys="true" keyProperty="plotSeq">
+    INSERT INTO TBL_PLOT ( PLOT_CONTENT, PROMPT_SEQ, CREATE_AT )
+    VALUES ( #{plotContent}, #{promptSeq}, NOW() )
+  </insert>
 
 </mapper>

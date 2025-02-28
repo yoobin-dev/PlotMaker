@@ -84,19 +84,15 @@ public class LoginServiceImpl implements LoginService {
   @Transactional
   public UserDTO insertOrUpdateUser(String accessToken){
     UserDTO userInfo = getUserInfo(accessToken);
-    log.debug("userInfo: " + userInfo);
     if(userInfo == null){
       throw new RuntimeException();
     }
-    log.debug(userInfo.getSocialId());
     UserDTO existingUser = loginMapper.findUserBySocialId(userInfo.getSocialId());
     if(existingUser != null){
-      log.debug(userInfo.getSocialId());
       loginMapper.updateLastLogin(userInfo.getSocialId());
       userInfo = existingUser;
       return userInfo;
     } else {
-      log.fatal("새로운 USER");
       loginMapper.insertUser(userInfo);
       return userInfo;
     }
