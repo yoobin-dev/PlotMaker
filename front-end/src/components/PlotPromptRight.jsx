@@ -45,9 +45,14 @@ function PlotPromptResult() {
           내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.니다.내용입니다.내용입니다.내용입니다.
         </div>
       </div>
-      <div id="plotPromptLoadingAccess">
-        <img src="loading_prompt_acess.gif"></img>
-        <img src="loading_prompt_waiting.gif" className="d-none"></img>
+      <div id="plotPromptLoadingAccess" className="">
+        <img src="loading_prompt_acess.gif" className="access"></img>
+      </div>
+      <div id="plotPromptLoadingWaiting" className="d-none">
+        <img src="loading_prompt_waiting.gif"></img>
+        <span className="title_3 ft_black">
+          플롯 메이커가 내용을 채우는 중...
+        </span>
       </div>
     </>
   );

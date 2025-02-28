@@ -511,6 +511,12 @@ body * {
 .bg_blue_m {
   background-color: #72a5bd;
 }
+.bg_gray_s {
+  background-color: #eeeeee;
+}
+.bg_gray_m {
+  background-color: #666666;
+}
 .bg_blue_s {
   background-color: #ecf6fd;
 }

@@ -35,3 +35,8 @@
   align-items: center;
   cursor: pointer;
 }
+#btnConfirm.disabled {
+  background-color: #888;
+  color: #555;
+  cursor: not-allowed;
+}

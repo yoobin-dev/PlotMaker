@@ -52,6 +52,11 @@ function PlotCardList() {
     navigate("/plotDetail");
   };
 
+  // 작성으로 이동하기
+  const goToWrite = () => {
+    navigate("/prompt");
+  };
+
   // plotList가 업데이트 될 때마다 드래그 기능 적용
   useEffect(() => {
     PlotCardTagBoxScroll();
@@ -61,7 +66,7 @@ function PlotCardList() {
     <>
       {plotList.map((d, i) => (
         <PlotCard
-          key={d.plotSeq}
+          key={i}
           info={d}
           id={d.plotSeq}
           title={d.title}
@@ -71,7 +76,7 @@ function PlotCardList() {
           goToDetail={goToDetail}
         ></PlotCard>
       ))}
-      <PlotCardAdd></PlotCardAdd>
+      <PlotCardAdd goToWrite={goToWrite}></PlotCardAdd>
     </>
   );
 }
@@ -85,8 +90,6 @@ function PlotCard({
   setToggleOn,
   goToDetail,
 }) {
-  console.log(info);
-
   const tags = [
     {
       color: "gray",
@@ -119,14 +122,14 @@ function PlotCard({
   ];
 
   return (
-    <div className="plotCard">
+    <div id={`card_${info.plotSeq}`} className="plotCard">
       <div className="plotCardTitle">
         <div className="title heading_1 ft_gray_4" onClick={goToDetail}>
-          {info.email}
+          {info.title}
         </div>
         <PlotCardTitleToggle
-          id={info.id}
-          title={info.email}
+          id={`burger_${info.plotSeq}`}
+          title={info.title}
         ></PlotCardTitleToggle>
       </div>
       <div className="plotCardContents body_1 ft_gray_2" onClick={goToDetail}>
@@ -136,10 +139,10 @@ function PlotCard({
       <PlotCardTagBox tags={tags}></PlotCardTagBox>
 
       <PlotCardFooter
-        view={info.id * 23}
-        like={info.id * 34}
-        comment={info.id * 3}
-        createdDt={`${info.postId * 20}분 전`}
+        view={info.view * 1}
+        like={info.like * 1}
+        comment={info.comment * 1}
+        createAt={info.createAt}
       ></PlotCardFooter>
     </div>
   );
@@ -155,15 +158,15 @@ function PlotCardTagBox({ tags }) {
   );
 }
 
-function PlotCardAdd() {
+function PlotCardAdd({ goToWrite }) {
   return (
-    <div className="plotCardAdd bg_gray_5 shadow_gray_30">
+    <div className="plotCardAdd bg_gray_5 shadow_gray_30" onClick={goToWrite}>
       <img src="plus_square.svg"></img>
     </div>
   );
 }
 
-function PlotCardFooter({ view, like, comment, createdDt }) {
+function PlotCardFooter({ view, like, comment, createAt }) {
   return (
     <div className="plotCardFooter caption_2 ft_gray_94">
       <div className="plotCardFooterCount">
@@ -181,7 +184,7 @@ function PlotCardFooter({ view, like, comment, createdDt }) {
         </div>
       </div>
       <div className="plotCardFooterTime">
-        <div>{createdDt}</div>
+        <div>{createAt}</div>
       </div>
     </div>
   );
