@@ -29,21 +29,3 @@
   margin-bottom: 20px;
   width: calc(100% - 30px);
 }
-
-.promptBtn {
-  display: flex;
-  width: 33%;
-  height: 92px;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  flex-shrink: 0;
-
-  border-radius: 12px;
-  border: 1px solid var(--Grayscale-BLACK, #000);
-  cursor: pointer;
-}
-
-.promptBtn.dashed {
-  border: 1.5px dashed var(--Grayscale-BLACK, #222);
-}

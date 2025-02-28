@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import "../styles/plotDetailList.css";
+import "../styles/common.css";
 import LocaleContext from "../context/LocaleContext"; // LocaleContext import
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -12,11 +13,11 @@ function PlotDetailList() {
   }, []);
 
   return (
-    <>
+    <div id="plotDetailList" className="no_scroll">
       {plotList.map((d, i) => (
         <PlotDetailCard key={i} info={d} id={i}></PlotDetailCard>
       ))}
-    </>
+    </div>
   );
 }
 

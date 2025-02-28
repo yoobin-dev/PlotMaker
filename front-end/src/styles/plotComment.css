@@ -1,0 +1,51 @@
+#commentCount {
+  margin-left: 8px;
+}
+
+#commentList {
+  margin-bottom: 33px;
+}
+.plotCommentBox {
+  border-bottom: 1px solid #555;
+  padding: 14px 0;
+}
+.commentfooter {
+  display: flex;
+  gap: 5px;
+}
+.commentDelete {
+  border-radius: 4px;
+  width: 19px;
+  height: 19px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.commentDelete img {
+  width: 11px;
+  height: 11px;
+}
+#commmentLength {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#commentTextArea {
+  border-radius: 8px;
+  border: 1px solid var(--Grayscale-BLACK, #000);
+  resize: vertical;
+  width: calc(99% - 13px);
+  min-height: 60px;
+  padding: 10px;
+}
+#commentButton {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+#commentButton button {
+  border-radius: 9px;
+  background: var(--Grayscale-Gr_3, #333);
+  color: white;
+  padding: 8px 8.5px;
+}

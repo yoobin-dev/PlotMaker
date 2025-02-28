@@ -1,15 +1,3 @@
-#plotDetailPage {
-  width: calc(100% - 288px);
-}
-#plotDetailLeft {
-  width: 420px;
-  height: 100%;
-  background-color: #f9f9f9;
-  padding: 68px 10px;
-}
-#plotDetailRight {
-  width: 420px;
-  height: 100%;
-  background-color: #666;
-  padding: 68px 0;
+#plotDetailList {
+  padding-top: 210px;
 }

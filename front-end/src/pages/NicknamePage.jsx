@@ -5,6 +5,7 @@ import { postSetNickname } from "../api/user";
 import "../styles/common.css";
 import "../styles/NicknamePage.css";
 import { useNavigate } from "react-router-dom";
+import { length } from "../../node_modules/stylis/src/Tokenizer";
 
 const NicknamePage = () => {
   const navigate = useNavigate();
@@ -12,7 +13,10 @@ const NicknamePage = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   const handleInput = (e) => {
-    setNickname(e.target.value);
+    const length = e.target.value.length;
+    if (length < 11) {
+      setNickname(e.target.value);
+    }
   };
 
   const handleConfirm = async () => {
@@ -40,10 +44,11 @@ const NicknamePage = () => {
         <input
           id="nicknameInput"
           value={nickname}
-          className="headline_2"
+          className="display_2"
           maxLength={10}
           autoComplete="off"
-          onInput={handleInput}
+          onChange={handleInput}
+          placeholder="최대 10자"
         ></input>
       </div>
       <div id="btnConfirm" className="title_3 ft_white" onClick={handleConfirm}>
