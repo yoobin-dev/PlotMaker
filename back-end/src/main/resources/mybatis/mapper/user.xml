@@ -12,7 +12,7 @@
   </select>
   
   <select id="isNicknameDupl" parameterType="String" resultType="int">
-    SELECT COUNT(NICKNAME)
+    SELECT COUNT(SOCIAL_ID)
     FROM TBL_USER
     WHERE NICKNAME = #{nickname}
   </select>

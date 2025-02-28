@@ -24,7 +24,7 @@ public class UserController {
     @RequestParam("nickname") String nickname
     ){
     if(userService.isNicknameDupl(nickname)){
-      // 예외처리 : 닉네임 중복
+      throw new IllegalArgumentException("중복된 닉네임입니다.");
     }
     UserDTO userInfo = userService.setNickname(socialId, nickname);
     ApiResponse<UserDTO> response = ApiResponse.<UserDTO>builder().isSuccess(true).data(userInfo).build();

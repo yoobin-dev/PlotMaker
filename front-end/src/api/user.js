@@ -8,12 +8,14 @@ export const postSetNickname = async (socialId = "naver", nickname) => {
     const response = await axios.post(`${prefix}/${socialId}/nickname`, null, {
       params: { nickname },
     });
-    if (response.data.success) {
-      return response.data.data;
-    } else {
-      throw new Error(response.data.message);
-    }
+    return response.data;
+    // if (response.data.success) {
+    //   return response.data.data;
+    // } else {
+    //   throw new Error(response.data.message);
+    // }
   } catch (error) {
     console.error("닉네임 변경 실패: ", error);
+    return error;
   }
 };
