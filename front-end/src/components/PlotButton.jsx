@@ -16,7 +16,9 @@ function PlotButton({ icon, name, caption, color, isDetail }) {
         isDetail ? "bigSize" : ""
       }`}
     >
-      <div className="promptBtnIcon"></div>
+      <div className="promptBtnIcon">
+        <img src={icon}></img>
+      </div>
       <div className={`promptBtnText ${ftColor}`}>
         <div className="promptBtnName heading_1">{name}</div>
         <div className="promptBtnCaption body_1">{caption}</div>

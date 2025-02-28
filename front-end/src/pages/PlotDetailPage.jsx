@@ -75,12 +75,14 @@ function PlotDetailPage() {
                 name="이어쓰기"
                 caption="플롯메이커와 계속해서 작품을 이어나갈 수 있어요."
                 isDetail={true}
+                icon="Relay_large_white.svg"
               ></PlotButton>
               <PlotButton
                 name="내보내기"
                 caption=".txt 확장자로 작품을 저장할 수 있어요."
                 color="white"
                 isDetail={true}
+                icon="export_large.svg"
               ></PlotButton>
             </div>
             <PlotComment></PlotComment>
