@@ -27,6 +27,7 @@ public class PlotServiceImpl implements PlotService {
     } catch(Exception e){
       throw new RuntimeException("Prompt 입력 실패");
     }
+    
     log.info(plotMapper.selectPlotListByPromptSeq(request.getPromptSeq()));
     return plotMapper.selectPlotListByPromptSeq(request.getPromptSeq());
   }
