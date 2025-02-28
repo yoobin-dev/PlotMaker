@@ -32,7 +32,6 @@ public class PlotController {
   @PostMapping("/{socialId}")
   public ResponseEntity<ApiResponse<PlotResponseDTO>> makePlot(@PathVariable String socialId, @RequestBody PlotRequestDTO request){
     request.setSocialId(socialId);
-    // 수정사항: insert -> api -> response 까지 연결해야 함
     PlotResponseDTO plot = plotService.insertPrompt(request);
     ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
     return ResponseEntity.ok().body(response);

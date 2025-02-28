@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
 
+import org.ohap.plotmaker.plot.ClovaRequestDTO.Message;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,14 +35,6 @@ public class ClovaResponseDTO {
         private String stopReason;
         private long seed;
         private List<AiFilter> aiFilter;
-    }
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Message {
-        private String role;
-        private String content;
     }
 
     @Data

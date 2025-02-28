@@ -9,5 +9,6 @@ import org.ohap.plotmaker.code.CodeDTO;
 public interface CodeMapper {
   
   public List<CodeDTO> selectCodeList();
+  public String selectCodeNameByCode(String code);
 
 }
