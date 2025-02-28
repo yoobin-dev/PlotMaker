@@ -25,13 +25,13 @@ const NicknamePage = () => {
       return;
     }
 
-    try {
-      // 로그인 백단 구현 시 주석 해제
-      // const userData = await postSetNickname(userInfo.socialId, nickname);
-      // localStorage.setItem("userInfo", JSON.stringify(userData));
+    const response = await postSetNickname(userInfo.socialId, nickname);
+    if(response.success){
+      localStorage.setItem("userInfo", JSON.stringify(response.data));
       navigate("/welcome");
-    } catch (error) {
-      console.error("error", error);
+    } else {
+      // 수정사항: 중복닉네임 모달 
+      console.log('err:', response.response.data.message);
     }
   };
 
