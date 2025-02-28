@@ -47,6 +47,7 @@ function PlotPromptResult() {
       </div>
       <div id="plotPromptLoadingAccess">
         <img src="loading_prompt_acess.gif"></img>
+        <img src="loading_prompt_waiting.gif" className="d-none"></img>
       </div>
     </>
   );

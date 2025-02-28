@@ -10,39 +10,6 @@ function PlotCardList() {
   const [toggleOn, setToggleOn] = useState(false);
   const navigate = useNavigate();
 
-  const tagArr = [
-    {
-      id: 1,
-      color: "blue",
-      name: "극본",
-    },
-    {
-      id: 2,
-      color: "yellow",
-      name: "판타지",
-    },
-    {
-      id: 3,
-      color: "green",
-      name: "회귀물",
-    },
-    {
-      id: 4,
-      color: "red",
-      name: "분량, 전개",
-    },
-    {
-      id: 5,
-      color: "purple",
-      name: "등장인물",
-    },
-    {
-      id: 6,
-      color: "mint",
-      name: "허겁지겁",
-    },
-  ];
-
   // 태그박스 스크롤 기능
   const PlotCardTagBoxScroll = () => {
     const tagBoxs = document.querySelectorAll(".plotCardTagBox");
@@ -94,12 +61,11 @@ function PlotCardList() {
     <>
       {plotList.map((d, i) => (
         <PlotCard
-          key={i}
+          key={d.plotSeq}
           info={d}
-          id={i}
-          title={d.email}
-          contents={d.body}
-          tags={tagArr}
+          id={d.plotSeq}
+          title={d.title}
+          contents={d.plotContent}
           toggleOn={toggleOn}
           setToggleOn={setToggleOn}
           goToDetail={goToDetail}
@@ -115,11 +81,43 @@ function PlotCard({
   id,
   title,
   contents,
-  tags,
   toggleOn,
   setToggleOn,
   goToDetail,
 }) {
+  console.log(info);
+
+  const tags = [
+    {
+      color: "gray",
+      name: info.type,
+    },
+    {
+      color: "blue",
+      name: info.genre,
+    },
+    {
+      color: "yellow",
+      name: info.timeframe,
+    },
+    {
+      color: "red",
+      name: info.theme,
+    },
+    {
+      color: "green",
+      name: info.event,
+    },
+    {
+      color: "mustard",
+      name: info.tellType,
+    },
+    {
+      color: "mint",
+      name: info.custom,
+    },
+  ];
+
   return (
     <div className="plotCard">
       <div className="plotCardTitle">
@@ -150,8 +148,8 @@ function PlotCard({
 function PlotCardTagBox({ tags }) {
   return (
     <div className="plotCardTagBox no_scroll">
-      {tags.map((d) => (
-        <PlotTag key={d.id} name={d.name} color={d.color}></PlotTag>
+      {tags.map((d, i) => (
+        <PlotTag key={i} name={d.name} color={d.color}></PlotTag>
       ))}
     </div>
   );

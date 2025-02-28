@@ -14,7 +14,7 @@ function PlotListPage() {
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
-      const data = await getPlotList();
+      const data = await getPlotList("1");
       setPlotList(data);
       setLoading(false);
     };
