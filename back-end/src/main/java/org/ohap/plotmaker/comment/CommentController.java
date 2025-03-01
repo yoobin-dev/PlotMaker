@@ -27,8 +27,10 @@ public class CommentController {
     return ResponseEntity.ok().body(response);
   }
 
-  @PostMapping("")
-  public ResponseEntity<ApiResponse<CommentDTO>> insertComment(@RequestBody CommentDTO comment){
+  @PostMapping("/{promptSeq}")
+  public ResponseEntity<ApiResponse<CommentDTO>> insertComment(@PathVariable String promptSeq,
+    @RequestBody CommentDTO comment){
+    comment.setPromptSeq(promptSeq);
     CommentDTO result = commentService.insertComment(comment);
     ApiResponse<CommentDTO> response = ApiResponse.<CommentDTO>builder().isSuccess(true).data(result).build();
     return ResponseEntity.ok().body(response);
