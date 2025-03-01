@@ -15,6 +15,7 @@
     <typeAlias alias="PlotResponseDTO"  type="org.ohap.plotmaker.plot.PlotResponseDTO" />
     <typeAlias alias="PlotRequestDTO"   type="org.ohap.plotmaker.plot.PlotRequestDTO" />
     <typeAlias alias="PlotDTO"          type="org.ohap.plotmaker.plot.PlotDTO" />
+    <typeAlias alias="PromptDTO"        type="org.ohap.plotmaker.prompt.PromptDTO" />
     <typeAlias alias="CodeDTO"          type="org.ohap.plotmaker.code.CodeDTO" />
   </typeAliases>
 </configuration>

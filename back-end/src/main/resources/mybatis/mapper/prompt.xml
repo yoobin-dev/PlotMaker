@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ohap.plotmaker.mapper.PromptMapper">
+
+  <select id="findPromptOnlyByPromptSeq" parameterType="String" resultType="PromptDTO">
+    SELECT PROMPT_SEQ, SOCIAL_ID, TITLE, IS_PUBLIC
+    FROM TBL_PROMPT
+    WHERE PROMPT_SEQ = #{promptSeq}
+  </select>
+
+  <update id="changePublicState" parameterType="PromptDTO">
+    UPDATE TBL_PROMPT
+    SET IS_PUBLIC = #{isPublic}
+    WHERE PROMPT_SEQ = #{promptSeq}
+  </update>
+
+  <update id="changeTitle" parameterType="PromptDTO">
+    UPDATE TBL_PROMPT
+    SET TITLE = #{title}
+    WHERE PROMPT_SEQ = #{promptSeq}
+  </update>
+
+  <delete id="deletePromptCascade" parameterType="String">
+    DELETE FROM TBL_PROMPT
+    WHERE PROMPT_SEQ = #{promptSeq}
+  </delete>
+
+</mapper>
