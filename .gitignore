@@ -5,6 +5,8 @@
 application.properties
 .env
 Dockerfile
+*.yml
+*.yaml
 
 ### Eclipse ###
 .metadata
