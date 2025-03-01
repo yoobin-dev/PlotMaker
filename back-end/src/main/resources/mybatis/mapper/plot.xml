@@ -50,6 +50,9 @@
       LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
       LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
     WHERE PR.SOCIAL_ID = #{socialId}
+    <if test="status != null and status != 'all'">
+      AND IS_PUBLIC = #{status}
+    </if>
   </select>
 
   <select id="selectPlotByPromptSeq" parameterType="Long" resultType="PlotResponseDTO">
