@@ -1,5 +1,7 @@
 package org.ohap.plotmaker.plot;
 
+import java.util.List;
+
 import org.ohap.plotmaker.mapper.CodeMapper;
 import org.ohap.plotmaker.mapper.PlotMapper;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,6 @@ public class PlotServiceImpl implements PlotService {
   private final ClovaService clovaService;
 
   /* 수정사항: 메소드 분리 !!!! */
-
   @Transactional
   @Override
   public PlotResponseDTO insertPrompt(PlotRequestDTO request){
@@ -69,4 +70,9 @@ public class PlotServiceImpl implements PlotService {
 
   }
 
+  @Override
+  public List<PlotResponseDTO> searchPlot(PlotSearchParamDTO param){
+    List<PlotResponseDTO> list = plotMapper.selectPlotBySearchParam(param);
+    return list;
+  }
 }
