@@ -153,7 +153,7 @@ function PlotPromptInputBox({
   );
 }
 
-function PlotPromptLeft() {
+function PlotPromptLeft({ setCreate }) {
   const promptDetailObj = [
     {
       id: "category",
@@ -348,11 +348,13 @@ function PlotPromptLeft() {
     }
   };
 
+  // 플롯 생성하기
   const insertPlotPrompt = (e) => {
     if (percent < 100) {
       return;
     } else {
       insertPlot("1", promptValues);
+      setCreate(true);
     }
   };
 

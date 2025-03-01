@@ -102,7 +102,6 @@ export function PlotCardTitleToggle({ id, title, setRefresh }) {
             <div
               key={i}
               id={d.id}
-              promptSeq={id.replace("burger_", "")}
               className="d-flex toggleMenuItem"
               onClick={(e) => clickToggleItem(e, d.id)}
             >
@@ -217,7 +216,6 @@ export function PlotCardNameToggle({ id, nameToggleOn, setNameToggleOn }) {
 
   const handleNamePlot = () => {
     const promptSeq = id.replace("burger_", "");
-    console.log(promptSeq);
     // 이름 변경하는 API
     updatePlotTitle(promptSeq, newName);
     setNameToggleOn(false);

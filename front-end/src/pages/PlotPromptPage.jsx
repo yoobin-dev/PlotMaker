@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 function PlotPromptPage() {
   const location = useLocation();
   const [fadeIn, setFadeIn] = useState(false);
+  const [create, setCreate] = useState(false);
 
   useEffect(() => {
     if (location.state?.fadeIn) {
@@ -17,8 +18,8 @@ function PlotPromptPage() {
 
   return (
     <div id="plotPromptPage" className={`${fadeIn ? "fade-in" : ""}`}>
-      <PlotPromptLeft></PlotPromptLeft>
-      <PlotPromptRight></PlotPromptRight>
+      <PlotPromptLeft setCreate={setCreate}></PlotPromptLeft>
+      <PlotPromptRight create={create}></PlotPromptRight>
     </div>
   );
 }
