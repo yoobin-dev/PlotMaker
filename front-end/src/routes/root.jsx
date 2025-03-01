@@ -12,7 +12,7 @@ import WelcomePage from "../pages/WelcomePage";
 
 const root = createBrowserRouter([
   {
-    path: "/login",
+    path: "/",
     element: <LoginPage />,
   },
   {

@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { postSetNickname } from "../api/user";
 import { useNavigate } from "react-router-dom";
 import "../styles/common.css";
-import "../styles/NicknamePage.css";
+import "../styles/nicknamePage.css";
 
 import DuplicateModal from "../components/modal/DuplicateModal";
 
