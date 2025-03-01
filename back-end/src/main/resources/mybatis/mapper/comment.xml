@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.ohap.plotmaker.mapper.CommentMapper">
+
+  <select id="selectCommentListByPromptSeq" parameterType="String" resultType="CommentDTO">
+    SELECT COMMENT_SEQ, COMMENT_CONTENT, CREATE_AT, MODIFY_AT, PROMPT_SEQ
+    FROM TBL_COMMENT
+    WHERE PROMPT_SEQ = #{promptSeq}
+  </select>
+
+  <select id="selectCommentListByCommentSeq" parameterType="String" resultType="CommentDTO">
+    SELECT COMMENT_SEQ, COMMENT_CONTENT, CREATE_AT, MODIFY_AT, PROMPT_SEQ
+    FROM TBL_COMMENT
+    WHERE COMMENT_SEQ = #{commentSeq}
+  </select>
+
+  <insert id="insertComment" parameterType="CommentDTO" useGeneratedKeys="true" keyProperty="commentSeq">
+    INSERT INTO TBL_COMMENT (COMMENT_CONTENT, CREATE_AT, PROMPT_SEQ )
+      VALUES ( #{commentContent}, #{createAt}, #{promptSeq} )
+  </insert>
+
+  <delete id="deleteComment" parameterType="String">
+    DELETE FROM TBL_COMMENT
+    WHERE COMMENT_SEQ = #{commentSeq}
+  </delete>
+
+</mapper>

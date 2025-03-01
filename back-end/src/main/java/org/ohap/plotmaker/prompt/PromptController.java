@@ -19,8 +19,9 @@ public class PromptController {
   private final PromptService promptService;
 
   @PostMapping("/{promptSeq}/status")
-  public ResponseEntity<ApiResponse<PlotResponseDTO>> changePublicState(@PathVariable String promptSeq){
-    PlotResponseDTO plot = promptService.changePublicState(promptSeq);
+  public ResponseEntity<ApiResponse<PlotResponseDTO>> changePublicState(@PathVariable String promptSeq,
+    @RequestBody String isPublic){
+    PlotResponseDTO plot = promptService.changePublicState(promptSeq, isPublic);
     ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
     return ResponseEntity.ok().body(response);
   }

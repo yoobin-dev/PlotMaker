@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import io.micrometer.common.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class PlotResponseDTO {
   
   private long promptSeq;
-  private String typeCode;
-  private String type;
+  private String categoryCode;
+  private String category;
   private String genreCode;
   private String genre;
   private String timeframeCode;
@@ -36,8 +35,9 @@ public class PlotResponseDTO {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
   private Timestamp createAt;
 
+  private int comment;
+
   @Builder.Default private int view = 0;
   @Builder.Default private int like = 1;
-  @Builder.Default private int comment = 3;
 
 }
