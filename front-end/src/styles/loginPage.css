@@ -1,4 +1,4 @@
-#loginBackground img {
+#loginBackground > img {
   position: absolute;
 }
 #login_1 {
