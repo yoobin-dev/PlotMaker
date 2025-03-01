@@ -9,29 +9,33 @@ import LocaleContext from "../context/LocaleContext";
 function PlotListPage() {
   const [plotCount, setPlotCount] = useState(0);
   const [plotList, setPlotList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 플롯 목록 가져오기
   useEffect(() => {
     const getData = async () => {
-      setLoading(true);
+      setIsLoading(true);
       const data = await getPlotList("1");
       setPlotList(data);
-      setLoading(false);
+      setIsLoading(false);
     };
     getData();
   }, []);
 
   return (
     <LocaleContext.Provider value={{ plotList, setPlotList }}>
-      <div id="plotListPage">
-        <div id="plotListPageTop">
-          <PlotHeader plotCount={plotCount} isDetail={false}></PlotHeader>
+      {isLoading ? (
+        <Loading></Loading>
+      ) : (
+        <div id="plotListPage">
+          <div id="plotListPageTop">
+            <PlotHeader plotCount={plotCount} isDetail={false}></PlotHeader>
+          </div>
+          <div id="plotListPageBottom" className="no_scroll h-100 bg_gray_f9">
+            <PlotCardList></PlotCardList>
+          </div>
         </div>
-        <div id="plotListPageBottom" className="no_scroll h-100 bg_gray_f9">
-          <PlotCardList></PlotCardList>
-        </div>
-      </div>
+      )}
     </LocaleContext.Provider>
   );
 }

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/common.css";
 import "../styles/plotHeader.css";
 import LocaleContext from "../context/LocaleContext";
+import { getPlotList } from "../api/plotApi";
 
 // 플롯 헤더
 function PlotHeader({ isDetail, plotCount }) {
@@ -45,6 +46,21 @@ function PlotHeader({ isDetail, plotCount }) {
     // 선택한 버튼 active 적용
     const target = document.getElementById(id);
     target.classList.add("active");
+
+    console.log(id);
+    // 필터에 따른 플롯 가져오기
+    const getData = async () => {
+      let isPublic = "All";
+
+      if (id.includes("Public")) {
+        isPublic = "Y";
+      } else if (id.includes("Private")) {
+        isPublic = "N";
+      }
+      const data = await getPlotList("1", isPublic);
+      setPlotList(data);
+    };
+    getData();
   };
 
   // 검색 및 정렬 버튼 선택

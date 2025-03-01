@@ -69,7 +69,7 @@ function PlotCardList() {
         <PlotCard
           key={i}
           info={d}
-          id={d.plotSeq}
+          id={d.promptSeq}
           title={d.title}
           contents={d.plotContent}
           toggleOn={toggleOn}
@@ -123,13 +123,13 @@ function PlotCard({
   ];
 
   return (
-    <div id={`card_${info.plotSeq}`} className="plotCard">
+    <div id={`card_${info.promptSeq}`} className="plotCard">
       <div className="plotCardTitle">
         <div className="title heading_1 ft_gray_4" onClick={goToDetail}>
           {info.title}
         </div>
         <PlotCardTitleToggle
-          id={`burger_${info.plotSeq}`}
+          id={`burger_${info.promptSeq}`}
           title={info.title}
         ></PlotCardTitleToggle>
       </div>

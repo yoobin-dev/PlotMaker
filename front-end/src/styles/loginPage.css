@@ -58,6 +58,17 @@
   border: 1px solid #762662;
   cursor: pointer;
 }
+#naverLogin:hover {
+  background: var(
+    --Gd_1,
+    linear-gradient(
+      228deg,
+      var(--Grayscale-WHITE, #fff) 0%,
+      #23bbc0 42.14%,
+      #b85e5e 101.68%
+    )
+  );
+}
 
 svg {
   padding-right: 4px;

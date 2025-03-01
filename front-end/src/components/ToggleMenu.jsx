@@ -139,11 +139,11 @@ export function PlotCardShareToggle({ id, shareToggleOn, setShareToggleOn }) {
     },
   ];
   const handleSharePlot = (isShare) => {
-    const plotSeq = id.replace("burger_", "");
+    const promptSeq = id.replace("burger_", "");
 
     if (isShare === "share") {
       // 공개로 변경하는 API
-      alert("공개됨");
+      updatePlotPublic(promptSeq);
     } else {
       // 비공개로 변경하는 API
       alert("비공개됨");
@@ -203,8 +203,8 @@ export function PlotCardNameToggle({ id, nameToggleOn, setNameToggleOn }) {
   const [newName, setNewName] = useState("");
 
   const handleNamePlot = () => {
-    const plotSeq = id.replace("burger_", "");
-    console.log(plotSeq);
+    const promptSeq = id.replace("burger_", "");
+    console.log(promptSeq);
     // 이름 변경하는 API
     alert("변경됨");
     setNameToggleOn(false);
