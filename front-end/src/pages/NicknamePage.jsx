@@ -28,7 +28,7 @@ const NicknamePage = () => {
     const response = await postSetNickname(userInfo.socialId, nickname);
     if (response.success) {
       localStorage.setItem("userInfo", JSON.stringify(response.data));
-      navigate("/welcome", { state: { nickname: nickname } });
+      navigate("/welcome");
     } else {
       setIsDupl(true);
       console.log("err:", response.response.data.message);

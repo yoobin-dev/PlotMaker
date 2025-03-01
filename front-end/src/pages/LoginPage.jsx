@@ -28,7 +28,6 @@ const LoginPage = () => {
             <div className="main_2">
               <span>당신을 위한 보조작가</span>
               <span className="main_3" style={{ color: "#FC3A89" }}>
-                {" "}
                 플롯 메이커
               </span>
             </div>

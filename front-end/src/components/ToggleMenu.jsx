@@ -19,6 +19,7 @@ export function PlotCardTitleToggle({
   const [toggleOn, setToggleOn] = useState(false);
   const [shareToggleOn, setShareToggleOn] = useState(false);
   const [nameToggleOn, setNameToggleOn] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   const menuArr = [
     {
@@ -77,7 +78,7 @@ export function PlotCardTitleToggle({
 
         const getData = async () => {
           const data = await getPlotList(
-            "1",
+            userInfo.socialId,
             isAll.includes("active") ? "All" : isPublic === "Y" ? "N" : "Y"
           );
 
@@ -151,6 +152,7 @@ export function PlotCardTitleToggle({
         setRefresh={setRefresh}
         plotList={plotList}
         setPlotList={setPlotList}
+        userInfo={userInfo}
       ></PlotCardShareToggle>
       <PlotCardNameToggle
         id={id}
@@ -159,6 +161,7 @@ export function PlotCardTitleToggle({
         setRefresh={setRefresh}
         plotList={plotList}
         setPlotList={setPlotList}
+        userInfo={userInfo}
       ></PlotCardNameToggle>
     </div>
   );
@@ -172,6 +175,7 @@ export function PlotCardShareToggle({
   setRefresh,
   plotList,
   setPlotList,
+  userInfo,
 }) {
   const menuArr = [
     {
@@ -193,7 +197,7 @@ export function PlotCardShareToggle({
 
     const getData = async () => {
       const data = await getPlotList(
-        "1",
+        userInfo.socialId,
         isAll.includes("active") ? "All" : isPublic === "Y" ? "N" : "Y"
       );
 
@@ -258,6 +262,7 @@ export function PlotCardNameToggle({
   setNameToggleOn,
   plotList,
   setPlotList,
+  userInfo,
 }) {
   const [nameLength, setNameLength] = useState(0);
   const [newName, setNewName] = useState("");
@@ -273,7 +278,7 @@ export function PlotCardNameToggle({
 
     const getData = async () => {
       const data = await getPlotList(
-        "1",
+        userInfo.socialId,
         isAll.includes("active") ? "All" : isPublic === "Y" ? "N" : "Y"
       );
 

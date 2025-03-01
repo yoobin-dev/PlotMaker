@@ -18,7 +18,7 @@ function SideMenu({ id, icon, title, onClick }) {
   );
 }
 
-function SideMenuList({ nickName = "무명 작가", handleClick }) {
+function SideMenuList({ nickName, handleClick }) {
   const [menuIdx, setMenuIdx] = useState("1");
   const navigate = useNavigate();
 

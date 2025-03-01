@@ -155,6 +155,7 @@ function PlotPromptInputBox({
 }
 
 function PlotPromptLeft({ setCreate, promptValues, setPromptValues }) {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const promptDetailObj = [
     {
       id: "category",
@@ -357,7 +358,7 @@ function PlotPromptLeft({ setCreate, promptValues, setPromptValues }) {
 
   useEffect(() => {
     const getCodeData = async () => {
-      const prptdata = await getPromptCode("1");
+      const prptdata = await getPromptCode(userInfo.socialId);
 
       setPromptDetail((prevState) =>
         prevState.map((e) => ({

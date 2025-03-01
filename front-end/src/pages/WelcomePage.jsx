@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const WelcomePage = () => {
   const location = useLocation();
-  const nickname = location.state.nickname;
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +20,7 @@ const WelcomePage = () => {
     }, 2000);
 
     setTimeout(() => {
+      // navigate("/prompt", { state: { nickname: nickname } }); // 페이드아웃 후 페이지 이동
       navigate("/prompt"); // 페이드아웃 후 페이지 이동
     }, 3000);
   }, [navigate]);
@@ -35,13 +36,13 @@ const WelcomePage = () => {
                 textUnderlineOffset: "10px",
               }}
             >
-              {nickname}
-            </span>{" "}
+              {userInfo.nickname}
+            </span>
             작가님
           </div>
           <div>환영해요!</div>
         </div>
-        <Profile nickname={nickname}></Profile>
+        <Profile nickname={userInfo.nickname}></Profile>
       </div>
       <div id="questMessage">
         <div className="headling_1 ft_gray_a">Lv.1 업적 달성!</div>
