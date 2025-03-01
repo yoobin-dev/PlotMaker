@@ -10,6 +10,7 @@ function PlotCardList() {
   const [toggleOn, setToggleOn] = useState(false);
   const navigate = useNavigate();
 
+  console.log(plotList);
   // 태그박스 스크롤 기능
   const PlotCardTagBoxScroll = () => {
     const tagBoxs = document.querySelectorAll(".plotCardTagBox");
@@ -48,8 +49,8 @@ function PlotCardList() {
   };
 
   // 상세로 이동하기
-  const goToDetail = () => {
-    navigate("/plotDetail");
+  const goToDetail = (plot) => {
+    navigate("/plotDetail", { state: { plot: plot, plotList: plotList } });
   };
 
   // 작성으로 이동하기
@@ -73,7 +74,7 @@ function PlotCardList() {
           contents={d.plotContent}
           toggleOn={toggleOn}
           setToggleOn={setToggleOn}
-          goToDetail={goToDetail}
+          goToDetail={() => goToDetail(d)}
         ></PlotCard>
       ))}
       <PlotCardAdd goToWrite={goToWrite}></PlotCardAdd>

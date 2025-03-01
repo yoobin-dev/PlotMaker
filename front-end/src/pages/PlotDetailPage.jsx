@@ -8,21 +8,29 @@ import { getPlotList } from "../api/plotApi";
 import "../styles/plotDetailPage.css";
 import "../styles/common.css";
 import LocaleContext from "../context/LocaleContext";
+import { useLocation } from "react-router-dom";
 
 function PlotDetailPage() {
-  const [plotCount, setPlotCount] = useState(0);
-  const [plotList, setPlotList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const [plot, setPlot] = useState(location.state.plot);
+  const [plotList, setPlotList] = useState(location.state.plotList);
+
+  // 태그에 필요한 값 배열 만들기
+  const plotTagsArr = Object.entries(plot)
+    .filter(([key, _]) => !key.includes("Code"))
+    .filter(([key, _]) => !key.includes("like"))
+    .filter(([key, _]) => !key.includes("view"))
+    .filter(([key, _]) => !key.includes("plot"))
+    .filter(([key, _]) => !key.includes("Seq"))
+    .filter(([key, _]) => !key.includes("public"))
+    .map(([_, value]) => value);
 
   // 플롯 목록 가져오기
   useEffect(() => {
-    const getData = async () => {
-      setLoading(true);
-      const data = await getPlotList();
-      setPlotList(data);
+    setTimeout(() => {
       setLoading(false);
-    };
-    getData();
+    }, 500);
   }, []);
 
   return (
@@ -33,41 +41,23 @@ function PlotDetailPage() {
         <div id="plotDetailPage">
           <div id="plotDetailLeft" className="no_scroll">
             <div id="plotDetailLeftTop">
-              <PlotHeader plotCount={plotCount} isDetail={true}></PlotHeader>
+              <PlotHeader isDetail={true}></PlotHeader>
             </div>
             <div
               id="plotDetailLeftBottom"
-              className="no_scroll h-100 bg_gray_f9 no_scroll"
+              className="h-100 bg_gray_f9 no_scroll"
             >
               <PlotDetailList></PlotDetailList>
             </div>
           </div>
-          <div id="plotDetailRight">
+          <div id="plotDetailRight" className="no_scroll">
             <div id="plotDetailTitle" className="body_main">
-              소설 01
+              {plot.title}
             </div>
             <div id="plotDetailContents" className="body_main">
-              내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
+              {plot.plotContent}
             </div>
             <div id="plotDetailTags">
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지fdsaf" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
-              <PlotTag name="판타지" color="blue"></PlotTag>
               <PlotTag name="판타지fdasfasd" color="blue"></PlotTag>
             </div>
             <div id="plotDetailButtons">

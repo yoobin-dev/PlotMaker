@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import PlotHeader from "../components/PlotHeader";
 import PlotCardList from "../components/PlotCardList";
+import Loading from "../components/Loading";
 import { getPlotList } from "../api/plotApi";
 import "../styles/plotListPage.css";
 import LocaleContext from "../context/LocaleContext";
@@ -23,18 +24,14 @@ function PlotListPage() {
 
   return (
     <LocaleContext.Provider value={{ plotList, setPlotList }}>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <div id="plotListPage">
-          <div id="plotListPageTop">
-            <PlotHeader plotCount={plotCount} isDetail={false}></PlotHeader>
-          </div>
-          <div id="plotListPageBottom" className="no_scroll h-100 bg_gray_f9">
-            <PlotCardList></PlotCardList>
-          </div>
+      <div id="plotListPage">
+        <div id="plotListPageTop">
+          <PlotHeader plotCount={plotCount} isDetail={false}></PlotHeader>
         </div>
-      )}
+        <div id="plotListPageBottom" className="no_scroll h-100 bg_gray_f9">
+          <PlotCardList></PlotCardList>
+        </div>
+      </div>
     </LocaleContext.Provider>
   );
 }

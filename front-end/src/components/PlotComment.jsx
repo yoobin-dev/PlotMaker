@@ -1,5 +1,13 @@
+import { useState } from "react";
 import "../styles/plotComment.css";
 function PlotComment() {
+  const [comment, setComment] = useState("");
+
+  const handleComment = (e) => {
+    console.log(e.target.value);
+    setComment(e.target.value);
+  };
+
   return (
     <div id="plotDetailComment">
       <div id="commentTitle" className="headline_2 ft_gray_2">
@@ -10,9 +18,14 @@ function PlotComment() {
         <PlotCommentBox></PlotCommentBox>
       </div>
       <div id="commmentLength" className="label_1 ft_gray_94">
-        <span>0</span>/1000자
+        {comment.length}/1000자
       </div>
-      <textarea id="commentTextArea" className="body_1 ft_gray_4"></textarea>
+      <textarea
+        id="commentTextArea"
+        value={comment}
+        className="body_1 ft_gray_4"
+        onChange={handleComment}
+      ></textarea>
       <div id="commentButton" className="headline_2">
         <button>등록하기</button>
       </div>
@@ -29,7 +42,7 @@ function PlotCommentBox() {
       <div className="commentfooter">
         <div className="commentDate body_2 ft_gray_94">2024.12.24</div>
         <div className="commentDelete bg_gray_a">
-          <img src="/close.png" />
+          <img src="/close.png" style={{ cursor: "pointer" }} />
         </div>
       </div>
     </div>

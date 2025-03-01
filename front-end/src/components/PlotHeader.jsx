@@ -5,7 +5,7 @@ import "../styles/plotHeader.css";
 import LocaleContext from "../context/LocaleContext";
 
 // 플롯 헤더
-function PlotHeader({ isDetail }) {
+function PlotHeader({ isDetail, plotCount }) {
   const [sortingOn, setSortingOn] = useState(false);
   const [keyword, setKeyword] = useState("");
   const { plotList, setPlotList } = useContext(LocaleContext);
