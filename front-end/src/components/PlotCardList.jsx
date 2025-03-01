@@ -11,10 +11,6 @@ function PlotCardList() {
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(plotList);
-  }, [plotList]);
-
   // 태그박스 스크롤 기능
   const PlotCardTagBoxScroll = () => {
     const tagBoxs = document.querySelectorAll(".plotCardTagBox");
@@ -140,6 +136,7 @@ function PlotCard({
         </div>
         <PlotCardTitleToggle
           id={`burger_${info.promptSeq}`}
+          promptSeq={info.promptSeq}
           title={info.title}
           setRefresh={setRefresh}
           plotList={plotList}

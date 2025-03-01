@@ -43,5 +43,5 @@ public class CommentController {
     ApiResponse<String> response = ApiResponse.<String>builder().isSuccess(isSuccess).message(result).data(result).build();
     return ResponseEntity.ok().body(response);
   }
-  
+
 }

@@ -1,10 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import "../styles/toggleMenu.css";
-import { updatePlotPublic, updatePlotTitle, deletePlot } from "../api/plotApi";
+import {
+  getPlotList,
+  updatePlotPublic,
+  updatePlotTitle,
+  deletePlot,
+} from "../api/plotApi";
 
 // 플롯 카드 리스트 햄버거
 export function PlotCardTitleToggle({
   id,
+  promptSeq,
   title,
   setRefresh,
   plotList,
@@ -60,9 +66,28 @@ export function PlotCardTitleToggle({
     } else if (id === "name") {
       setNameToggleOn(true);
     } else if (id === "delete") {
-      alert("삭제됨");
-      deletePlot();
-      // 삭제하는 API
+      // 플롯삭제 API
+      const deletePrompt = async () => {
+        const isAll = document.getElementById("filterAll").classList.value;
+        const filterType = document.querySelector("#filterButton .active");
+
+        const isPublic = filterType.id.includes("Public") ? "N" : "Y";
+
+        await deletePlot(promptSeq);
+
+        const getData = async () => {
+          const data = await getPlotList(
+            "1",
+            isAll.includes("active") ? "All" : isPublic === "Y" ? "N" : "Y"
+          );
+
+          setPlotList([]);
+          setPlotList(data);
+        };
+        getData();
+      };
+
+      deletePrompt();
     }
   };
 
@@ -162,16 +187,20 @@ export function PlotCardShareToggle({
   const handleSharePlot = async (isShare) => {
     const promptSeq = id.replace("burger_", "");
     const isPublic = isShare === "share" ? "Y" : "N";
+    const isAll = document.getElementById("filterAll").classList.value;
 
-    async function chgShare() {
-      const chgPlot = await updatePlotPublic(promptSeq, isPublic);
+    await updatePlotPublic(promptSeq, isPublic);
 
-      setPlotList((prev) =>
-        prev.map((p) => (p.promptSeq === promptSeq ? chgPlot : p))
+    const getData = async () => {
+      const data = await getPlotList(
+        "1",
+        isAll.includes("active") ? "All" : isPublic === "Y" ? "N" : "Y"
       );
-    }
 
-    chgShare();
+      setPlotList([]);
+      setPlotList(data);
+    };
+    getData();
 
     setShareToggleOn(false);
   };
@@ -228,14 +257,31 @@ export function PlotCardNameToggle({
   nameToggleOn,
   setNameToggleOn,
   plotList,
+  setPlotList,
 }) {
   const [nameLength, setNameLength] = useState(0);
   const [newName, setNewName] = useState("");
 
-  const handleNamePlot = () => {
+  const handleNamePlot = async () => {
     const promptSeq = id.replace("burger_", "");
-    // 이름 변경하는 API
-    const newTitle = updatePlotTitle(promptSeq, newName);
+    const isAll = document.getElementById("filterAll").classList.value;
+    const filterType = document.querySelector("#filterButton .active");
+
+    const isPublic = filterType.id.includes("Public") ? "N" : "Y";
+
+    await updatePlotTitle(promptSeq, newName);
+
+    const getData = async () => {
+      const data = await getPlotList(
+        "1",
+        isAll.includes("active") ? "All" : isPublic === "Y" ? "N" : "Y"
+      );
+
+      setPlotList([]);
+      setPlotList(data);
+    };
+    getData();
+
     setNameToggleOn(false);
   };
 

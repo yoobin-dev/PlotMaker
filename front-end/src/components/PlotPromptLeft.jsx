@@ -1,7 +1,7 @@
 import "../styles/plotPromptLeft.css";
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { getPromptCode, insertPlot } from "../api/plotApi";
+import { getPromptCode, makePlot } from "../api/plotApi";
 
 // 직접 입력할 프롬프트
 const textPrpt = ["event", "tellType", "custom"];
@@ -29,6 +29,7 @@ function PlotPromptSelect({
   handleTextarea,
 }) {
   const prptValue = promptValues[plotDetail.id];
+
   let options = [];
   // select2에 사용하기 위한 options 객체로 만들기
   for (let opt of plotDetail.contents) {
@@ -61,7 +62,7 @@ function PlotPromptSelect({
           // 문체, 성격, 고유 설정은 select없이 textarea 노출
           textPrpt.includes(plotDetail.id) ? "" : "d-none"
         }`}
-        value={prptValue}
+        value={prptValue || ""}
         maxLength={100}
         onChange={(e) => {
           handleTextarea(e);
@@ -74,7 +75,7 @@ function PlotPromptSelect({
           textPrpt.includes(plotDetail.id) ? "" : "d-none"
         }`}
       >
-        {prptValue.length}/100자
+        {prptValue?.length}/100자
       </div>
     </>
   );
@@ -87,7 +88,7 @@ function PlotPromptInputBox({
   handleTextarea,
   percent,
   promptValues,
-  insertPlotPrompt,
+  makePlotPrompt,
 }) {
   return (
     <div id="plotPromptBox" className="shadow_gray_30 no_scroll">
@@ -143,7 +144,7 @@ function PlotPromptInputBox({
           id="makePlotBtn"
           className={`makePlotBtn ${percent > 99 ? "activation" : ""}`}
           onClick={(e) => {
-            insertPlotPrompt(e);
+            makePlotPrompt(e);
           }}
         >
           작품 만들기
@@ -153,7 +154,7 @@ function PlotPromptInputBox({
   );
 }
 
-function PlotPromptLeft({ setCreate }) {
+function PlotPromptLeft({ setCreate, promptValues, setPromptValues }) {
   const promptDetailObj = [
     {
       id: "category",
@@ -210,20 +211,6 @@ function PlotPromptLeft({ setCreate }) {
   const [promptDetail, setPromptDetail] = useState(promptDetailObj);
   // 선택된 프롬프트 기록 (프로그레스바)
   const [selectedPrompt, setSelectedPrompt] = useState([]);
-  const [promptValues, setPromptValues] = useState({
-    categoryCode: "",
-    category: "",
-    genreCode: "",
-    genre: "",
-    timeframeCode: "",
-    timeframe: "",
-    themeCode: "",
-    theme: "",
-    event: "",
-    tellType: "",
-    custom: "",
-    isPublic: "",
-  });
 
   // 스킵 버튼 클릭
   const handleSkip = (isSkip, btnId) => {
@@ -253,9 +240,12 @@ function PlotPromptLeft({ setCreate }) {
           setPercent((prev) => Math.min(prev + 100 / 6, 100));
           setSelectedPrompt((prev) => [...prev, btnId]);
           // 불변성을 유지하여 promptValues 업데이트
+          // 스킵시 직접 코드를 직접입력으로 수정
+          const resetCode =
+            btnId === "genre" ? "G" : btnId === "timeframe" ? "F" : "M";
           setPromptValues((prev) => ({
             ...prev,
-            [btnId]: prev[btnId],
+            [`${btnId}Code`]: resetCode + "999",
           }));
         }
       }
@@ -340,21 +330,28 @@ function PlotPromptLeft({ setCreate }) {
 
       if (prevLength === 0 && newLength > 0) {
         // 처음 입력 시 진행률 증가
-        setPercent((prev) => Math.min(prev + 100 / 7, 100));
+        setPercent((prev) => Math.min(prev + 100 / 6, 100));
       } else if (prevLength > 0 && newLength === 0) {
         // 내용 삭제 시 진행률 감소
-        setPercent((prev) => Math.max(prev - 100 / 7, 0));
+        setPercent((prev) => Math.max(prev - 100 / 6, 0));
       }
     }
   };
 
   // 플롯 생성하기
-  const insertPlotPrompt = (e) => {
+  const makePlotPrompt = async (e) => {
     if (percent < 100) {
       return;
     } else {
-      insertPlot("1", promptValues);
+      e.target.classList.add("d-none");
+      const plotTitle = document.getElementById("plotPromptResultTitle");
+      const plotContent = document.getElementById("plotPromptResultContents");
       setCreate(true);
+      const returnData = await makePlot(promptValues);
+      setPromptValues(returnData);
+      plotContent.innerText = returnData.plotContent;
+      plotTitle.innerText = returnData.category;
+      setCreate("finish");
     }
   };
 
@@ -387,7 +384,7 @@ function PlotPromptLeft({ setCreate }) {
         handleTextarea={handleTextarea}
         percent={percent}
         promptValues={promptValues}
-        insertPlotPrompt={insertPlotPrompt}
+        makePlotPrompt={makePlotPrompt}
       ></PlotPromptInputBox>
     </div>
   );
