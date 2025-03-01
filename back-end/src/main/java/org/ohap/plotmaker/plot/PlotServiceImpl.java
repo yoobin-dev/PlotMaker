@@ -58,6 +58,7 @@ public class PlotServiceImpl implements PlotService {
       .append("\n고유설정: ").append(request.getCustom())
       .append("\n너의 성격: ").append(request.getTellType())
       .append("\n제목은 정하지 않고, 다른 설명없이 생성된 이야기만 반환해주세요.\n")
+      .append("\n값이 없는 키워드에 대해서는 임의로 값을 설정해서 만들어주세요.")
       .append(volume);
     
     String plotContent = clovaService.requestClova(isSynopsis, sb.toString());

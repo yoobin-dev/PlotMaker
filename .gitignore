@@ -4,6 +4,7 @@
 # security
 application.properties
 .env
+Dockerfile
 
 ### Eclipse ###
 .metadata
