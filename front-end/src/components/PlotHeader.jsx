@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/common.css";
 import "../styles/plotHeader.css";
 import LocaleContext from "../context/LocaleContext";
-import { getPlotList } from "../api/plotApi";
+import { getPlotList, searchPlotList } from "../api/plotApi";
 
 // 플롯 헤더
 function PlotHeader({ isDetail, plotCount }) {
@@ -85,21 +85,20 @@ function PlotHeader({ isDetail, plotCount }) {
     }
   };
 
+  // 키워드로 플롯 검색
+  const searchByKeyword = () => {
+    const search = async () => {
+      const data = await searchPlotList("1", keyword);
+      setPlotList(data);
+    };
+    search();
+  };
+
   // 엔터 입력 시 키워드 검색
   const getSearchKeyDown = (e) => {
     if (e.key === "Enter") {
       searchByKeyword();
     }
-  };
-
-  // 키워드로 플롯 검색
-  const searchByKeyword = (e) => {
-    const searchInput = document.querySelector("#search_input");
-    // 검색 기능 추가 (임시로 필터 axios로 받아와야함)
-    const filterList = plotList.filter((plot) =>
-      plot.email.includes(searchInput.value)
-    );
-    setPlotList(filterList);
   };
 
   // 검색 버튼 (비)활성화 시키기
@@ -117,7 +116,6 @@ function PlotHeader({ isDetail, plotCount }) {
         // 정렬 버튼 숨기기
         sortBtn.classList.add("d-none");
         // 상세일 경우 필터(전체, 공개, 비공개) 숨기기
-        console.log(isDetail);
         if (isDetail) {
           filterButtons.classList.add("d-none");
         }
@@ -204,6 +202,8 @@ function PlotHeader({ isDetail, plotCount }) {
             id={"searching"}
             plotList={plotList}
             setPlotList={setPlotList}
+            keyword={keyword}
+            setKeyword={setKeyword}
             isDetail={isDetail}
             activeSearchToggle={activeSearchToggle}
             getSearchKeyDown={getSearchKeyDown}
@@ -244,6 +244,7 @@ function SearchFilterButton({
   plotList,
   setPlotList,
   keyword,
+  setKeyword,
   getSearchKeyDown,
   activeSearchToggle,
   isDetail,
@@ -255,7 +256,10 @@ function SearchFilterButton({
           id="search_input"
           value={keyword}
           className="search-input headline_2"
-          onKeyDown={getSearchKeyDown}
+          onChange={(e) => {
+            setKeyword(e.target.value);
+          }}
+          onKeyUp={(e) => getSearchKeyDown(e)}
         ></input>
         <div
           className="search-icon"
@@ -339,9 +343,6 @@ function SortingMenu({ sortingOn, plotList, setPlotList }) {
     // 선택한 정렬 방식 강조
     const target = document.getElementById(id);
     target.classList.add("bg_gray_c");
-
-    console.log(sort);
-    console.log(order);
 
     const sortedList = plotList.sort((a, b) => {
       // 오름차순일 경우 b - a, 내림차순일 경우 a - b로 비교

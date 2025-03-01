@@ -9,16 +9,17 @@ function PlotPromptRight({ create }) {
     if (create) {
       // 플롯 내용 (2초 소요됨)
       const plotPromptResult = document.getElementById("plotPromptResult");
-      plotPromptResult.classList.add("goDown");
+      // plotPromptResult.classList.add("goDown");
 
       // 접근 이미지
       const loadingAccess = document.getElementById("plotPromptLoadingAccess");
+      loadingAccess.classList.add("d-none");
 
       // 응답 대기 이미지
       const loadingWaiting = document.getElementById(
         "plotPromptLoadingWaiting"
       );
-      // loadingWaiting.classList.remove("d-none");
+      loadingWaiting.classList.remove("d-none");
     }
   };
 

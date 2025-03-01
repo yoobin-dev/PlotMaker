@@ -140,6 +140,7 @@ function PlotCard({
         </div>
         <PlotCardTitleToggle
           id={`burger_${info.promptSeq}`}
+          promptSeq={info.promptSeq}
           title={info.title}
           setRefresh={setRefresh}
           plotList={plotList}

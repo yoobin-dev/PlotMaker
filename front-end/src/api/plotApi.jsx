@@ -37,6 +37,21 @@ export const getPlotList = async (socialId, isPublic) => {
   }
 };
 
+// 플롯 검색
+export const searchPlotList = async (socialId, title) => {
+  let url = `${prefix}/plot/${socialId}/search`;
+  try {
+    const res = await axios.get(url, { params: { title: title } });
+    if (res.status === 200) {
+      return res.data.data;
+    } else {
+      alert("시스템 오류가 발생했습니다.");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 // 프롬프트 코드 가져오기
 export const getPromptCode = async (socialId) => {
   try {

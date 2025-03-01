@@ -340,10 +340,10 @@ function PlotPromptLeft({ setCreate }) {
 
       if (prevLength === 0 && newLength > 0) {
         // 처음 입력 시 진행률 증가
-        setPercent((prev) => Math.min(prev + 100 / 7, 100));
+        setPercent((prev) => Math.min(prev + 100 / 6, 100));
       } else if (prevLength > 0 && newLength === 0) {
         // 내용 삭제 시 진행률 감소
-        setPercent((prev) => Math.max(prev - 100 / 7, 0));
+        setPercent((prev) => Math.max(prev - 100 / 6, 0));
       }
     }
   };
@@ -353,7 +353,7 @@ function PlotPromptLeft({ setCreate }) {
     if (percent < 100) {
       return;
     } else {
-      insertPlot("1", promptValues);
+      // insertPlot("1", promptValues);
       setCreate(true);
     }
   };
