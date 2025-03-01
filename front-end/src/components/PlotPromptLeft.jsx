@@ -1,7 +1,7 @@
 import "../styles/plotPromptLeft.css";
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { getPromptCode } from "../api/plotApi";
+import { getPromptCode, insertPlot } from "../api/plotApi";
 
 // 직접 입력할 프롬프트
 const textPrpt = ["event", "tellType", "custom"];
@@ -87,6 +87,7 @@ function PlotPromptInputBox({
   handleTextarea,
   percent,
   promptValues,
+  insertPlotPrompt,
 }) {
   return (
     <div id="plotPromptBox" className="shadow_gray_30 no_scroll">
@@ -141,6 +142,9 @@ function PlotPromptInputBox({
         <div
           id="makePlotBtn"
           className={`makePlotBtn ${percent > 99 ? "activation" : ""}`}
+          onClick={(e) => {
+            insertPlotPrompt(e);
+          }}
         >
           작품 만들기
         </div>
@@ -207,14 +211,18 @@ function PlotPromptLeft() {
   // 선택된 프롬프트 기록 (프로그레스바)
   const [selectedPrompt, setSelectedPrompt] = useState([]);
   const [promptValues, setPromptValues] = useState({
+    categoryCode: "",
     category: "",
+    genreCode: "",
     genre: "",
+    timeframeCode: "",
     timeframe: "",
+    themeCode: "",
     theme: "",
     event: "",
-    character: "",
     tellType: "",
     custom: "",
+    isPublic: "",
   });
 
   // 스킵 버튼 클릭
@@ -277,7 +285,6 @@ function PlotPromptLeft() {
 
   // 셀렉트 클릭
   const handleSelect = (e) => {
-    console.log(e);
     const target = document.getElementById(`prompt_${e.id}`);
     const text = document.getElementById(`textarea_${e.id}`);
     const length = document.getElementById(`textarea_${e.id}_length`);
@@ -294,13 +301,16 @@ function PlotPromptLeft() {
     // 직접 입력하는 프롬프트를 제외한
     if (!textPrpt.includes(e.value)) {
       // 선택되어 있지 않은 경우 진행상태 증가
-      console.log(target.classList);
-      console.log(!target.classList.contains("selected"));
       if (percent <= 100 && !target.classList.contains("selected")) {
         setPercent((prev) => Math.min(prev + 100 / 6, 100));
       }
       setSelectedPrompt((prev) => [...prev, e.value]);
-      setPromptValues((prev) => ({ ...prev, [e.value]: e.value }));
+
+      const code = `${e.id}Code`;
+      const label = e.label;
+
+      setPromptValues((prev) => ({ ...prev, [code]: e.value }));
+      setPromptValues((prev) => ({ ...prev, [e.id]: e.label }));
     }
 
     // 선택한 프롬프트 체크하기(프로그레스바)
@@ -338,6 +348,14 @@ function PlotPromptLeft() {
     }
   };
 
+  const insertPlotPrompt = (e) => {
+    if (percent < 100) {
+      return;
+    } else {
+      insertPlot("1", promptValues);
+    }
+  };
+
   useEffect(() => {
     const getCodeData = async () => {
       const prptdata = await getPromptCode("1");
@@ -367,6 +385,7 @@ function PlotPromptLeft() {
         handleTextarea={handleTextarea}
         percent={percent}
         promptValues={promptValues}
+        insertPlotPrompt={insertPlotPrompt}
       ></PlotPromptInputBox>
     </div>
   );

@@ -47,7 +47,6 @@ function PlotHeader({ isDetail, plotCount }) {
     const target = document.getElementById(id);
     target.classList.add("active");
 
-    console.log(id);
     // 필터에 따른 플롯 가져오기
     const getData = async () => {
       let isPublic = "All";

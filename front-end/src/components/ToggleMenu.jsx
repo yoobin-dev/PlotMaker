@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../styles/toggleMenu.css";
-import { replace } from "../../node_modules/stylis/src/Utility";
+import { updatePlotPublic, updatePlotTitle, deletePlot } from "../api/plotApi";
 
 // 플롯 카드 리스트 햄버거
-export function PlotCardTitleToggle({ id, title }) {
+export function PlotCardTitleToggle({ id, title, setRefresh }) {
   const [toggleOn, setToggleOn] = useState(false);
   const [shareToggleOn, setShareToggleOn] = useState(false);
   const [nameToggleOn, setNameToggleOn] = useState(false);
@@ -49,12 +49,16 @@ export function PlotCardTitleToggle({ id, title }) {
       t.classList.add("d-none");
     }
 
+    console.log(e);
+    console.log(id);
+
     if (id === "share") {
       setShareToggleOn(true);
     } else if (id === "name") {
       setNameToggleOn(true);
     } else if (id === "delete") {
       alert("삭제됨");
+      deletePlot();
       // 삭제하는 API
     }
   };
@@ -98,6 +102,7 @@ export function PlotCardTitleToggle({ id, title }) {
             <div
               key={i}
               id={d.id}
+              promptSeq={id.replace("burger_", "")}
               className="d-flex toggleMenuItem"
               onClick={(e) => clickToggleItem(e, d.id)}
             >
@@ -116,18 +121,25 @@ export function PlotCardTitleToggle({ id, title }) {
         id={id}
         shareToggleOn={shareToggleOn}
         setShareToggleOn={setShareToggleOn}
+        setRefresh={setRefresh}
       ></PlotCardShareToggle>
       <PlotCardNameToggle
         id={id}
         nameToggleOn={nameToggleOn}
         setNameToggleOn={setNameToggleOn}
+        setRefresh={setRefresh}
       ></PlotCardNameToggle>
     </div>
   );
 }
 
 // 플롯 카드 공개 비공개
-export function PlotCardShareToggle({ id, shareToggleOn, setShareToggleOn }) {
+export function PlotCardShareToggle({
+  id,
+  shareToggleOn,
+  setShareToggleOn,
+  setRefresh,
+}) {
   const menuArr = [
     {
       id: "share",
@@ -143,12 +155,13 @@ export function PlotCardShareToggle({ id, shareToggleOn, setShareToggleOn }) {
 
     if (isShare === "share") {
       // 공개로 변경하는 API
-      updatePlotPublic(promptSeq);
+      updatePlotPublic(promptSeq, "Y");
     } else {
       // 비공개로 변경하는 API
-      alert("비공개됨");
+      updatePlotPublic(promptSeq, "N");
     }
     setShareToggleOn(false);
+    setRefresh((prev) => !prev);
   };
 
   useEffect(() => {
@@ -206,7 +219,7 @@ export function PlotCardNameToggle({ id, nameToggleOn, setNameToggleOn }) {
     const promptSeq = id.replace("burger_", "");
     console.log(promptSeq);
     // 이름 변경하는 API
-    alert("변경됨");
+    updatePlotTitle(promptSeq, newName);
     setNameToggleOn(false);
   };
 

@@ -8,9 +8,9 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 function PlotCardList() {
   const { plotList, setPlotList } = useContext(LocaleContext);
   const [toggleOn, setToggleOn] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
 
-  console.log(plotList);
   // 태그박스 스크롤 기능
   const PlotCardTagBoxScroll = () => {
     const tagBoxs = document.querySelectorAll(".plotCardTagBox");
@@ -75,6 +75,7 @@ function PlotCardList() {
           toggleOn={toggleOn}
           setToggleOn={setToggleOn}
           goToDetail={() => goToDetail(d)}
+          setRefresh={setRefresh}
         ></PlotCard>
       ))}
       <PlotCardAdd goToWrite={goToWrite}></PlotCardAdd>
@@ -90,6 +91,7 @@ function PlotCard({
   toggleOn,
   setToggleOn,
   goToDetail,
+  setRefresh,
 }) {
   const tags = [
     {
@@ -131,6 +133,7 @@ function PlotCard({
         <PlotCardTitleToggle
           id={`burger_${info.promptSeq}`}
           title={info.title}
+          setRefresh={setRefresh}
         ></PlotCardTitleToggle>
       </div>
       <div className="plotCardContents body_1 ft_gray_2" onClick={goToDetail}>
