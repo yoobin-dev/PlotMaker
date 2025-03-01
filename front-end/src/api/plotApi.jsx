@@ -28,7 +28,6 @@ export const getPlotList = async (socialId, isPublic) => {
   try {
     const res = await axios.get(url);
     if (res.status === 200) {
-      console.log(res.data.data);
       return res.data.data;
     } else {
       alert("시스템 오류가 발생했습니다.");
@@ -56,10 +55,9 @@ export const getPromptCode = async (socialId) => {
 // 공개 비공개 설정
 export const updatePlotPublic = async (promptSeq, isPublic) => {
   try {
-    const res = await axios.post(
-      `${prefix}/prompt/${promptSeq}/status`,
-      isPublic
-    );
+    const res = await axios.post(`${prefix}/prompt/${promptSeq}/status`, {
+      isPublic,
+    });
     if (res.status === 200) {
       return res.data.data;
     } else {
@@ -69,10 +67,14 @@ export const updatePlotPublic = async (promptSeq, isPublic) => {
     console.error(e);
   }
 };
+
 // 제목 설정
 export const updatePlotTitle = async (promptSeq, title) => {
   try {
-    const res = await axios.post(`${prefix}/prompt/${promptSeq}/title`, title);
+    const res = await axios.post(`${prefix}/prompt/${promptSeq}/title`, {
+      title,
+    });
+    console.log(res.data.data);
     if (res.status === 200) {
       return res.data.data;
     } else {

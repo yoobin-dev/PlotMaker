@@ -44,7 +44,7 @@ function PlotDetailCard({ plot, handleDetailCard }) {
       >
         <div className="header d-flex">
           <div className="title heading_1 ft_gray_3">{plot.title}</div>
-          <div className="tag label_1 ft_gray_6">{plot.type}</div>
+          <div className="tag label_1 ft_gray_6">{plot.category}</div>
         </div>
         <div className="body d-flex">
           <div className="contents body_1 ft_gray_5">{plot.plotContent}</div>

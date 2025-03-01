@@ -1,5 +1,7 @@
 package org.ohap.plotmaker.prompt;
 
+import java.util.Map;
+
 import org.ohap.plotmaker.common.ApiResponse;
 import org.ohap.plotmaker.plot.PlotResponseDTO;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,8 @@ public class PromptController {
 
   @PostMapping("/{promptSeq}/status")
   public ResponseEntity<ApiResponse<PlotResponseDTO>> changePublicState(@PathVariable String promptSeq,
-    @RequestBody String isPublic){
+    @RequestBody Map<String, String> request){
+    String isPublic = request.get("isPublic");
     PlotResponseDTO plot = promptService.changePublicState(promptSeq, isPublic);
     ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
     return ResponseEntity.ok().body(response);
@@ -28,7 +31,8 @@ public class PromptController {
 
   @PostMapping("/{promptSeq}/title")
   public ResponseEntity<ApiResponse<PlotResponseDTO>> changeTitle(@PathVariable String promptSeq,
-    @RequestBody String title) {
+    @RequestBody Map<String, String> request) {
+      String title = request.get("title");
       PlotResponseDTO plot = promptService.changeTitle(promptSeq, title);
       ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
       return ResponseEntity.ok().body(response);

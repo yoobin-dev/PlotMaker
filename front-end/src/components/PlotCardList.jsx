@@ -11,6 +11,10 @@ function PlotCardList() {
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log(plotList);
+  }, [plotList]);
+
   // 태그박스 스크롤 기능
   const PlotCardTagBoxScroll = () => {
     const tagBoxs = document.querySelectorAll(".plotCardTagBox");
@@ -76,6 +80,8 @@ function PlotCardList() {
           setToggleOn={setToggleOn}
           goToDetail={() => goToDetail(d)}
           setRefresh={setRefresh}
+          plotList={plotList}
+          setPlotList={setPlotList}
         ></PlotCard>
       ))}
       <PlotCardAdd goToWrite={goToWrite}></PlotCardAdd>
@@ -92,11 +98,13 @@ function PlotCard({
   setToggleOn,
   goToDetail,
   setRefresh,
+  plotList,
+  setPlotList,
 }) {
   const tags = [
     {
       color: "gray",
-      name: info.type,
+      name: info.category,
     },
     {
       color: "blue",
@@ -134,6 +142,8 @@ function PlotCard({
           id={`burger_${info.promptSeq}`}
           title={info.title}
           setRefresh={setRefresh}
+          plotList={plotList}
+          setPlotList={setPlotList}
         ></PlotCardTitleToggle>
       </div>
       <div className="plotCardContents body_1 ft_gray_2" onClick={goToDetail}>

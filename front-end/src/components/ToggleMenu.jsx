@@ -3,7 +3,13 @@ import "../styles/toggleMenu.css";
 import { updatePlotPublic, updatePlotTitle, deletePlot } from "../api/plotApi";
 
 // 플롯 카드 리스트 햄버거
-export function PlotCardTitleToggle({ id, title, setRefresh }) {
+export function PlotCardTitleToggle({
+  id,
+  title,
+  setRefresh,
+  plotList,
+  setPlotList,
+}) {
   const [toggleOn, setToggleOn] = useState(false);
   const [shareToggleOn, setShareToggleOn] = useState(false);
   const [nameToggleOn, setNameToggleOn] = useState(false);
@@ -48,9 +54,6 @@ export function PlotCardTitleToggle({ id, title, setRefresh }) {
     for (let t of titleTg) {
       t.classList.add("d-none");
     }
-
-    console.log(e);
-    console.log(id);
 
     if (id === "share") {
       setShareToggleOn(true);
@@ -121,12 +124,16 @@ export function PlotCardTitleToggle({ id, title, setRefresh }) {
         shareToggleOn={shareToggleOn}
         setShareToggleOn={setShareToggleOn}
         setRefresh={setRefresh}
+        plotList={plotList}
+        setPlotList={setPlotList}
       ></PlotCardShareToggle>
       <PlotCardNameToggle
         id={id}
         nameToggleOn={nameToggleOn}
         setNameToggleOn={setNameToggleOn}
         setRefresh={setRefresh}
+        plotList={plotList}
+        setPlotList={setPlotList}
       ></PlotCardNameToggle>
     </div>
   );
@@ -138,6 +145,8 @@ export function PlotCardShareToggle({
   shareToggleOn,
   setShareToggleOn,
   setRefresh,
+  plotList,
+  setPlotList,
 }) {
   const menuArr = [
     {
@@ -149,18 +158,22 @@ export function PlotCardShareToggle({
       text: "비공개",
     },
   ];
-  const handleSharePlot = (isShare) => {
-    const promptSeq = id.replace("burger_", "");
 
-    if (isShare === "share") {
-      // 공개로 변경하는 API
-      updatePlotPublic(promptSeq, "Y");
-    } else {
-      // 비공개로 변경하는 API
-      updatePlotPublic(promptSeq, "N");
+  const handleSharePlot = async (isShare) => {
+    const promptSeq = id.replace("burger_", "");
+    const isPublic = isShare === "share" ? "Y" : "N";
+
+    async function chgShare() {
+      const chgPlot = await updatePlotPublic(promptSeq, isPublic);
+
+      setPlotList((prev) =>
+        prev.map((p) => (p.promptSeq === promptSeq ? chgPlot : p))
+      );
     }
+
+    chgShare();
+
     setShareToggleOn(false);
-    setRefresh((prev) => !prev);
   };
 
   useEffect(() => {
@@ -210,14 +223,19 @@ export function PlotCardShareToggle({
 }
 
 // 플롯 카드 이름 바꾸기
-export function PlotCardNameToggle({ id, nameToggleOn, setNameToggleOn }) {
+export function PlotCardNameToggle({
+  id,
+  nameToggleOn,
+  setNameToggleOn,
+  plotList,
+}) {
   const [nameLength, setNameLength] = useState(0);
   const [newName, setNewName] = useState("");
 
   const handleNamePlot = () => {
     const promptSeq = id.replace("burger_", "");
     // 이름 변경하는 API
-    updatePlotTitle(promptSeq, newName);
+    const newTitle = updatePlotTitle(promptSeq, newName);
     setNameToggleOn(false);
   };
 
