@@ -15,8 +15,8 @@ public class PlotRequestDTO {
   private String socialId;
   private long promptSeq;
   
-  @Nullable private String typeCode;
-  @Nullable private String type;
+  @Nullable private String categoryCode;
+  @Nullable private String category;
   @Nullable private String genreCode;
   @Nullable private String genre;
   @Nullable private String timeframeCode;
@@ -26,6 +26,5 @@ public class PlotRequestDTO {
   @Nullable private String event;
   @Nullable private String tellType;
   @Nullable private String custom;
-  @Nullable private String isPublic;
   
 }
