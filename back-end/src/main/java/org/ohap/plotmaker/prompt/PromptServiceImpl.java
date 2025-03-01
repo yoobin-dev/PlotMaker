@@ -14,10 +14,8 @@ public class PromptServiceImpl implements PromptService {
   private final PlotMapper plotMapper;
   private final PromptMapper promptMapper;
 
-  public PlotResponseDTO changePublicState(String promptSeq){
-    PromptDTO prompt = promptMapper.findPromptOnlyByPromptSeq(promptSeq);
-    if(prompt.getIsPublic().equals("Y")) prompt.setIsPublic("N");
-    if(prompt.getIsPublic().equals("N")) prompt.setIsPublic("Y");
+  public PlotResponseDTO changePublicState(String promptSeq, String isPublic){
+    PromptDTO prompt = PromptDTO.builder().promptSeq(Long.parseLong(promptSeq)).isPublic(isPublic).build();
     promptMapper.changePublicState(prompt);
     return plotMapper.selectPlotByPromptSeq(Long.parseLong(promptSeq));
   }

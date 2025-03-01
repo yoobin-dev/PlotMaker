@@ -33,8 +33,8 @@ public class PlotServiceImpl implements PlotService {
       }
 
       /* 코드처리 */
-      String typeCode = request.getTypeCode();
-      request.setType(codeMapper.selectCodeNameByCode(typeCode));
+      String categoryCode = request.getCategoryCode();
+      request.setCategory(codeMapper.selectCodeNameByCode(categoryCode));
       String genreCode = request.getGenreCode();
       if(!genreCode.contains("999")) request.setGenre(codeMapper.selectCodeNameByCode(genreCode));
       String timeframeCode = request.getTimeframeCode();
@@ -42,10 +42,10 @@ public class PlotServiceImpl implements PlotService {
       String themeCode = request.getThemeCode();
       if(!themeCode.contains("999")) request.setTheme(codeMapper.selectCodeNameByCode(themeCode));
 
-      Boolean isSynopsis = typeCode.equals("T000");
+      Boolean isSynopsis = categoryCode.equals("T000");
       String volume = isSynopsis? "중간에서 끊지 않고, 내용을 끝까지 완성해주세요." : "\n분량: 첫 1화";
       StringBuilder sb = new StringBuilder();
-      sb.append("키워드를 가지고 ").append(request.getType()).append("을(를) 창작합니다. 키워드는 아래와 같습니다.\n");
+      sb.append("키워드를 가지고 ").append(request.getCategory()).append("을(를) 창작합니다. 키워드는 아래와 같습니다.\n");
       sb.append("장르: ").append(request.getGenre())
         .append("\n대본은 등장인물의 대사를 위주로 작성해야 하고, 시나리오는 실제 영화 시나리오처럼 장면에 대한 묘사도 필요합니다.")
         .append("\n배경: ").append(request.getTimeframe())
