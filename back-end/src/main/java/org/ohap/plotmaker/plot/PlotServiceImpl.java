@@ -111,7 +111,6 @@ public class PlotServiceImpl implements PlotService {
     }
     PlotResponseDTO result = plotMapper.selectPlotByPromptSeq(request.getPromptSeq());
     result.setSocialId(socialId);
-    log.info("@@@@@@@@@@@@@@@@ " + result.getSocialId());
     return result;
   }
 
