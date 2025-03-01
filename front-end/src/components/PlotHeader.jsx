@@ -169,7 +169,7 @@ function PlotHeader({ isDetail, plotCount }) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [sortingOn]);
+  }, []);
 
   return (
     <div id="plotHeader" className={`${isDetail ? "onDetail" : ""}`}>
@@ -222,6 +222,7 @@ function PlotHeader({ isDetail, plotCount }) {
         sortingOn={sortingOn}
         plotList={plotList}
         setPlotList={setPlotList}
+        setSortingOn={setSortingOn}
       ></SortingMenu>
     </div>
   );
@@ -292,7 +293,7 @@ function SortingFilterButton({ id, onClick }) {
 }
 
 // 정렬 토글 메뉴
-function SortingMenu({ sortingOn, plotList, setPlotList }) {
+function SortingMenu({ sortingOn, plotList, setPlotList, setSortingOn }) {
   const sortingArr = [
     {
       id: 1,
@@ -339,20 +340,35 @@ function SortingMenu({ sortingOn, plotList, setPlotList }) {
     for (let i of items) {
       i.classList.remove("bg_gray_c");
     }
-
     // 선택한 정렬 방식 강조
     const target = document.getElementById(id);
     target.classList.add("bg_gray_c");
 
-    const sortedList = plotList.sort((a, b) => {
-      // 오름차순일 경우 b - a, 내림차순일 경우 a - b로 비교
-      if (order === "asc") {
-        return a[sort] - b[sort];
-      } else {
-        return b[sort] - a[sort];
+    const sortMenu = document.getElementById("sortMenuBox");
+    const sortIcon = document.getElementById("sorting");
+    setSortingOn(false);
+    sortIcon.classList.remove("clicked");
+
+    const sortedList = [...plotList].sort((a, b) => {
+      // 숫자 비교
+      if (typeof a[sort] === "number" && typeof b[sort] === "number") {
+        return order === "asc" ? a[sort] - b[sort] : b[sort] - a[sort];
       }
+      // 문자열 비교
+      if (typeof a[sort] === "string" && typeof b[sort] === "string") {
+        return order === "asc"
+          ? a[sort].localeCompare(b[sort])
+          : b[sort].localeCompare(a[sort]);
+      }
+      // 날짜 비교
+      if (Date.parse(a[sort]) && Date.parse(b[sort])) {
+        return order === "asc"
+          ? new Date(a[sort]) - new Date(b[sort])
+          : new Date(b[sort]) - new Date(a[sort]);
+      }
+      return 0;
     });
-    setPlotList((prev) => [...sortedList]);
+    setPlotList(sortedList);
   }
 
   return (

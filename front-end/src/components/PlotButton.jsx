@@ -1,4 +1,12 @@
-function PlotButton({ icon, name, caption, color, isDetail }) {
+function PlotButton({
+  icon,
+  name,
+  caption,
+  color,
+  isDetail,
+  promptValues,
+  makePlotPrompt,
+}) {
   let bgColor = "";
   let ftColor = "";
 
@@ -10,11 +18,23 @@ function PlotButton({ icon, name, caption, color, isDetail }) {
     ftColor = "ft_white";
   }
 
+  const handlePlotButton = async () => {
+    if (name === "다시쓰기") {
+      makePlotPrompt();
+    } else if (name === "저장하기") {
+      const modal = document.getElementById("plotInsertModalBackground");
+      modal.classList.remove("d-none");
+    } else if (name === "내보내기") {
+      alert("서비스 준비중입니다.");
+    }
+  };
+
   return (
     <div
       className={`promptBtn ${bgColor} ${name === "내보내기" ? "dashed" : ""} ${
         isDetail ? "bigSize" : ""
       }`}
+      onClick={handlePlotButton}
     >
       <div className="promptBtnIcon">
         <img src={icon}></img>

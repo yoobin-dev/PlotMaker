@@ -4,9 +4,23 @@ import { API_SERVER } from "./apiSetting";
 const prefix = `${API_SERVER}`;
 
 // 플롯 만들기
-export const insertPlot = async (socialId, promptObj) => {
+export const makePlot = async (promptObj) => {
   try {
-    const res = await axios.post(`${prefix}/plot/${socialId}`, promptObj);
+    const res = await axios.post(`${prefix}/plot/make`, promptObj);
+    if (res.status === 200) {
+      return res.data.data;
+    } else {
+      alert("시스템 오류가 발생했습니다.");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+// 플롯 저장하기
+export const savePlot = async (socialId, promptObj) => {
+  console.log(promptObj);
+  try {
+    const res = await axios.post(`${prefix}/plot/${socialId}/save`, promptObj);
     if (res.status === 200) {
       return res.data.data;
     } else {
@@ -99,7 +113,7 @@ export const updatePlotTitle = async (promptSeq, title) => {
     console.error(e);
   }
 };
-// 제목 설정
+// 플롯 삭제
 export const deletePlot = async (promptSeq) => {
   try {
     const res = await axios.post(`${prefix}/prompt/${promptSeq}/delete`);

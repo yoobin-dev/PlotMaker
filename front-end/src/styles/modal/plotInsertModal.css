@@ -1,0 +1,67 @@
+#plotInsertModalBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+
+#plotInsertModal {
+  width: 600px;
+  border-radius: 8px;
+  border: 1px solid var(--Grayscale-BLACK, #000);
+  background: var(--Grayscale-WHITE, #fff);
+
+  /* Black-30% */
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+#plotInsertModal .title {
+  padding: 16px 12px;
+  border-bottom: 1px solid #000;
+}
+
+#plotInsertModal .body {
+  display: flex;
+  flex-direction: column;
+}
+
+#plotInsertModal .body input {
+  height: 44px;
+  margin: 32px 12px 4px 12px;
+}
+
+#plotInsertModal .body .option {
+  padding: 12px;
+}
+
+#plotInsertModal .body .option:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+#plotInsertModal .footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 12px 24px 12px;
+  gap: 8px;
+}
+
+#plotInsertModal .footer button {
+  padding: 4px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#plotInsertModal .footer .blackBtn {
+  color: #fff;
+  background-color: #000;
+}
+
+#plotInsertModal .footer .whiteBtn {
+  color: #000;
+  background-color: #fff;
+}

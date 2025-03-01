@@ -14,11 +14,11 @@ public class HandleException {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
   }
 
-  @ExceptionHandler(Exception.class)
-  public ResponseEntity<ApiResponse<String>> handleException(Exception e){
-    ApiResponse<String> response = ApiResponse.<String>builder().isSuccess(false).message(e.getMessage()).build();
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-  }
+  // @ExceptionHandler(Exception.class)
+  // public ResponseEntity<ApiResponse<String>> handleException(Exception e){
+  //   ApiResponse<String> response = ApiResponse.<String>builder().isSuccess(false).message(e.getMessage()).build();
+  //   return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+  // }
 
 }
 

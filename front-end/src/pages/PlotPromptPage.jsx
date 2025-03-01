@@ -10,6 +10,20 @@ function PlotPromptPage() {
   const location = useLocation();
   const [fadeIn, setFadeIn] = useState(false);
   const [create, setCreate] = useState(false);
+  const [promptValues, setPromptValues] = useState({
+    categoryCode: "",
+    category: "",
+    genreCode: "",
+    genre: "",
+    timeframeCode: "",
+    timeframe: "",
+    themeCode: "",
+    theme: "",
+    event: "",
+    tellType: "",
+    custom: "",
+    isPublic: "",
+  });
 
   useEffect(() => {
     if (location.state?.fadeIn) {
@@ -18,11 +32,25 @@ function PlotPromptPage() {
   }, [location.state]);
 
   return (
-    <div id="plotPromptPage" className={`${fadeIn ? "fade-in" : ""}`}>
-      <PlotInsertModal></PlotInsertModal>
-      <PlotPromptLeft setCreate={setCreate}></PlotPromptLeft>
-      <PlotPromptRight create={create}></PlotPromptRight>
-    </div>
+    <>
+      <PlotInsertModal
+        promptValues={promptValues}
+        setPromptValues={setPromptValues}
+      ></PlotInsertModal>
+      <div id="plotPromptPage" className={`${fadeIn ? "fade-in" : ""}`}>
+        <PlotPromptLeft
+          setCreate={setCreate}
+          promptValues={promptValues}
+          setPromptValues={setPromptValues}
+        ></PlotPromptLeft>
+        <PlotPromptRight
+          create={create}
+          setCreate={setCreate}
+          promptValues={promptValues}
+          setPromptValues={setPromptValues}
+        ></PlotPromptRight>
+      </div>
+    </>
   );
 }
 
