@@ -8,7 +8,6 @@ export const getPlotList = async (socialId) => {
   try {
     const res = await axios.get(`${prefix}/plot/${socialId}`);
     if (res.status === 200) {
-      console.log(res);
       return res.data.data;
     } else {
       alert("플롯 조회에 실패했습니다.");

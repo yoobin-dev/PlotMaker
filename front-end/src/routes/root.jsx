@@ -5,6 +5,7 @@ import NaverCallbackPage from "../pages/NaverCallbackPage";
 import PlotPromptPage from "../pages/PlotPromptPage";
 import PlotListPage from "../pages/PlotListPage";
 import PlotDetailPage from "../pages/PlotDetailPage";
+import PlotBoard from "../pages/PlotBoard";
 import Layout from "../layouts/Layout";
 import NicknamePage from "../pages/NicknamePage";
 import WelcomePage from "../pages/WelcomePage";
@@ -41,6 +42,10 @@ const root = createBrowserRouter([
       {
         path: "/plotDetail",
         element: <PlotDetailPage />,
+      },
+      {
+        path: "/board",
+        element: <PlotBoard />,
       },
     ],
   },

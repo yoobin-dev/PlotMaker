@@ -5,7 +5,7 @@
 #plotDetailLeft {
   min-width: 471.5px;
   max-width: 471.5px;
-  height: 100%;
+  height: calc(100% - 5px);
   background-color: #f9f9f9;
   padding: 0 10px 0 24px;
   overflow: auto;
@@ -17,8 +17,9 @@
 }
 #plotDetailRight {
   width: calc(100% - 490px);
-  height: calc(100% - 154px);
-  padding: 68px 65px 84px 63px;
+  height: calc(100% - 105px);
+  overflow: scroll;
+  padding: 68px 65px 37px 63px;
 }
 #plotHeader.onDetail {
   position: fixed;

@@ -4,7 +4,7 @@ import Select from "react-select";
 import { getPromptCode } from "../api/plotApi";
 
 // 직접 입력할 프롬프트
-const textPrpt = ["speech", "tellType", "custom"];
+const textPrpt = ["event", "tellType", "custom"];
 
 function PlotPromptProgressBar({ percent }) {
   return (

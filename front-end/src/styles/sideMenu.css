@@ -1,6 +1,7 @@
-a.sideMenu {
+.sideMenu {
   border-radius: 12px;
   color: #f9f9f9;
+  cursor: pointer;
 }
 div.sideMenu {
   display: flex;
@@ -10,7 +11,8 @@ div.sideMenu {
 }
 
 .active,
-div.sideMenu:hover {
+.active span,
+.sideMenu:hover {
   background-color: #f9f9f9;
   color: #222;
 }
