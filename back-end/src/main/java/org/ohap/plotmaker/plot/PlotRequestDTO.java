@@ -1,5 +1,6 @@
 package org.ohap.plotmaker.plot;
 
+import io.micrometer.common.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,20 +13,19 @@ import lombok.NoArgsConstructor;
 public class PlotRequestDTO {
 
   private String socialId;
-  private String promptSeq;
+  private long promptSeq;
   
-  private String typeCode;
-  private String type;
-  private String genreCode;
-  private String genre;
-  private String timeframeCode;
-  private String timeframe;
-  private String themeCode;
-  private String theme;
-  private String event;
-  // private int characters;
-  private String tellType;
-  private String custom;
-  private String title;
+  @Nullable private String typeCode;
+  @Nullable private String type;
+  @Nullable private String genreCode;
+  @Nullable private String genre;
+  @Nullable private String timeframeCode;
+  @Nullable private String timeframe;
+  @Nullable private String themeCode;
+  @Nullable private String theme;
+  @Nullable private String event;
+  @Nullable private String tellType;
+  @Nullable private String custom;
+  @Nullable private String isPublic;
   
 }
