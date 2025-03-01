@@ -3,19 +3,35 @@ import { API_SERVER } from "./apiSetting";
 
 const prefix = `${API_SERVER}`;
 
-// 플롯 가져오기
-export const getPlotList = async (socialId, isPublic) => {
-  let url = `${prefix}/plot/${socialId}`;
-  if (isPublic !== "All") {
-    url += `?isPublic=${isPublic}`;
-  }
-  console.log(url);
+// 플롯 만들기
+export const insertPlot = async (socialId, promptObj) => {
   try {
-    const res = await axios.get(url);
+    const res = await axios.post(`${prefix}/plot/${socialId}`, promptObj);
     if (res.status === 200) {
       return res.data.data;
     } else {
-      alert("플롯 조회에 실패했습니다.");
+      alert("시스템 오류가 발생했습니다.");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+// 플롯 가져오기
+export const getPlotList = async (socialId, isPublic) => {
+  let url = `${prefix}/plot/${socialId}`;
+
+  if (isPublic !== "All") {
+    url += `?isPublic=${isPublic}`;
+  }
+
+  try {
+    const res = await axios.get(url);
+    if (res.status === 200) {
+      console.log(res.data.data);
+      return res.data.data;
+    } else {
+      alert("시스템 오류가 발생했습니다.");
     }
   } catch (e) {
     console.error(e);
@@ -38,14 +54,42 @@ export const getPromptCode = async (socialId) => {
 };
 
 // 공개 비공개 설정
-export const updatePlotPublic = async (promptSeq) => {
+export const updatePlotPublic = async (promptSeq, isPublic) => {
   try {
-    const res = await axios.post(`${prefix}/prompt/${promptSeq}/status`);
-    console.log(res);
+    const res = await axios.post(
+      `${prefix}/prompt/${promptSeq}/status`,
+      isPublic
+    );
     if (res.status === 200) {
       return res.data.data;
     } else {
-      alert("플롯 조회에 실패했습니다.");
+      alert("시스템 오류가 발생했습니다.");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+// 제목 설정
+export const updatePlotTitle = async (promptSeq, title) => {
+  try {
+    const res = await axios.post(`${prefix}/prompt/${promptSeq}/title`, title);
+    if (res.status === 200) {
+      return res.data.data;
+    } else {
+      alert("시스템 오류가 발생했습니다.");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+// 제목 설정
+export const deletePlot = async (promptSeq) => {
+  try {
+    const res = await axios.post(`${prefix}/prompt/${promptSeq}/delete`);
+    if (res.status === 200) {
+      return res.data.data;
+    } else {
+      alert("시스템 오류가 발생했습니다.");
     }
   } catch (e) {
     console.error(e);
