@@ -39,6 +39,7 @@
           PR.TELL_TYPE                     AS TELL_TYPE,
           PR.CUSTOM                        AS CUSTOM,
           PR.TITLE                         AS TITLE,
+          PR.IS_PUBLIC                     AS IS_PUBLIC,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT
@@ -51,7 +52,7 @@
       LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
     WHERE PR.SOCIAL_ID = #{socialId}
     <if test="status != null and status != 'all'">
-      AND IS_PUBLIC = #{status}
+      AND PR.IS_PUBLIC = #{status}
     </if>
   </select>
 
@@ -79,6 +80,7 @@
           PR.TELL_TYPE                     AS TELL_TYPE,
           PR.CUSTOM                        AS CUSTOM,
           PR.TITLE                         AS TITLE,
+          PR.IS_PUBLIC                     AS IS_PUBLIC,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT
@@ -90,6 +92,50 @@
       LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
       LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
     WHERE PR.PROMPT_SEQ = #{promptSeq}
+  </select>
+
+    <select id="selectPlotBySearchParam" parameterType="PlotSearchParamDTO" resultType="PlotResponseDTO">
+    SELECT PR.PROMPT_SEQ                   AS PROMPT_SEQ,
+          PR.TYPE_CODE                     AS TYPE_CODE,
+          C_T.CODE_NAME                    AS TYPE,
+          PR.GENRE_CODE                    AS GENRE_CODE,
+          CASE
+            WHEN PR.GENRE_CODE = 'G999' THEN PRD.GENRE
+            ELSE C_G.CODE_NAME
+          END                              AS GENRE,
+          PR.TIMEFRAME_CODE                AS TIMEFRAME_CODE,
+          CASE
+            WHEN PR.TIMEFRAME_CODE = 'F999' THEN PRD.TIMEFRAME
+            ELSE C_F.CODE_NAME
+          END                              AS TIMEFRAME,
+          PR.THEME_CODE                    AS THEME_CODE,
+          CASE
+            WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
+            ELSE C_M.CODE_NAME
+          END                              AS THEME,
+          PR.EVENT                        AS EVENT,
+          PR.CHARACTERS                    AS CHARACTERS,
+          PR.TELL_TYPE                     AS TELL_TYPE,
+          PR.CUSTOM                        AS CUSTOM,
+          PR.TITLE                         AS TITLE,
+          PR.IS_PUBLIC                     AS IS_PUBLIC,
+          PL.PLOT_SEQ                      AS PLOT_SEQ,
+          PL.PLOT_CONTENT                  AS PLOT_CONTENT,
+          PR.CREATE_AT                     AS CREATE_AT
+    FROM TBL_PROMPT PR
+      LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
+      LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
+      LEFT JOIN TBL_CODE C_F ON PR.TIMEFRAME_CODE = C_F.CODE
+      LEFT JOIN TBL_CODE C_M ON PR.THEME_CODE = C_M.CODE
+      LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
+      LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
+    WHERE 1=1
+    <if test="socialId != null and socialId !=''">
+      AND PR.SOCIAL_ID = #{socialId}
+    </if>
+    <if test="title != null and title != ''">
+      AND PR.TITLE LIKE CONCAT ('%', #{title}, '%')
+    </if>
   </select>
 
   <insert id="insertPlotResult" parameterType="PlotDTO" useGeneratedKeys="true" keyProperty="plotSeq">
