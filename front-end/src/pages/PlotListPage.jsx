@@ -10,12 +10,13 @@ function PlotListPage() {
   const [plotCount, setPlotCount] = useState(0);
   const [plotList, setPlotList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   // 플롯 목록 가져오기
   useEffect(() => {
     const getData = async () => {
       setIsLoading(true);
-      const data = await getPlotList("1", "All");
+      const data = await getPlotList(userInfo.socialId, "All");
       // setPlotList(data);
       setIsLoading(false);
     };

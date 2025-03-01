@@ -5,11 +5,12 @@ import { savePlot } from "../../api/plotApi";
 function PlotInsertModal({ promptValues, setPromptValues }) {
   const [step, setStep] = useState("title");
   const [plotTitle, setPlotTitle] = useState("");
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   useEffect(() => {
     if (step === "folder") {
       const save = async () => {
-        const result = await savePlot("1", promptValues);
+        const result = await savePlot(userInfo, sicialId, promptValues);
       };
       save();
 

@@ -11,6 +11,7 @@ function PlotHeader({ isDetail, plotCount }) {
   const [keyword, setKeyword] = useState("");
   const { plotList, setPlotList } = useContext(LocaleContext);
   const navigate = useNavigate();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   // 필터 버튼 배열
   const filterButtonArr = [
@@ -56,7 +57,7 @@ function PlotHeader({ isDetail, plotCount }) {
       } else if (id.includes("Private")) {
         isPublic = "N";
       }
-      const data = await getPlotList("1", isPublic);
+      const data = await getPlotList(userInfo.socialId, isPublic);
       setPlotList(data);
     };
     getData();
@@ -88,7 +89,7 @@ function PlotHeader({ isDetail, plotCount }) {
   // 키워드로 플롯 검색
   const searchByKeyword = () => {
     const search = async () => {
-      const data = await searchPlotList("1", keyword);
+      const data = await searchPlotList(userInfo.socialId, keyword);
       setPlotList(data);
     };
     search();
