@@ -1,4 +1,4 @@
-import "../../styles/modal/PlotInsertModal.css";
+import "../../styles/modal/plotInsertModal.css";
 import { useEffect, useState } from "react";
 import { savePlot } from "../../api/plotApi";
 

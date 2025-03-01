@@ -17,7 +17,7 @@
     "react-select": "^5.10.0",
     "uuid": "^11.1.0"
   },
-  "proxy": "http://localhost:8080",
+  "proxy": "http://211.188.50.43:8080",
   "devDependencies": {
     "@eslint/js": "^9.19.0",
     "@types/react": "^19.0.8",

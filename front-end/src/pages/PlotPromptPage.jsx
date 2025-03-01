@@ -1,4 +1,4 @@
-import "../styles/PlotPromptPage.css";
+import "../styles/plotPromptPage.css";
 import PlotPromptLeft from "../components/PlotPromptLeft";
 import PlotPromptRight from "../components/PlotPromptRight";
 import Loading from "../components/Loading";
