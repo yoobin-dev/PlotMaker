@@ -46,12 +46,18 @@ public class PlotController {
     return ResponseEntity.ok().body(response);
   }
 
-  @PostMapping("/{socialId}")
+  @PostMapping("/make")
+  public ResponseEntity <ApiResponse<PlotResponseDTO>> makePlot(@RequestBody PlotRequestDTO request){
+    PlotResponseDTO plot = plotService.makePlot(request);
+    ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
+    return ResponseEntity.ok().body(response);
+  }
+
+  @PostMapping("/{socialId}/save")
   public ResponseEntity<ApiResponse<PlotResponseDTO>> makePlot(@PathVariable String socialId,
-    @RequestBody PlotRequestDTO request)
+    @RequestBody PlotResponseDTO request)
   {
-    request.setSocialId(socialId);
-    PlotResponseDTO plot = plotService.insertPrompt(request);
+    PlotResponseDTO plot = plotService.savePlot(socialId, request);
     ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
     return ResponseEntity.ok().body(response);
   }
