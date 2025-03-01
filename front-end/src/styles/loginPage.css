@@ -1,3 +1,40 @@
+#loginBackground img {
+  position: absolute;
+}
+#login_1 {
+  left: -23%;
+  top: -35%;
+  opacity: 35%;
+  transform: rotate(-209deg);
+  height: 894px;
+}
+#login_2 {
+  left: 80%;
+  top: -20%;
+  opacity: 60%;
+  transform: rotate(-351deg);
+  height: 668px;
+}
+#login_3 {
+  left: -21%;
+  top: 58%;
+  opacity: 55%;
+  height: 704px;
+}
+#login_4 {
+  left: 70%;
+  top: 72%;
+  opacity: 30%;
+  transform: rotate(-387deg);
+  height: 900px;
+}
+#login_5 {
+  left: 39%;
+  top: -1%;
+  opacity: 35%;
+  height: 704px;
+}
+
 #loginBackground {
   height: 100%;
   width: 100%;
@@ -8,6 +45,7 @@
   text-align: center;
   background-color: #111;
   position: relative;
+  overflow: hidden;
 }
 
 #loginTop {
