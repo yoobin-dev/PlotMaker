@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PlotResponseDTO {
   
+  private String socialId;
   private long promptSeq;
   private String categoryCode;
   private String category;

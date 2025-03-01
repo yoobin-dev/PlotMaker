@@ -4,7 +4,8 @@ import java.util.List;
 
 public interface PlotService {
 
-  public PlotResponseDTO insertPrompt(PlotRequestDTO request);
+  public PlotResponseDTO makePlot(PlotRequestDTO request);
+  public PlotResponseDTO savePlot(String socialId, PlotResponseDTO response);
   public List<PlotResponseDTO> searchPlot(PlotSearchParamDTO param);
   
 }
