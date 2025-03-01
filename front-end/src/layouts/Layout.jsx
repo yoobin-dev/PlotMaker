@@ -13,10 +13,14 @@ const Layout = () => {
     }, 3000);
   });
 
+  const handleClick = () => {
+    setIsLoading(true);
+  }
+
   return (
     <>
       <div className="d-flex h-100">
-        <SideMenuList />
+        <SideMenuList handleClick={handleClick} />
         <Main>{isLoading ? <Loading></Loading> : <Outlet />}</Main>
       </div>
     </>

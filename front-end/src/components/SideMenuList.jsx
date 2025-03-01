@@ -18,7 +18,7 @@ function SideMenu({ id, icon, title, onClick }) {
   );
 }
 
-function SideMenuList({ nickName = "무명 작가" }) {
+function SideMenuList({ nickName = "무명 작가", handleClick }) {
   const [menuIdx, setMenuIdx] = useState("1");
   const navigate = useNavigate();
 
@@ -63,6 +63,8 @@ function SideMenuList({ nickName = "무명 작가" }) {
 
     const target = document.getElementById(`menu_${menuIdx}`);
     target.classList.add("active");
+
+    handleClick();
   }, [menuIdx]);
 
   return (
