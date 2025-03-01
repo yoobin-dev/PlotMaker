@@ -2,8 +2,27 @@ import "../styles/plotPromptRight.css";
 import "../styles/common.css";
 import "../styles/plotButton.css";
 import PlotButton from "./PlotButton";
+import { useEffect } from "react";
 
 function PlotPromptRight() {
+  const buildPlot = () => {
+    // 플롯 내용 (2초 소요됨)
+    const plotPromptResult = document.getElementById("plotPromptResult");
+    plotPromptResult.classList.add("goDown");
+
+    // 접근 이미지
+    const loadingAccess = document.getElementById("plotPromptLoadingAccess");
+    loadingAccess.classList.add("goRight");
+
+    // 응답 대기 이미지
+    const loadingWaiting = document.getElementById("plotPromptLoadingWaiting");
+    // loadingWaiting.classList.remove("d-none");
+  };
+
+  useEffect(() => {
+    buildPlot();
+  });
+
   return (
     <div id="plotPromptRightBox">
       <PlotPromptResult></PlotPromptResult>

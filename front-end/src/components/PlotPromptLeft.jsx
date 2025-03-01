@@ -180,29 +180,11 @@ function PlotPromptLeft() {
       contents: [],
     },
     {
-      id: "speech",
-      title: "작품의 문체",
-      extra: "를 선택하거나 입력해주세요.",
+      id: "event",
+      title: "작품의 사건",
+      extra: "을 입력해주세요.",
       color: "bg_green_m",
       contents: [{ value: "999", label: "+ 직접 입력" }],
-    },
-    {
-      id: "character",
-      title: "작품의 등장 인물 수",
-      extra: "를 선택해주세요.",
-      color: "bg_blue_m",
-      contents: [
-        { value: 1, label: "1명" },
-        { value: 2, label: "2명" },
-        { value: 3, label: "3명" },
-        { value: 4, label: "4명" },
-        { value: 5, label: "5명" },
-        { value: 6, label: "6명" },
-        { value: 7, label: "7명" },
-        { value: 8, label: "8명" },
-        { value: 9, label: "9명" },
-        { value: 10, label: "10명" },
-      ],
     },
     {
       id: "tellType",
@@ -229,7 +211,7 @@ function PlotPromptLeft() {
     genre: "",
     timeframe: "",
     theme: "",
-    speech: "",
+    event: "",
     character: "",
     tellType: "",
     custom: "",
@@ -260,7 +242,7 @@ function PlotPromptLeft() {
           !promptInput.classList.contains("selected") &&
           btnId !== "custom"
         ) {
-          setPercent((prev) => Math.min(prev + 100 / 7, 100));
+          setPercent((prev) => Math.min(prev + 100 / 6, 100));
           setSelectedPrompt((prev) => [...prev, btnId]);
           // 불변성을 유지하여 promptValues 업데이트
           setPromptValues((prev) => ({
@@ -282,7 +264,7 @@ function PlotPromptLeft() {
           btnId !== "custom" &&
           !promptInput.classList.contains("selected")
         ) {
-          setPercent((prev) => Math.min(prev - 100 / 7, 100));
+          setPercent((prev) => Math.min(prev - 100 / 6, 100));
           setSelectedPrompt((prev) => prev.filter((prpt) => prpt !== btnId));
           setPromptValues((prev) => ({
             ...prev,
@@ -315,7 +297,7 @@ function PlotPromptLeft() {
       console.log(target.classList);
       console.log(!target.classList.contains("selected"));
       if (percent <= 100 && !target.classList.contains("selected")) {
-        setPercent((prev) => Math.min(prev + 100 / 7, 100));
+        setPercent((prev) => Math.min(prev + 100 / 6, 100));
       }
       setSelectedPrompt((prev) => [...prev, e.value]);
       setPromptValues((prev) => ({ ...prev, [e.value]: e.value }));

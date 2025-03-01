@@ -10,7 +10,7 @@ const Layout = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 500);
   });
 
   const handleClick = () => {
