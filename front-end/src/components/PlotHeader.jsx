@@ -363,7 +363,7 @@ function SortingMenu({ sortingOn, plotList, setPlotList, setSortingOn }) {
       }
       // 날짜 비교
       if (Date.parse(a[sort]) && Date.parse(b[sort])) {
-        return order === "asc"
+        return order === "desc"
           ? new Date(a[sort]) - new Date(b[sort])
           : new Date(b[sort]) - new Date(a[sort]);
       }

@@ -178,3 +178,13 @@ select::-ms-expand {
   color: white !important;
   cursor: pointer !important;
 }
+
+#continuePlotBtn {
+  border-radius: 999px;
+  border: 2px solid var(--Grayscale-BLACK, #000);
+  padding: 16px 44px;
+  cursor: pointer;
+}
+#continuePlotBtn:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}

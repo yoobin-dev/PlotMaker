@@ -46,6 +46,11 @@ const LoginPage = () => {
         <div id="clova">
           <img src="/logo_clova.png" />
         </div>
+        <img id="login_1" src="/login_1.png"></img>
+        <img id="login_2" src="/login_2.png"></img>
+        <img id="login_3" src="/login_3.png"></img>
+        <img id="login_4" src="/login_4.png"></img>
+        <img id="login_5" src="/login_5.png"></img>
       </div>
     </>
   );

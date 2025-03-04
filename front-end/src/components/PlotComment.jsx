@@ -17,8 +17,6 @@ function PlotComment(plot) {
 
   const handleDelete = async (comment) => {
     const result = await deleteComment(comment.commentSeq);
-    alert(result);
-
     // 삭제된 댓글을 제외한 새로운 배열로 상태 업데이트
     setCommentList((prev) =>
       prev.filter((c) => c.commentSeq !== comment.commentSeq)

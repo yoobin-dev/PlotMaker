@@ -28,7 +28,11 @@ function PlotPromptSelect({
   handleSelect,
   handleTextarea,
 }) {
-  const prptValue = promptValues[plotDetail.id];
+  let prptValue = {
+    id: plotDetail.id,
+    value: promptValues[plotDetail.id + "Code"],
+    label: promptValues[plotDetail.id],
+  };
 
   let options = [];
   // select2에 사용하기 위한 options 객체로 만들기
@@ -62,7 +66,7 @@ function PlotPromptSelect({
           // 문체, 성격, 고유 설정은 select없이 textarea 노출
           textPrpt.includes(plotDetail.id) ? "" : "d-none"
         }`}
-        value={prptValue || ""}
+        values={prptValue || ""}
         maxLength={100}
         onChange={(e) => {
           handleTextarea(e);
@@ -88,12 +92,15 @@ function PlotPromptInputBox({
   handleTextarea,
   percent,
   promptValues,
+  setPromptValues,
   makePlotPrompt,
+  isContinue,
 }) {
+  // ${isContinue ? "d-none" : ""}
   return (
-    <div id="plotPromptBox" className="shadow_gray_30 no_scroll">
+    <div id="plotPromptBox" className={`shadow_gray_30 no_scroll`}>
       {promptDetail.map((d) => (
-        <div key={d.id} className="plotPromptBoxInner">
+        <div key={d.id} className={`plotPromptBoxInner`}>
           <div className="promptTitle ">
             <div className="title_3 ft_gray_2 d-flex">
               <div className={`promptColor ${d.color}`}></div>
@@ -127,12 +134,13 @@ function PlotPromptInputBox({
             ></div>
           </div>
           <div id={`prompt_${d.id}`}>
-            <div className="promptInput">
+            <div className={`promptInput`}>
               <PlotPromptSelect
                 plotDetail={d}
                 promptValues={promptValues}
                 handleSelect={handleSelect}
                 handleTextarea={handleTextarea}
+                isContinue={isContinue}
               ></PlotPromptSelect>
             </div>
           </div>
@@ -149,12 +157,30 @@ function PlotPromptInputBox({
         >
           작품 만들기
         </div>
+        <div
+          id="continuePlotBtn"
+          // 상세에서 이어쓰기했을 경우
+          className={`ft_black ${isContinue ? "" : "d-none"}`}
+          onClick={() => {
+            // 제목 입력 모달 열기
+            const modal = document.getElementById("plotInsertModalBackground");
+            modal.classList.remove("d-none");
+            setPromptValues((prev) => ({ ...prev, continue: true }));
+          }}
+        >
+          저장 및 이어쓰기
+        </div>
       </div>
     </div>
   );
 }
 
-function PlotPromptLeft({ setCreate, promptValues, setPromptValues }) {
+function PlotPromptLeft({
+  setCreate,
+  promptValues,
+  setPromptValues,
+  isContinue,
+}) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const promptDetailObj = [
     {
@@ -347,16 +373,24 @@ function PlotPromptLeft({ setCreate, promptValues, setPromptValues }) {
       e.target.classList.add("d-none");
       const plotTitle = document.getElementById("plotPromptResultTitle");
       const plotContent = document.getElementById("plotPromptResultContents");
+      const continueBtn = document.getElementById("continuePlotBtn");
+
+      // 우측 화면 작성으로 변경
       setCreate(true);
+
       const returnData = await makePlot(promptValues);
       setPromptValues(returnData);
       plotContent.innerText = returnData.plotContent;
       plotTitle.innerText = returnData.category;
+
+      // 우측 화면 작성글 노출로 변경
       setCreate("finish");
+      continueBtn.classList.remove("d-none");
     }
   };
 
   useEffect(() => {
+    // 프롬프트 코드 조회
     const getCodeData = async () => {
       const prptdata = await getPromptCode(userInfo.socialId);
 
@@ -371,12 +405,30 @@ function PlotPromptLeft({ setCreate, promptValues, setPromptValues }) {
         }))
       );
     };
-
     getCodeData();
+
+    // 상세에서 이어쓰기 할 경우 즉시 실행
+    if (isContinue) {
+      // 우측 화면 작성으로 변경
+      setCreate(true);
+      console.log(isContinue);
+      const continuePlot = async () => {
+        const returnData = await makePlot(isContinue);
+        setPromptValues(returnData);
+        const plotTitle = document.getElementById("plotPromptResultTitle");
+        const plotContent = document.getElementById("plotPromptResultContents");
+
+        plotContent.innerText = returnData.plotContent;
+        plotTitle.innerText = returnData.category;
+        // 우측 화면 작성글 노출로 변경
+        setCreate("finish");
+      };
+      continuePlot();
+    }
   }, []);
 
   return (
-    <div id="plotPromptLeftBox">
+    <div id="plotPromptLeftBox" className={`${isContinue ? "d-none" : ""}`}>
       <PlotPromptProgressBar percent={percent}></PlotPromptProgressBar>
       <PlotPromptInputBox
         promptDetail={promptDetail}
@@ -385,7 +437,9 @@ function PlotPromptLeft({ setCreate, promptValues, setPromptValues }) {
         handleTextarea={handleTextarea}
         percent={percent}
         promptValues={promptValues}
+        setPromptValues={setPromptValues}
         makePlotPrompt={makePlotPrompt}
+        isContinue={isContinue}
       ></PlotPromptInputBox>
     </div>
   );

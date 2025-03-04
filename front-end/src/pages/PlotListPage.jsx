@@ -16,8 +16,8 @@ function PlotListPage() {
   useEffect(() => {
     const getData = async () => {
       setIsLoading(true);
+
       const data = await getPlotList(userInfo.socialId, "All");
-      // setPlotList(data);
       setIsLoading(false);
     };
     getData();
