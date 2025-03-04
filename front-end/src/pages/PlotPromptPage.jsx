@@ -24,6 +24,8 @@ function PlotPromptPage() {
     custom: "",
     isPublic: "",
   });
+  // 상세 페이지에서 이어쓰기 할 경우 가져온 promptValues
+  const [isContinue, setIsContinue] = useState(location.state);
 
   useEffect(() => {
     if (location.state?.fadeIn) {
@@ -42,6 +44,7 @@ function PlotPromptPage() {
           setCreate={setCreate}
           promptValues={promptValues}
           setPromptValues={setPromptValues}
+          isContinue={isContinue}
         ></PlotPromptLeft>
         <PlotPromptRight
           create={create}

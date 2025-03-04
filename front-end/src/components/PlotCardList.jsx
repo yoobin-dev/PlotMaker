@@ -132,7 +132,7 @@ function PlotCard({
     <div id={`card_${info.promptSeq}`} className="plotCard">
       <div className="plotCardTitle">
         <div className="title heading_1 ft_gray_4" onClick={goToDetail}>
-          {info.title}
+          {info.title ? "스승과 함께" : "스승과 함께"}
         </div>
         <PlotCardTitleToggle
           id={`burger_${info.promptSeq}`}

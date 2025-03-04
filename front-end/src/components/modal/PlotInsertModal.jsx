@@ -7,12 +7,19 @@ function PlotInsertModal({ promptValues, setPromptValues }) {
   const [plotTitle, setPlotTitle] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
+  console.log(promptValues);
+
   useEffect(() => {
     if (step === "folder") {
       const save = async () => {
-        const result = await savePlot(userInfo, sicialId, promptValues);
+        const result = await savePlot(userInfo, "1", promptValues);
       };
       save();
+
+      // "저장 및 이어쓰기" 시 실행할 API
+      if (promptValues.isContinue) {
+        alert("이어쓰기");
+      }
 
       // 폴더 고도화 시 삭제
       const bg = document.getElementById("plotInsertModalBackground");
@@ -65,7 +72,6 @@ function PlotInsertTitle({
   promptValues,
   setPromptValues,
 }) {
-  console.log(plotTitle);
   const stepAfterTitle = () => {
     const title = document.getElementById("title_name");
     setPromptValues((prev) => ({ ...prev, title: title.value }));
@@ -90,6 +96,7 @@ function PlotInsertTitle({
           className="heading_1"
           value={plotTitle}
           onChange={handleTitle}
+          autoComplete="off"
         ></input>
         <span className="caption_1 ft_gray_94" style={{ marginLeft: "12px" }}>
           {plotTitle.length}/50

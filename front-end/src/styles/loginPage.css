@@ -1,5 +1,6 @@
 #loginBackground > img {
   position: absolute;
+  z-index: 0;
 }
 #login_1 {
   left: -23%;
@@ -56,6 +57,7 @@
   align-items: center;
   text-align: center;
   margin-top: 90px;
+  z-index: 9;
 }
 
 #clova {
