@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 function PlotButton({
   icon,
   name,
@@ -7,6 +9,9 @@ function PlotButton({
   promptValues,
   makePlotPrompt,
 }) {
+  const navigate = useNavigate();
+
+  // 버튼 색상에 따른 배경과 폰트색
   let bgColor = "";
   let ftColor = "";
 
@@ -26,6 +31,11 @@ function PlotButton({
       modal.classList.remove("d-none");
     } else if (name === "내보내기") {
       alert("서비스 준비중입니다.");
+    } else if (name == "이어쓰기") {
+      if (isDetail) {
+        const modal = document.getElementById("confirmModalBackground");
+        modal.classList.remove("d-none");
+      }
     }
   };
 

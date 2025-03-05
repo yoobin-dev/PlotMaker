@@ -93,12 +93,8 @@ function PlotPromptResult() {
         id="plotPromptResult"
         className="shadow_gray_30 body_main ft_black h-100 no_scroll"
       >
-        <div id="plotPromptResultTitle">소설 01</div>
-        <div id="plotPromptResultContents">
-          내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-          내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-          내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.니다.내용입니다.내용입니다.내용입니다.
-        </div>
+        <div id="plotPromptResultTitle"></div>
+        <div id="plotPromptResultContents"></div>
       </div>
       <div id="plotPromptLoadingAccess" className="">
         <img src="loading_prompt_acess.gif" className="access"></img>
