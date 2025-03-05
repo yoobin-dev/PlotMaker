@@ -157,19 +157,6 @@ function PlotPromptInputBox({
         >
           작품 만들기
         </div>
-        <div
-          id="continuePlotBtn"
-          // 상세에서 이어쓰기했을 경우
-          className={`ft_black ${isContinue ? "" : "d-none"}`}
-          onClick={() => {
-            // 제목 입력 모달 열기
-            const modal = document.getElementById("plotInsertModalBackground");
-            modal.classList.remove("d-none");
-            setPromptValues((prev) => ({ ...prev, continue: true }));
-          }}
-        >
-          저장 및 이어쓰기
-        </div>
       </div>
     </div>
   );
@@ -370,22 +357,23 @@ function PlotPromptLeft({
     if (percent < 100) {
       return;
     } else {
-      e.target.classList.add("d-none");
+      e.target.classList.remove("activation");
       const plotTitle = document.getElementById("plotPromptResultTitle");
       const plotContent = document.getElementById("plotPromptResultContents");
-      const continueBtn = document.getElementById("continuePlotBtn");
+      const plotPromptResult = document.getElementById("plotPromptResult");
 
       // 우측 화면 작성으로 변경
-      setCreate(true);
+      setCreate("reWrite");
 
       const returnData = await makePlot(promptValues);
       setPromptValues(returnData);
       plotContent.innerText = returnData.plotContent;
       plotTitle.innerText = returnData.category;
+      e.target.innerText = "다시쓰기";
+      e.target.classList.add("activation");
 
       // 우측 화면 작성글 노출로 변경
       setCreate("finish");
-      continueBtn.classList.remove("d-none");
     }
   };
 

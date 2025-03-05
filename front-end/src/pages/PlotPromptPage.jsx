@@ -51,6 +51,7 @@ function PlotPromptPage() {
           setCreate={setCreate}
           promptValues={promptValues}
           setPromptValues={setPromptValues}
+          isContinue={isContinue}
         ></PlotPromptRight>
       </div>
     </>

@@ -5,6 +5,9 @@
   height: 100%;
   position: relative;
 }
+#plotPromptRightBox.w-70 {
+  width: 70% !important;
+}
 
 #plotPromptResult {
   width: calc(100% - 80px);
@@ -71,7 +74,10 @@
   gap: 16px;
   margin-top: 48px;
   margin-bottom: 20px;
-  width: calc(100% - 35px);
+  width: 100%;
   position: absolute;
   bottom: -20px;
+}
+#promptBtnBox.continue {
+  width: calc(100% - 32px);
 }
