@@ -7,12 +7,10 @@ function PlotInsertModal({ promptValues, setPromptValues }) {
   const [plotTitle, setPlotTitle] = useState("");
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-  console.log(promptValues);
-
   useEffect(() => {
     if (step === "folder") {
       const save = async () => {
-        const result = await savePlot(userInfo, "1", promptValues);
+        const result = await savePlot("1", promptValues);
       };
       save();
 

@@ -18,9 +18,10 @@ export const makePlot = async (promptObj) => {
 };
 // 플롯 저장하기
 export const savePlot = async (socialId, promptObj) => {
-  console.log(promptObj);
+  console.log("저장 객체 " + promptObj);
   try {
     const res = await axios.post(`${prefix}/plot/${socialId}/save`, promptObj);
+    console.log(res);
     if (res.status === 200) {
       return res.data.data;
     } else {

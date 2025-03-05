@@ -62,7 +62,6 @@ function PlotDetailPage() {
     }, 500);
   }, []);
 
-  console.log(plot);
   return (
     <LocaleContext.Provider value={{ plotList, setPlotList }}>
       <ConfirmModal
