@@ -5,7 +5,13 @@ import PlotButton from "./PlotButton";
 import { useEffect } from "react";
 import { makePlot } from "../api/plotApi";
 
-function PlotPromptRight({ create, setCreate, promptValues, setPromptValues }) {
+function PlotPromptRight({
+  create,
+  setCreate,
+  promptValues,
+  setPromptValues,
+  isContinue,
+}) {
   const buildPlot = () => {
     // 로딩이미지 실행
     if (create) {
@@ -56,9 +62,12 @@ function PlotPromptRight({ create, setCreate, promptValues, setPromptValues }) {
   });
 
   return (
-    <div id="plotPromptRightBox">
+    <div id="plotPromptRightBox" className={`${isContinue ? "w-70" : ""}`}>
       <PlotPromptResult></PlotPromptResult>
-      <div id="promptBtnBox" className="d-none">
+      <div
+        id="promptBtnBox"
+        className={`d-none ${isContinue ? "continue" : ""}`}
+      >
         <PlotButton
           name="다시쓰기"
           caption="작품을 다시 써볼래요."
@@ -66,6 +75,7 @@ function PlotPromptRight({ create, setCreate, promptValues, setPromptValues }) {
           icon="recycle_white.png"
           promptValues={promptValues}
           makePlotPrompt={makePlotPrompt}
+          isContinue={isContinue}
         ></PlotButton>
         <PlotButton
           name="저장하기"
@@ -73,6 +83,7 @@ function PlotPromptRight({ create, setCreate, promptValues, setPromptValues }) {
           color="white"
           icon="save_black.svg"
           promptValues={promptValues}
+          isContinue={isContinue}
         ></PlotButton>
         <PlotButton
           name="내보내기"
@@ -80,6 +91,7 @@ function PlotPromptRight({ create, setCreate, promptValues, setPromptValues }) {
           color="white"
           icon="export_medium.svg"
           promptValues={promptValues}
+          isContinue={isContinue}
         ></PlotButton>
       </div>
     </div>

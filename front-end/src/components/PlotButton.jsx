@@ -8,6 +8,7 @@ function PlotButton({
   isDetail,
   promptValues,
   makePlotPrompt,
+  isContinue,
 }) {
   const navigate = useNavigate();
 
@@ -38,12 +39,15 @@ function PlotButton({
       }
     }
   };
-
+  console.log(name);
+  console.log(isContinue ? "true" : "false");
   return (
     <div
-      className={`promptBtn ${bgColor} ${name === "내보내기" ? "dashed" : ""} ${
-        isDetail ? "bigSize" : ""
-      }`}
+      className={`promptBtn ${bgColor} 
+      ${name === "내보내기" ? "dashed" : ""} 
+      ${isDetail ? "bigSize" : ""} 
+      ${!isContinue && name === "다시쓰기" ? "d-none" : ""}
+      ${isContinue ? "w-33" : ""}`}
       onClick={handlePlotButton}
     >
       <div className="promptBtnIcon">
