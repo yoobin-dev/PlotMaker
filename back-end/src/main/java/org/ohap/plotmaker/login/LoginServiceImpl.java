@@ -1,6 +1,7 @@
 package org.ohap.plotmaker.login;
 
 import org.ohap.plotmaker.mapper.LoginMapper;
+import org.ohap.plotmaker.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;

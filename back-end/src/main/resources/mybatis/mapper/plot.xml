@@ -6,8 +6,8 @@
 <mapper namespace="org.ohap.plotmaker.mapper.PlotMapper">
 
   <insert id="insertPromptMST" parameterType="PlotRequestDTO" useGeneratedKeys="true" keyProperty="promptSeq">
-    INSERT INTO TBL_PROMPT ( SOCIAL_ID, TYPE_CODE, GENRE_CODE, TIMEFRAME_CODE, THEME_CODE, EVENT, TELL_TYPE, CUSTOM )
-    VALUES ( #{socialId}, #{categoryCode}, #{genreCode}, #{timeframeCode}, #{themeCode}, #{event}, #{tellType}, #{custom} )
+    INSERT INTO TBL_PROMPT ( SOCIAL_ID, TYPE_CODE, GENRE_CODE, TIMEFRAME_CODE, THEME_CODE, EVENT, TELL_TYPE, CUSTOM, TITLE, IS_PUBLIC, CREATE_AT )
+    VALUES ( #{socialId}, #{categoryCode}, #{genreCode}, #{timeframeCode}, #{themeCode}, #{event}, #{tellType}, #{custom}, #{title}, #{isPublic}, NOW() )
   </insert>
 
   <insert id="insertPromptDTL" parameterType="PlotRequestDTO">
