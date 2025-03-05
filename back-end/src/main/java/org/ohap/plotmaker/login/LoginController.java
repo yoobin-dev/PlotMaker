@@ -3,6 +3,7 @@ package org.ohap.plotmaker.login;
 import java.util.Map;
 
 import org.ohap.plotmaker.common.ApiResponse;
+import org.ohap.plotmaker.user.UserDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

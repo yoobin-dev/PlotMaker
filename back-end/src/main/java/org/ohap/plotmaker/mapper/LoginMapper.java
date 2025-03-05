@@ -1,7 +1,7 @@
 package org.ohap.plotmaker.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.ohap.plotmaker.login.UserDTO;
+import org.ohap.plotmaker.user.UserDTO;
 
 @Mapper
 public interface LoginMapper {

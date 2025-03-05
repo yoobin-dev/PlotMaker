@@ -2,14 +2,21 @@ import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import NaverLoginButton from "../components/NaverLoginButton";
+import LoginModalButton from "../components/LoginModalButton";
 import GuestModal from "../components/modal/GuestModal";
 
 import "../styles/loginPage.css";
 import "../styles/common.css";
+import LoginModal from "../components/modal/LoginModal";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  const handleLogin = (id, pw) => {
+    console.log("아이디: ", id, " pw: ", pw);
+  }
 
   return (
     <>
@@ -22,6 +29,11 @@ const LoginPage = () => {
             navigate("/prompt");
           }}
         />
+        <LoginModal
+          isOpen={isLoginModalOpen}
+          onClose={() => setIsLoginModalOpen(false)}
+          onLogin={handleLogin}
+        />
         <div id="loginTop">
           <div id="title" className="ft_white">
             <div className="main_1">이야기가 필요한 순간,</div>
@@ -33,6 +45,9 @@ const LoginPage = () => {
             </div>
           </div>
 
+          <LoginModalButton 
+            onClick={() => setIsLoginModalOpen(true)}
+          />
           <NaverLoginButton />
 
           <div

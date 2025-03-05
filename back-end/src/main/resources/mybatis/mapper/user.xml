@@ -23,4 +23,9 @@
     WHERE SOCIAL_ID = #{socialId}
   </update>
 
+  <insert id="insertUser" parameterType="UserRequestDTO">
+    INSERT INTO TBL_USER ( LOGIN_TYPE, SOCIAL_ID, EMAIL, USER_PW, GENDER, AGE, BIRTHYEAR, CREATE_AT )
+    VALUES ( #{loginType}, #{socialId}, #{email}, #{userPw}, #{gender}, #{age}, #{birthyear}, now() )
+  </insert>
+
 </mapper>

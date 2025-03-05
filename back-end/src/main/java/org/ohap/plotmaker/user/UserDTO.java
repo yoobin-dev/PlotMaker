@@ -1,4 +1,4 @@
-package org.ohap.plotmaker.login;
+package org.ohap.plotmaker.user;
 
 import java.sql.Timestamp;
 

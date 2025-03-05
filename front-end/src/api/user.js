@@ -19,3 +19,15 @@ export const postSetNickname = async (socialId = "naver", nickname) => {
     return error;
   }
 };
+
+
+export const getEmailCheck = async (email) => {
+  try {
+    const response = await axios.get(`${prefix}/email/check`, {
+      params: { email },
+    });
+    return response.data;
+  } catch(error) {
+    return error;
+  }
+};

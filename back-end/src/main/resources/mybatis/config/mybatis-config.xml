@@ -11,7 +11,8 @@
 
   <typeAliases>
     <typeAlias alias="TempDTO"              type="org.ohap.plotmaker.temporary.TempDTO" />
-    <typeAlias alias="UserDTO"              type="org.ohap.plotmaker.login.UserDTO" />
+    <typeAlias alias="UserDTO"              type="org.ohap.plotmaker.user.UserDTO" />
+    <typeAlias alias="UserRequestDTO"       type="org.ohap.plotmaker.user.UserRequestDTO" />
     <typeAlias alias="PlotResponseDTO"      type="org.ohap.plotmaker.plot.PlotResponseDTO" />
     <typeAlias alias="PlotRequestDTO"       type="org.ohap.plotmaker.plot.PlotRequestDTO" />
     <typeAlias alias="PlotDTO"              type="org.ohap.plotmaker.plot.PlotDTO" />
