@@ -54,7 +54,7 @@ public class PlotController {
   }
 
   @PostMapping("/{socialId}/save")
-  public ResponseEntity<ApiResponse<PlotResponseDTO>> makePlot(@PathVariable String socialId,
+  public ResponseEntity<ApiResponse<PlotResponseDTO>> savePlot(@PathVariable String socialId,
     @RequestBody PlotResponseDTO request)
   {
     PlotResponseDTO plot = plotService.savePlot(socialId, request);
