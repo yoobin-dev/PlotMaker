@@ -5,5 +5,6 @@ import org.ohap.plotmaker.user.UserDTO;
 public interface LoginService {
   
   public UserDTO login(String socialId, String userPw);
+  public void deleteUser(String socialId, String userPw);
 
 }
