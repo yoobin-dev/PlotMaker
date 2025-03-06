@@ -380,7 +380,7 @@ function PlotPromptLeft({
   useEffect(() => {
     // 프롬프트 코드 조회
     const getCodeData = async () => {
-      const prptdata = await getPromptCode(userInfo.socialId);
+      const prptdata = await getPromptCode();
 
       setPromptDetail((prevState) =>
         prevState.map((e) => ({

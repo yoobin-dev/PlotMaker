@@ -73,7 +73,7 @@ export const searchPlotList = async (socialId, title) => {
 };
 
 // 프롬프트 코드 가져오기
-export const getPromptCode = async (socialId) => {
+export const getPromptCode = async () => {
   try {
     const response = await axios.get(`${prefix}/code`);
     if (response.data.success) {
