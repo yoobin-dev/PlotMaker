@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 public class PlotOrderParamDTO {
   
   private String socialId;
-  @Nullable private String status;
   @Nullable private String isPublic;
   @Nullable private String sortBy;
   @Nullable private String sortOrder;

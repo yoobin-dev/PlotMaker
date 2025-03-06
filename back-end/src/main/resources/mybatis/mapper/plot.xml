@@ -56,8 +56,8 @@
       LEFT JOIN TBL_COMMENT CM ON PR.PROMPT_SEQ = CM.PROMPT_SEQ
       LEFT JOIN TBL_LIKE LK ON PR.PROMPT_SEQ = LK.PROMPT_SEQ
     WHERE PR.SOCIAL_ID = #{socialId}
-    <if test="status != null and status != ''">
-      AND PR.IS_PUBLIC = #{status}
+    <if test="isPublic != null and isPublic != ''">
+      AND PR.IS_PUBLIC = #{isPublic}
     </if>
     GROUP BY PR.PROMPT_SEQ, PR.TYPE_CODE, PR.GENRE_CODE, PR.TIMEFRAME_CODE, PR.THEME_CODE,
             PR.EVENT, PR.CHARACTERS, PR.TELL_TYPE, PR.CUSTOM, PR.TITLE, PR.IS_PUBLIC,
