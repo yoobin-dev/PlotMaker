@@ -9,6 +9,7 @@ public interface PromptMapper {
   public PromptDTO findPromptOnlyByPromptSeq(String promptSeq);
   public int changePublicState(PromptDTO prompt);
   public int changeTitle(PromptDTO prompt);
+  public int deletePromptCascadeBySocialId(String socialId);
   public int deletePromptCascade(String promptSeq);
 
 }

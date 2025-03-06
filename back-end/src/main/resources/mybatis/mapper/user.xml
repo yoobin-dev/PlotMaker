@@ -28,4 +28,9 @@
     VALUES ( #{loginType}, #{socialId}, #{email}, #{userPw}, #{gender}, #{age}, #{birthyear}, now() )
   </insert>
 
+  <delete id="deleteUser" parameterType="String">
+    DELETE FROM TBL_USER
+    WHERE SOCIAL_ID = #{socialId}
+  </delete>
+
 </mapper>

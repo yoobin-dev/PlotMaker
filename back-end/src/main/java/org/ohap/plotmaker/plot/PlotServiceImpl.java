@@ -20,6 +20,12 @@ public class PlotServiceImpl implements PlotService {
   private final CodeMapper codeMapper;
   private final ClovaService clovaService;
 
+  public List<PlotResponseDTO> getPlotList(String socialId, PlotOrderParamDTO order){
+    order.setSocialId(socialId);
+    List<PlotResponseDTO> list = plotMapper.selectandOrderPlot(order);
+    return list;
+  }
+
   private void codeDefine(PlotRequestDTO request){
     String categoryCode = request.getCategoryCode();
     request.setCategory(codeMapper.selectCodeNameByCode(categoryCode));
@@ -38,7 +44,9 @@ public class PlotServiceImpl implements PlotService {
       .timeframeCode(request.getTimeframeCode()).timeframe(request.getTimeframe())
       .themeCode(request.getThemeCode()).theme(request.getTheme())
       .event(request.getEvent()).tellType(request.getTellType())
-      .custom(request.getCustom()).build();
+      .custom(request.getCustom())
+      .title(request.getTitle()).isPublic(request.getIsPublic())
+      .build();
       return result;
   }
 
@@ -85,7 +93,9 @@ public class PlotServiceImpl implements PlotService {
     .timeframeCode(response.getTimeframeCode()).timeframe(response.getTimeframe())
     .themeCode(response.getThemeCode()).theme(response.getTheme())
     .event(response.getEvent()).tellType(response.getTellType())
-    .custom(response.getCustom()).build();
+    .custom(response.getCustom())
+    .title(response.getTitle()).isPublic(response.getIsPublic())
+    .build();
     return result;
   }
 

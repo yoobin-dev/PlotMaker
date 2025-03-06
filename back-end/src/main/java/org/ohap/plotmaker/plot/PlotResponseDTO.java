@@ -31,6 +31,8 @@ public class PlotResponseDTO {
   private String custom;
   private String title;
   private String isPublic;
+  private int view;
+  private int likes;
   private long plotSeq;
   private String plotContent;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
@@ -38,7 +40,5 @@ public class PlotResponseDTO {
 
   private int comment;
 
-  @Builder.Default private int view = 0;
-  @Builder.Default private int like = 1;
 
 }

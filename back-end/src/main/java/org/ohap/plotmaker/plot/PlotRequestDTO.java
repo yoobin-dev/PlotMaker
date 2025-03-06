@@ -26,5 +26,7 @@ public class PlotRequestDTO {
   @Nullable private String event;
   @Nullable private String tellType;
   @Nullable private String custom;
+  private String title;
+  private String isPublic;
   
 }

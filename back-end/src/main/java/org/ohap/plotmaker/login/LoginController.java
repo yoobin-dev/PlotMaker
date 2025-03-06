@@ -4,8 +4,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.ohap.plotmaker.common.ApiResponse;
-import org.ohap.plotmaker.mapper.LoginMapper;
-import org.ohap.plotmaker.mapper.UserMapper;
 import org.ohap.plotmaker.user.UserDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +31,13 @@ public class LoginController {
       throw new NoSuchElementException("아이디 또는 비밀번호를 확인주세요.");
     }
     ApiResponse<UserDTO> response = ApiResponse.<UserDTO>builder().isSuccess(true).data(user).build();
+    return ResponseEntity.ok().body(response);
+  }
+
+  @PostMapping("/leave")
+  public ResponseEntity<ApiResponse<String>> deleteUser(@RequestBody LoginDTO request){
+    loginService.deleteUser(request.getSocialId(), request.getUserPw());
+    ApiResponse<String> response = ApiResponse.<String>builder().message("회원탈퇴 완료").build();
     return ResponseEntity.ok().body(response);
   }
   
