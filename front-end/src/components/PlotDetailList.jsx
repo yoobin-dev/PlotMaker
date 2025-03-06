@@ -4,7 +4,7 @@ import "../styles/common.css";
 import LocaleContext from "../context/LocaleContext"; // LocaleContext import
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
-function PlotDetailList() {
+function PlotDetailList({ setPlot }) {
   const { plotList, setPlotList } = useContext(LocaleContext);
   const [toggleOn, setToggleOn] = useState(false);
 
@@ -16,6 +16,7 @@ function PlotDetailList() {
       if (p.promptSeq === promptSeq) {
         plotTitle.innerText = p.title;
         plotContent.innerText = p.plotContent;
+        setPlot(p);
         break;
       }
     }
