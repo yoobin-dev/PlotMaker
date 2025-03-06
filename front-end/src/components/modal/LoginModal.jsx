@@ -13,8 +13,17 @@ const LoginModal = ({ isOpen, onLogin }) => {
   /* 로그인 관련 */
   const [id, setId] = useState('');
   const [pw, setPw] = useState('');
+  const isLoginActive = id && pw;
   
   const handleSubmitLogin = () => {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(id)) {
+      alert('이메일 형식을 확인해주세요.');
+      return;
+    }
+    if(!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/.test(pw)) {
+      alert('비밀번호 조합을 확인해주세요. (영문, 숫자, 특수문자 조합 8자리 이상)');
+      return;
+    }
     onLogin(id, pw);
   }
 
@@ -115,11 +124,8 @@ const LoginModal = ({ isOpen, onLogin }) => {
       const result = await postAddUser(form);
       const userData = result.data;
       sessionStorage.setItem("userInfo", JSON.stringify(userData));
-      if(userData.nickname == null){
-        navigate("/login/nickname");
-      } else {
-        navigate("/prompt");
-      }
+      // 여기 회원가입완료 안내창 있어야 할 지?
+      navigate("/login/nickname");
     } catch(error){
 
     }
@@ -127,9 +133,6 @@ const LoginModal = ({ isOpen, onLogin }) => {
 
   // 클래스 적용할 때 CclassName={form."이름"? errors."이름"? "오류(빨간색) 클래스명" : "정상(파란색) 클래스명" : ""} 이렇게 주면 될 듯
 
-  console.log('form', form);
-  console.log('confirm', confirmEmail);
-  console.log('err', errors);
   return (
     <div style={{ zIndex: "99"}}>
       {
@@ -156,6 +159,7 @@ const LoginModal = ({ isOpen, onLogin }) => {
           <LoginButton
             onClick={handleSubmitLogin} 
             title={'이메일로 로그인'}
+            disabled={!isLoginActive}
           />
           <span className="ft_white">회원이 아니신가요?</span>
           <span className="ft_white" onClick={() => setIsSignUp(true)}>회원가입 하기</span>
