@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Routes,
-  Route,
-  NavLink,
-  useNavigate,
-  Navigate,
-} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Profile from "../components/Profile";
 import "../styles/sideMenu.css";
 
@@ -21,6 +15,7 @@ function SideMenu({ id, icon, title, onClick }) {
 function SideMenuList({ nickName, handleClick }) {
   const [menuIdx, setMenuIdx] = useState("1");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const menuObj = [
     {
@@ -44,28 +39,22 @@ function SideMenuList({ nickName, handleClick }) {
   ];
 
   // 메뉴 선택 이벤트
-  function activeMenu(idx, path) {
-    setMenuIdx(idx);
-    localStorage.setItem("menuIdx", idx);
+  function activeMenu(path) {
     navigate(path);
   }
 
   // 메뉴 선택
   useEffect(() => {
-    const rememberMenu = localStorage.getItem(`menuIdx`);
-    setMenuIdx(rememberMenu);
+    const path = document.getElementById(location.pathname);
+    const activeMenu = document.getElementsByClassName("active");
 
-    // 기존 active 해제
-    const menuList = document.getElementsByClassName("sideMenu");
-    for (let menu of menuList) {
-      menu.classList.remove("active");
+    for (let a of activeMenu) {
+      a.classList.remove("active");
     }
 
-    const target = document.getElementById(`menu_${menuIdx}`);
-    target.classList.add("active");
-
+    path.classList.add("active");
     handleClick();
-  }, [menuIdx]);
+  }, [location]);
 
   return (
     <div id="sideMenuContainer" className="bg_gray_2">
@@ -73,14 +62,14 @@ function SideMenuList({ nickName, handleClick }) {
         {menuObj.map((d, i) => (
           <SideMenu
             key={i}
-            id={`menu_${d.idx}`}
+            id={d.path}
             icon={d.icon}
             title={d.title}
             onClick={() => {
               if (d.path === "/board") {
                 alert("서비스 준비중입니다.");
               } else {
-                activeMenu(d.idx, d.path);
+                activeMenu(d.path);
               }
             }}
           ></SideMenu>

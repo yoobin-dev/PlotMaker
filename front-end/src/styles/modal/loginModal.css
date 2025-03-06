@@ -1,0 +1,184 @@
+#loginModalBackground {
+  position: absolute;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 547px;
+  height: 920px;
+  z-index: 99;
+  border-radius: 20px;
+  box-shadow: 0px 4px 4px 0px rgba(102, 102, 102, 0.3);
+}
+
+.loginModalClose {
+  position: relative;
+  width: 100%;
+  height: 24px;
+}
+.loginModalClose .close1 {
+  position: absolute;
+  right: 20px;
+  top: -240px;
+  cursor: pointer;
+}
+.loginModalClose .close2 {
+  position: absolute;
+  right: 20px;
+  top: -22px;
+  cursor: pointer;
+}
+
+#loginInputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 95px;
+}
+
+.loginText {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.loginInput {
+  background-color: #000;
+  border: unset;
+  border-bottom: 1px solid #666;
+  width: 320px;
+  padding: 7px 0;
+}
+.loginInput:focus {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #666;
+}
+
+#loginButton {
+  width: 260px;
+  height: 52px;
+  background-color: unset;
+  border-radius: 8px;
+  border: 1px solid #762662;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+#loginModalFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+#joinButton {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#emailBox {
+  position: relative;
+  margin-bottom: 40px;
+}
+.status {
+  padding-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+  height: 16px;
+}
+
+#passwordBox {
+  margin-bottom: 64px;
+}
+
+.joinTitle {
+  margin-bottom: 86px;
+}
+
+#duplChkButton {
+  border-radius: 2px;
+  border: 0.3px solid var(--Grayscale-Gr_D, #ddd);
+  background: var(--Grayscale-Gr_1, #111);
+  padding: 4px;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+
+#personalTitle {
+  text-align: left;
+  margin-bottom: 36px;
+}
+
+#personalInfoBox {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+#birthYearBox {
+  display: flex;
+  flex-direction: column;
+  width: 60px;
+  gap: 8px;
+}
+
+#bitrhYearInput {
+  width: calc(100% - 20px);
+  background-color: unset;
+  border: none;
+  border-bottom: 1px solid #fff;
+  color: #fff;
+}
+#bitrhYearInput:focus {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #fff;
+}
+
+#genderRadioBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.genderRadio {
+  width: 68px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  border: 0.5px solid var(--Grayscale-WHITE, #fff);
+  margin-top: 8px;
+  cursor: pointer;
+}
+.genderRadio.selected {
+  color: #000;
+  background-color: #fff;
+}
+
+#joinFooter {
+  margin-top: 68px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+span.red {
+  color: #ca3737;
+}
+span.blue {
+  color: #1651f3;
+}
+
+#clapText {
+  margin: 24px 0;
+}

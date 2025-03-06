@@ -10,7 +10,8 @@ function PlotInsertModal({ promptValues, setPromptValues }) {
   useEffect(() => {
     if (step === "folder") {
       const save = async () => {
-        const result = await savePlot("1", promptValues);
+        console.log(userInfo);
+        const result = await savePlot(userInfo.socialId, promptValues);
       };
       save();
 

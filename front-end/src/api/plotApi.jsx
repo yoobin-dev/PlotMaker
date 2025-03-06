@@ -18,7 +18,6 @@ export const makePlot = async (promptObj) => {
 };
 // 플롯 저장하기
 export const savePlot = async (socialId, promptObj) => {
-  console.log("저장 객체 " + promptObj);
   try {
     const res = await axios.post(`${prefix}/plot/${socialId}/save`, promptObj);
     console.log(res);
@@ -33,11 +32,17 @@ export const savePlot = async (socialId, promptObj) => {
 };
 
 // 플롯 가져오기
-export const getPlotList = async (socialId, isPublic) => {
-  let url = `${prefix}/plot/${socialId}`;
+export const getPlotList = async (
+  socialId,
+  isPublic,
+  sortBy = "createAt",
+  sortOrder = "asc"
+) => {
+  console.log(socialId);
+  let url = `${prefix}/plot/${socialId}?sortBy=${sortBy}&sortOrder=${sortOrder}`;
 
   if (isPublic !== "All") {
-    url += `?isPublic=${isPublic}`;
+    url += `&isPublic=${isPublic}`;
   }
 
   try {
