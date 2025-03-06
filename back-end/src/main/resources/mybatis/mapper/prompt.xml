@@ -28,4 +28,9 @@
     WHERE PROMPT_SEQ = #{promptSeq}
   </delete>
 
+  <delete id="deletePromptCascadeBySocialId" parameterType="String">
+    DELETE FROM TBL_PROMPT
+    WHERE SOCIAL_ID = #{socialId}
+  </delete>
+
 </mapper>

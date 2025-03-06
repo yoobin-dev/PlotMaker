@@ -35,6 +35,13 @@ public class LoginController {
     ApiResponse<UserDTO> response = ApiResponse.<UserDTO>builder().isSuccess(true).data(user).build();
     return ResponseEntity.ok().body(response);
   }
+
+  @PostMapping("/leave")
+  public ResponseEntity<ApiResponse<String>> deleteUser(@RequestBody LoginDTO request){
+    loginService.deleteUser(request.getSocialId(), request.getUserPw());
+    ApiResponse<String> response = ApiResponse.<String>builder().message("회원탈퇴 완료").build();
+    return ResponseEntity.ok().body(response);
+  }
   
   @PostMapping("/naver")
   public ResponseEntity<ApiResponse<UserDTO>> naverLogin(@RequestBody Map<String, String> request){

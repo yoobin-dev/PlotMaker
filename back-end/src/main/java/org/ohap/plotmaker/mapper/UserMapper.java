@@ -11,5 +11,6 @@ public interface UserMapper {
   public int isNicknameDupl(String nickname);
   public int setNickname(String socialId, String nickname);
   public int insertUser(UserRequestDTO user);
+  public int deleteUser(String socialId);
 
 }
