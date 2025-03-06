@@ -33,10 +33,6 @@ export const getEmailCheck = async (email) => {
 };
 
 export const postAddUser = async (form) => {
-  try {
-    const response = await axios.post(`${prefix}`, form);
-    return response.data;
-  } catch(error){
-    console.error('err: ', error);
-  }
+  const response = await axios.post(`${prefix}`, form);
+  return response.data;
 }

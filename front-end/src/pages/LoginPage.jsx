@@ -8,14 +8,27 @@ import GuestModal from "../components/modal/GuestModal";
 import "../styles/loginPage.css";
 import "../styles/common.css";
 import LoginModal from "../components/modal/LoginModal";
+import { plotmakerLogin } from "../api/login";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  const handleLogin = (id, pw) => {
-    console.log("아이디: ", id, " pw: ", pw);
+  const handleLogin = async (id, pw) => {
+    try {
+      const result = await plotmakerLogin(id, pw);
+      const userData = result.data;
+      sessionStorage.setItem("userInfo", JSON.stringify(userData));
+      if (userData.nickname == null) {
+        navigate("/login/nickname");
+      } else {
+        navigate("/prompt");
+      }
+    } catch(error){
+      // 수정사항: 에러처리 해줄 것
+      console.log('err!: ', error);
+    }
   }
 
   return (
