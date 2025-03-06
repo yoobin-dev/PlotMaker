@@ -11,6 +11,12 @@
     WHERE SOCIAL_ID = #{socialId}
   </select>
 
+  <select id="findLoginInfoBySocialId" parameterType="String" resultType="LoginDTO">
+    SELECT SOCIAL_ID, USER_PW
+    FROM TBL_USER
+    WHERE SOCIAL_ID = #{socialId}
+  </select>
+
   <insert id="insertUser" parameterType="UserDTO">
     INSERT INTO TBL_USER ( LOGIN_TYPE, SOCIAL_ID, EMAIL, GENDER, AGE, BIRTHYEAR, CREATE_AT, LAST_LOGIN )
     VALUES ( #{loginType}, #{socialId}, #{email}, #{gender}, #{age}, #{birthyear}, now(), now() )

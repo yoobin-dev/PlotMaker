@@ -10,7 +10,7 @@ function PlotListPage() {
   const [plotCount, setPlotCount] = useState(0);
   const [plotList, setPlotList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
   // 플롯 목록 가져오기
   useEffect(() => {

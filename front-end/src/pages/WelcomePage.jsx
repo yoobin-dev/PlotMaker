@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const WelcomePage = () => {
   const location = useLocation();
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const WelcomePage = () => {
 };
 
 const WelcomePage2 = () => {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   const nickname = userInfo.nickname;
   const navigate = useNavigate();
   const [fadeOut, setFadeOut] = useState(false);

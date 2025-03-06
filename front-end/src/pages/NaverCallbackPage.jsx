@@ -20,7 +20,7 @@ const NaverCallbackPage = () => {
 
       try {
         const userData = await naverLogin(code, state);
-        localStorage.setItem("userInfo", JSON.stringify(userData));
+        sessionStorage.setItem("userInfo", JSON.stringify(userData));
         if (userData.nickname == null) {
           navigate("/login/nickname");
         } else {
