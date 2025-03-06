@@ -15,7 +15,7 @@
     VALUES ( #{genre}, #{timeframe}, #{theme}, #{promptSeq} )
   </insert>
 
-  <select id="selectPlotListBySocialId" parameterType="String" resultType="PlotResponseDTO">
+  <select id="selectandOrderPlot" parameterType="PlotOrderParamDTO" resultType="PlotResponseDTO">
     SELECT PR.PROMPT_SEQ                   AS PROMPT_SEQ,
           PR.TYPE_CODE                     AS CATEGORY_CODE,
           C_T.CODE_NAME                    AS CATEGORY,
@@ -34,12 +34,14 @@
             WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
             ELSE C_M.CODE_NAME
           END                              AS THEME,
-          PR.EVENT                        AS EVENT,
+          PR.EVENT                         AS EVENT,
           PR.CHARACTERS                    AS CHARACTERS,
           PR.TELL_TYPE                     AS TELL_TYPE,
           PR.CUSTOM                        AS CUSTOM,
           PR.TITLE                         AS TITLE,
           PR.IS_PUBLIC                     AS IS_PUBLIC,
+          PR.VIEW                          AS VIEW,
+          COUNT(DISTINCT LK.LIKE_SEQ)      AS LIKES,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
@@ -52,6 +54,66 @@
       LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
       LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
       LEFT JOIN TBL_COMMENT CM ON PR.PROMPT_SEQ = CM.PROMPT_SEQ
+      LEFT JOIN TBL_LIKE LK ON PR.PROMPT_SEQ = LK.PROMPT_SEQ
+    WHERE PR.SOCIAL_ID = #{socialId}
+    <if test="status != null and status != ''">
+      AND PR.IS_PUBLIC = #{status}
+    </if>
+    GROUP BY PR.PROMPT_SEQ, PR.TYPE_CODE, PR.GENRE_CODE, PR.TIMEFRAME_CODE, PR.THEME_CODE,
+            PR.EVENT, PR.CHARACTERS, PR.TELL_TYPE, PR.CUSTOM, PR.TITLE, PR.IS_PUBLIC,
+            PL.PLOT_SEQ, PL.PLOT_CONTENT, PR.CREATE_AT, C_T.CODE_NAME, C_G.CODE_NAME,
+            C_F.CODE_NAME, C_M.CODE_NAME, PRD.GENRE, PRD.TIMEFRAME, PRD.THEME
+    <if test="sortBy != null and sortOrder != null">
+      ORDER BY
+        <choose>
+          <when test="sortBy == 'createAt'">PR.CREATE_AT</when>
+          <when test="sortBy == 'view'">PR.VIEW</when>
+          <when test="sortBy == 'likes'"></when>
+        </choose>
+        ${sortOrder}
+    </if>
+  </select>
+
+  <select id="selectPlotListBySocialId" parameterType="PlotOrderParamDTO" resultType="PlotResponseDTO">
+    SELECT PR.PROMPT_SEQ                   AS PROMPT_SEQ,
+          PR.TYPE_CODE                     AS CATEGORY_CODE,
+          C_T.CODE_NAME                    AS CATEGORY,
+          PR.GENRE_CODE                    AS GENRE_CODE,
+          CASE
+            WHEN PR.GENRE_CODE = 'G999' THEN PRD.GENRE
+            ELSE C_G.CODE_NAME
+          END                              AS GENRE,
+          PR.TIMEFRAME_CODE                AS TIMEFRAME_CODE,
+          CASE
+            WHEN PR.TIMEFRAME_CODE = 'F999' THEN PRD.TIMEFRAME
+            ELSE C_F.CODE_NAME
+          END                              AS TIMEFRAME,
+          PR.THEME_CODE                    AS THEME_CODE,
+          CASE
+            WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
+            ELSE C_M.CODE_NAME
+          END                              AS THEME,
+          PR.EVENT                         AS EVENT,
+          PR.CHARACTERS                    AS CHARACTERS,
+          PR.TELL_TYPE                     AS TELL_TYPE,
+          PR.CUSTOM                        AS CUSTOM,
+          PR.TITLE                         AS TITLE,
+          PR.IS_PUBLIC                     AS IS_PUBLIC,
+          PR.VIEW                          AS VIEW,
+          COUNT(DISTINCT LK.LIKE_SEQ)      AS LIKES,
+          PL.PLOT_SEQ                      AS PLOT_SEQ,
+          PL.PLOT_CONTENT                  AS PLOT_CONTENT,
+          PR.CREATE_AT                     AS CREATE_AT,
+          COUNT(CM.COMMENT_SEQ)            AS COMMENT
+    FROM TBL_PROMPT PR
+      LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
+      LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
+      LEFT JOIN TBL_CODE C_F ON PR.TIMEFRAME_CODE = C_F.CODE
+      LEFT JOIN TBL_CODE C_M ON PR.THEME_CODE = C_M.CODE
+      LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
+      LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
+      LEFT JOIN TBL_COMMENT CM ON PR.PROMPT_SEQ = CM.PROMPT_SEQ
+      LEFT JOIN TBL_LIKE LK ON PR.PROMPT_SEQ = LK.PROMPT_SEQ
     WHERE PR.SOCIAL_ID = #{socialId}
     <if test="status != null and status != 'all'">
       AND PR.IS_PUBLIC = #{status}
@@ -81,12 +143,14 @@
             WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
             ELSE C_M.CODE_NAME
           END                              AS THEME,
-          PR.EVENT                        AS EVENT,
+          PR.EVENT                         AS EVENT,
           PR.CHARACTERS                    AS CHARACTERS,
           PR.TELL_TYPE                     AS TELL_TYPE,
           PR.CUSTOM                        AS CUSTOM,
           PR.TITLE                         AS TITLE,
           PR.IS_PUBLIC                     AS IS_PUBLIC,
+          PR.VIEW                          AS VIEW,
+          COUNT(DISTINCT LK.LIKE_SEQ)      AS LIKES,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
@@ -99,6 +163,7 @@
       LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
       LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
       LEFT JOIN TBL_COMMENT CM ON PR.PROMPT_SEQ = CM.PROMPT_SEQ
+      LEFT JOIN TBL_LIKE LK ON PR.PROMPT_SEQ = LK.PROMPT_SEQ
     WHERE PR.PROMPT_SEQ = #{promptSeq}
     GROUP BY PR.PROMPT_SEQ, PR.TYPE_CODE, PR.GENRE_CODE, PR.TIMEFRAME_CODE, PR.THEME_CODE,
             PR.EVENT, PR.CHARACTERS, PR.TELL_TYPE, PR.CUSTOM, PR.TITLE, PR.IS_PUBLIC,
@@ -125,12 +190,13 @@
             WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
             ELSE C_M.CODE_NAME
           END                              AS THEME,
-          PR.EVENT                        AS EVENT,
+          PR.EVENT                         AS EVENT,
           PR.CHARACTERS                    AS CHARACTERS,
           PR.TELL_TYPE                     AS TELL_TYPE,
           PR.CUSTOM                        AS CUSTOM,
           PR.TITLE                         AS TITLE,
           PR.IS_PUBLIC                     AS IS_PUBLIC,
+          PR.VIEW                          AS VIEW,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
