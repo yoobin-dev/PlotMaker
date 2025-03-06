@@ -39,6 +39,6 @@ public class PlotResponseDTO {
   private int comment;
 
   @Builder.Default private int view = 0;
-  @Builder.Default private int like = 1;
+  @Builder.Default private int like = 0;
 
 }
