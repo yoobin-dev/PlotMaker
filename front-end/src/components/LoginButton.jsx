@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoginButton = ({onClick, disabled}) => {
+const LoginButton = ({title, onClick, disabled}) => {
 
   return (
     <button
@@ -9,7 +9,7 @@ const LoginButton = ({onClick, disabled}) => {
       style={{ backgroundColor: disabled? 'red' : 'green'}}
     >
       <div className="headline_1 ft_white">
-        이메일로 로그인
+        {title}
       </div>
     </button>
   )

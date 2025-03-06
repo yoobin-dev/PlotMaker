@@ -5,7 +5,7 @@ import { savePlot } from "../../api/plotApi";
 function PlotInsertModal({ promptValues, setPromptValues }) {
   const [step, setStep] = useState("title");
   const [plotTitle, setPlotTitle] = useState("");
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
   useEffect(() => {
     if (step === "folder") {

@@ -11,7 +11,7 @@ function PlotHeader({ isDetail, plotCount }) {
   const [keyword, setKeyword] = useState("");
   const { plotList, setPlotList } = useContext(LocaleContext);
   const navigate = useNavigate();
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
   // 필터 버튼 배열
   const filterButtonArr = [

@@ -1,11 +1,13 @@
 import {React, useState} from "react";
 
 import LoginButton from "../LoginButton";
-import { getEmailCheck } from "../../api/user";
+import { getEmailCheck, postAddUser } from "../../api/user";
+import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({ isOpen, onLogin }) => {
   if(!isOpen) return null;
 
+  const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(false);
 
   /* 로그인 관련 */
@@ -108,6 +110,21 @@ const LoginModal = ({ isOpen, onLogin }) => {
     }
   }
 
+  const handleSubmitSignUp = async () => {
+    try {
+      const result = await postAddUser(form);
+      const userData = result.data;
+      sessionStorage.setItem("userInfo", JSON.stringify(userData));
+      if(userData.nickname == null){
+        navigate("/login/nickname");
+      } else {
+        navigate("/prompt");
+      }
+    } catch(error){
+
+    }
+  }
+
   // 클래스 적용할 때 CclassName={form."이름"? errors."이름"? "오류(빨간색) 클래스명" : "정상(파란색) 클래스명" : ""} 이렇게 주면 될 듯
 
   console.log('form', form);
@@ -136,7 +153,10 @@ const LoginModal = ({ isOpen, onLogin }) => {
               onChange={(e) => setPw(e.target.value)}
             />
           </div>
-          <LoginButton onClick={handleSubmitLogin} />
+          <LoginButton
+            onClick={handleSubmitLogin} 
+            title={'이메일로 로그인'}
+          />
           <span className="ft_white">회원이 아니신가요?</span>
           <span className="ft_white" onClick={() => setIsSignUp(true)}>회원가입 하기</span>
         </>
@@ -228,8 +248,11 @@ const LoginModal = ({ isOpen, onLogin }) => {
               (필수) 개인정보 이용에 동의합니다.
             </label>
           </div>
-          {console.log('폼 유효성', isFormValid())}
-          <LoginButton disabled={!isFormValid()} />
+          <LoginButton 
+            disabled={!isFormValid()}
+            onClick={handleSubmitSignUp}
+            title={'이메일로 회원가입하기'}
+          />
         </div>
       }
     </div>

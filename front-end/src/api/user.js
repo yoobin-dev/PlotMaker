@@ -3,7 +3,7 @@ import { API_SERVER } from "./apiSetting";
 
 const prefix = `${API_SERVER}/user`;
 
-export const postSetNickname = async (socialId = "naver", nickname) => {
+export const postSetNickname = async (socialId, nickname) => {
   try {
     const response = await axios.post(`${prefix}/${socialId}/nickname`, null, {
       params: { nickname },
@@ -31,3 +31,12 @@ export const getEmailCheck = async (email) => {
     return error;
   }
 };
+
+export const postAddUser = async (form) => {
+  try {
+    const response = await axios.post(`${prefix}`, form);
+    return response.data;
+  } catch(error){
+    console.error('err: ', error);
+  }
+}

@@ -19,7 +19,7 @@ export function PlotCardTitleToggle({
   const [toggleOn, setToggleOn] = useState(false);
   const [shareToggleOn, setShareToggleOn] = useState(false);
   const [nameToggleOn, setNameToggleOn] = useState(false);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
   const menuArr = [
     {

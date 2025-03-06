@@ -10,7 +10,7 @@ const NicknamePage = () => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState("");
   const [isDupl, setIsDupl] = useState(false);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
   const handleInput = (e) => {
     const length = e.target.value.length;
@@ -27,7 +27,7 @@ const NicknamePage = () => {
 
     const response = await postSetNickname(userInfo.socialId, nickname);
     if (response.success) {
-      localStorage.setItem("userInfo", JSON.stringify(response.data));
+      sessionStorage.setItem("userInfo", JSON.stringify(response.data));
       navigate("/welcome");
     } else {
       setIsDupl(true);
