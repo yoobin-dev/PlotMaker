@@ -187,7 +187,7 @@ function PlotCardFooter({ view, like, comment, createAt }) {
         </div>
         <div>
           <img src="like.png"></img>
-          <span>{like}</span>
+          <span>{like ? 1 : 0}</span>
         </div>
         <div>
           <img src="comment.png"></img>

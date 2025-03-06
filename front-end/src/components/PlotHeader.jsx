@@ -9,6 +9,9 @@ import { getPlotList, searchPlotList } from "../api/plotApi";
 function PlotHeader({ isDetail, plotCount }) {
   const [sortingOn, setSortingOn] = useState(false);
   const [keyword, setKeyword] = useState("");
+  const [isPublic, setIsPublic] = useState("All");
+  const [sortBy, setSortBy] = useState("createAt");
+  const [sortOrder, setSortOrder] = useState("ASC");
   const { plotList, setPlotList } = useContext(LocaleContext);
   const navigate = useNavigate();
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -50,14 +53,19 @@ function PlotHeader({ isDetail, plotCount }) {
 
     // 필터에 따른 플롯 가져오기
     const getData = async () => {
-      let isPublic = "All";
-
       if (id.includes("Public")) {
-        isPublic = "Y";
+        setIsPublic("Y");
       } else if (id.includes("Private")) {
-        isPublic = "N";
+        setIsPublic("N");
+      } else {
+        setIsPublic("All");
       }
-      const data = await getPlotList(userInfo.socialId, isPublic);
+      const data = await getPlotList(
+        userInfo.socialId,
+        isPublic,
+        sortBy,
+        sortOrder
+      );
       setPlotList(data);
     };
     getData();
@@ -345,31 +353,17 @@ function SortingMenu({ sortingOn, plotList, setPlotList, setSortingOn }) {
     const target = document.getElementById(id);
     target.classList.add("bg_gray_c");
 
-    const sortMenu = document.getElementById("sortMenuBox");
+    console.log(userInfo);
     const sortIcon = document.getElementById("sorting");
     setSortingOn(false);
     sortIcon.classList.remove("clicked");
+    const socialId = userInfo.socialId;
+    const getSortList = async () => {
+      const sortedList = getPlotList(socialId, isPublic, sortBy, sortOrder);
+      setPlotList(sortedList);
+    };
 
-    const sortedList = [...plotList].sort((a, b) => {
-      // 숫자 비교
-      if (typeof a[sort] === "number" && typeof b[sort] === "number") {
-        return order === "asc" ? a[sort] - b[sort] : b[sort] - a[sort];
-      }
-      // 문자열 비교
-      if (typeof a[sort] === "string" && typeof b[sort] === "string") {
-        return order === "asc"
-          ? a[sort].localeCompare(b[sort])
-          : b[sort].localeCompare(a[sort]);
-      }
-      // 날짜 비교
-      if (Date.parse(a[sort]) && Date.parse(b[sort])) {
-        return order === "desc"
-          ? new Date(a[sort]) - new Date(b[sort])
-          : new Date(b[sort]) - new Date(a[sort]);
-      }
-      return 0;
-    });
-    setPlotList(sortedList);
+    getSortList();
   }
 
   return (

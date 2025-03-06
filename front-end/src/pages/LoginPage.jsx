@@ -1,8 +1,8 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import NaverLoginButton from "../components/NaverLoginButton";
-import LoginModalButton from "../components/LoginModalButton";
+import LoginButton from "../components/LoginButton";
 import GuestModal from "../components/modal/GuestModal";
 
 import "../styles/loginPage.css";
@@ -25,11 +25,11 @@ const LoginPage = () => {
       } else {
         navigate("/prompt");
       }
-    } catch(error){
+    } catch (error) {
       // 수정사항: 에러처리 해줄 것
-      console.log('err!: ', error);
+      console.log("err!: ", error);
     }
-  }
+  };
 
   return (
     <>
@@ -43,7 +43,8 @@ const LoginPage = () => {
           }}
         />
         <LoginModal
-          isOpen={isLoginModalOpen}
+          isLoginModalOpen={isLoginModalOpen}
+          setIsLoginModalOpen={setIsLoginModalOpen}
           onClose={() => setIsLoginModalOpen(false)}
           onLogin={handleLogin}
         />
@@ -58,8 +59,9 @@ const LoginPage = () => {
             </div>
           </div>
 
-          <LoginModalButton 
+          <LoginButton
             onClick={() => setIsLoginModalOpen(true)}
+            title={"이메일로 이용하기"}
           />
           <NaverLoginButton />
 

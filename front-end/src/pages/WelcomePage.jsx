@@ -42,7 +42,7 @@ const WelcomePage = () => {
           </div>
           <div>환영해요!</div>
         </div>
-        <Profile nickname={userInfo.nickname}></Profile>
+        <Profile></Profile>
       </div>
       <div id="questMessage">
         <div className="headling_1 ft_gray_a">Lv.1 업적 달성!</div>

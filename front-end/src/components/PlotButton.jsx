@@ -39,8 +39,6 @@ function PlotButton({
       }
     }
   };
-  console.log(name);
-  console.log(isContinue ? "true" : "false");
   return (
     <div
       className={`promptBtn ${bgColor} 
