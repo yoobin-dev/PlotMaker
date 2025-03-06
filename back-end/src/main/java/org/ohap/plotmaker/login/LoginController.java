@@ -4,8 +4,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.ohap.plotmaker.common.ApiResponse;
-import org.ohap.plotmaker.mapper.LoginMapper;
-import org.ohap.plotmaker.mapper.UserMapper;
 import org.ohap.plotmaker.user.UserDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

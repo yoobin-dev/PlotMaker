@@ -20,6 +20,12 @@ public class PlotServiceImpl implements PlotService {
   private final CodeMapper codeMapper;
   private final ClovaService clovaService;
 
+  public List<PlotResponseDTO> getPlotList(String socialId, PlotOrderParamDTO order){
+    order.setSocialId(socialId);
+    List<PlotResponseDTO> list = plotMapper.selectandOrderPlot(order);
+    return list;
+  }
+
   private void codeDefine(PlotRequestDTO request){
     String categoryCode = request.getCategoryCode();
     request.setCategory(codeMapper.selectCodeNameByCode(categoryCode));

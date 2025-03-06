@@ -18,6 +18,7 @@
     <typeAlias alias="PlotRequestDTO"       type="org.ohap.plotmaker.plot.PlotRequestDTO" />
     <typeAlias alias="PlotDTO"              type="org.ohap.plotmaker.plot.PlotDTO" />
     <typeAlias alias="PlotSearchParamDTO"   type="org.ohap.plotmaker.plot.PlotSearchParamDTO" />
+    <typeAlias alias="PlotOrderParamDTO"    type="org.ohap.plotmaker.plot.PlotOrderParamDTO" />
     <typeAlias alias="PromptDTO"            type="org.ohap.plotmaker.prompt.PromptDTO" />
     <typeAlias alias="CodeDTO"              type="org.ohap.plotmaker.code.CodeDTO" />
     <typeAlias alias="CommentDTO"           type="org.ohap.plotmaker.comment.CommentDTO" />
