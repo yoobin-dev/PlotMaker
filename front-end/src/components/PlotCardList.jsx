@@ -151,7 +151,7 @@ function PlotCard({
 
       <PlotCardFooter
         view={info.view * 1}
-        like={info.like * 1}
+        likes={info.likes * 1}
         comment={info.comment * 1}
         createAt={info.createAt}
       ></PlotCardFooter>
@@ -177,21 +177,21 @@ function PlotCardAdd({ goToWrite }) {
   );
 }
 
-function PlotCardFooter({ view, like, comment, createAt }) {
+function PlotCardFooter({ view = 0, likes = 0, comment = 0, createAt }) {
   return (
     <div className="plotCardFooter caption_2 ft_gray_94">
       <div className="plotCardFooterCount">
         <div>
           <img src="view.png"></img>
-          <span>{view}</span>
+          <span>{view ? view : 0}</span>
         </div>
         <div>
-          <img src="like.png"></img>
-          <span>{like ? 1 : 0}</span>
+          <img src="likes.png"></img>
+          <span>{likes ? likes : 0}</span>
         </div>
         <div>
           <img src="comment.png"></img>
-          <span>{comment}</span>
+          <span>{comment ? comment : 0}</span>
         </div>
       </div>
       <div className="plotCardFooterTime">

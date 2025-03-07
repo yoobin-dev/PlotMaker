@@ -11,7 +11,7 @@ function PlotHeader({ isDetail, plotCount }) {
   const [keyword, setKeyword] = useState("");
   const [isPublic, setIsPublic] = useState("All");
   const [sortBy, setSortBy] = useState("createAt");
-  const [sortOrder, setSortOrder] = useState("ASC");
+  const [sortOrder, setSortOrder] = useState("desc");
   const { plotList, setPlotList } = useContext(LocaleContext);
   const navigate = useNavigate();
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -229,9 +229,14 @@ function PlotHeader({ isDetail, plotCount }) {
       </div>
       <SortingMenu
         sortingOn={sortingOn}
-        plotList={plotList}
         setPlotList={setPlotList}
         setSortingOn={setSortingOn}
+        userInfo={userInfo}
+        isPublic={isPublic}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        sortOrder={sortOrder}
+        setSortOrder={setSortOrder}
       ></SortingMenu>
     </div>
   );
@@ -302,42 +307,52 @@ function SortingFilterButton({ id, onClick }) {
 }
 
 // 정렬 토글 메뉴
-function SortingMenu({ sortingOn, plotList, setPlotList, setSortingOn }) {
+function SortingMenu({
+  sortingOn,
+  setPlotList,
+  setSortingOn,
+  userInfo,
+  isPublic,
+  sortBy,
+  setSortBy,
+  sortOrder,
+  setSortOrder,
+}) {
   const sortingArr = [
     {
       id: 1,
       sort: "createAt",
-      order: "asc",
+      order: "desc",
       text: "작성일 최신 순 정렬",
     },
     {
       id: 2,
       sort: "createAt",
-      order: "desc",
+      order: "asc",
       text: "작성일 오래된 순 정렬",
     },
     {
       id: 3,
       sort: "view",
-      order: "asc",
+      order: "desc",
       text: "조회수 높은 순 정렬",
     },
     {
       id: 4,
       sort: "view",
-      order: "desc",
+      order: "asc",
       text: "조회수 낮은 순 정렬",
     },
     {
       id: 5,
-      sort: "like",
-      order: "asc",
+      sort: "likes",
+      order: "desc",
       text: "좋아요 많은 순 정렬",
     },
     {
       id: 6,
-      sort: "like",
-      order: "desc",
+      sort: "likes",
+      order: "asc",
       text: "좋아요 낮은 순 정렬",
     },
   ];
@@ -346,25 +361,39 @@ function SortingMenu({ sortingOn, plotList, setPlotList, setSortingOn }) {
   function sortPlotList(sort, order, id) {
     // 정렬 방식 강조 지우기
     const items = document.getElementsByClassName("sortMenuItem");
+    const target = document.getElementById(id);
+    const sortIcon = document.getElementById("sorting");
+
+    // 강조 표시 초기화
+    sortIcon.classList.remove("clicked");
     for (let i of items) {
       i.classList.remove("bg_gray_c");
     }
     // 선택한 정렬 방식 강조
-    const target = document.getElementById(id);
     target.classList.add("bg_gray_c");
-
-    console.log(userInfo);
-    const sortIcon = document.getElementById("sorting");
+    // 정렬 모달 닫기
     setSortingOn(false);
-    sortIcon.classList.remove("clicked");
-    const socialId = userInfo.socialId;
+    // 정렬 방식 변경
+    setSortBy(sort);
+    setSortOrder(order);
+  }
+
+  useEffect(() => {
+    const socialId = userInfo?.socialId;
+    // 정렬된 리스트 가져오기
     const getSortList = async () => {
-      const sortedList = getPlotList(socialId, isPublic, sortBy, sortOrder);
+      const sortedList = await getPlotList(
+        socialId,
+        isPublic,
+        sortBy,
+        sortOrder
+      );
+      console.log(Array.isArray(sortedList));
       setPlotList(sortedList);
     };
 
     getSortList();
-  }
+  }, [sortBy, sortOrder]);
 
   return (
     <div

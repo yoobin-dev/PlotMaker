@@ -17,7 +17,12 @@ function PlotListPage() {
     const getData = async () => {
       setIsLoading(true);
 
-      const data = await getPlotList(userInfo.socialId, "All");
+      const data = await getPlotList(
+        userInfo.socialId,
+        "All",
+        "createAt",
+        "asc"
+      );
       setIsLoading(false);
     };
     getData();
