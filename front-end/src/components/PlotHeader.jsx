@@ -388,7 +388,7 @@ function SortingMenu({
         sortBy,
         sortOrder
       );
-      console.log(Array.isArray(sortedList));
+
       setPlotList(sortedList);
     };
 

@@ -113,3 +113,9 @@
 svg {
   padding-right: 4px;
 }
+
+.loginButtonBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

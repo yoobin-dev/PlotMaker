@@ -14,7 +14,7 @@ const NaverCallbackPage = () => {
 
       if (!code || !state) {
         console.error("잘못된 네이버 로그인 요청");
-        navigate("/login");
+        navigate("/");
         return;
       }
 

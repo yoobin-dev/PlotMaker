@@ -39,7 +39,7 @@ export const getPlotList = async (
   sortOrder = "desc"
 ) => {
   let url = `${prefix}/plot/${socialId}?sortBy=${sortBy}&sortOrder=${sortOrder}`;
-  console.log(url);
+
   if (isPublic !== "All") {
     url += `&isPublic=${isPublic}`;
   }

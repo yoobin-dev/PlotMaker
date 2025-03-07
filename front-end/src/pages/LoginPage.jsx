@@ -59,11 +59,13 @@ const LoginPage = () => {
             </div>
           </div>
 
-          <LoginButton
-            onClick={() => setIsLoginModalOpen(true)}
-            title={"이메일로 이용하기"}
-          />
-          <NaverLoginButton />
+          <div className="loginButtonBox">
+            <LoginButton
+              onClick={() => setIsLoginModalOpen(true)}
+              title={"이메일로 이용하기"}
+            />
+            <NaverLoginButton />
+          </div>
 
           <div
             id="guest"

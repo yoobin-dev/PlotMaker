@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Profile from "../components/Profile";
+import NeedLoginModal from "../components/modal/NeedLoginModal";
+import LoginModal from "../components/modal/LoginModal";
 import "../styles/sideMenu.css";
+import { plotmakerLogin } from "../api/login";
 
 function SideMenu({ id, icon, title, onClick }) {
   return (
@@ -16,6 +19,8 @@ function SideMenuList({ nickName, handleClick }) {
   const navigate = useNavigate();
   const location = useLocation();
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [needLogin, setNeedLogin] = useState(false);
 
   const menuObj = [
     {
@@ -41,11 +46,28 @@ function SideMenuList({ nickName, handleClick }) {
   // 메뉴 선택 이벤트
   function activeMenu(path) {
     if (!userInfo && path === "/plotList") {
-      alert("로그인 후 이용 가능한 메뉴입니다.");
+      setNeedLogin(true);
       return;
     }
     navigate(path);
   }
+
+  const handleLogin = async (id, pw) => {
+    try {
+      const result = await plotmakerLogin(id, pw);
+      const userData = result.data;
+      sessionStorage.setItem("userInfo", JSON.stringify(userData));
+      if (userData.nickname == null) {
+        navigate("/login/nickname");
+      } else {
+        setIsLoginModalOpen(false);
+        navigate("/prompt");
+      }
+    } catch (error) {
+      // 수정사항: 에러처리 해줄 것
+      console.log("err!: ", error);
+    }
+  };
 
   // 메뉴 선택
   useEffect(() => {
@@ -66,6 +88,19 @@ function SideMenuList({ nickName, handleClick }) {
 
   return (
     <>
+      <NeedLoginModal
+        needLogin={needLogin}
+        setNeedLogin={setNeedLogin}
+        isLoginModalOpen={isLoginModalOpen}
+        setIsLoginModalOpen={setIsLoginModalOpen}
+        onClose={() => setNeedLogin(false)}
+      ></NeedLoginModal>
+      <LoginModal
+        isLoginModalOpen={isLoginModalOpen}
+        setIsLoginModalOpen={setIsLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onLogin={handleLogin}
+      />
       <div id="sideMenuContainer" className="bg_gray_2">
         <div id="sideMenuList">
           {menuObj.map((d, i) => (
