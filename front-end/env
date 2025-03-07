@@ -1,2 +1,2 @@
 VITE_NAVER_CLIENT_ID=5AtgPmvU6YYlx3LprleG
-VITE_NAVER_REDIRECT_URI=http://plotmaker.co.kr/login/callback/naver 
+VITE_NAVER_REDIRECT_URI=https://plotmaker.co.kr/login/callback/naver
