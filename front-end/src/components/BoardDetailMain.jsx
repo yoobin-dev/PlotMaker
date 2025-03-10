@@ -37,6 +37,15 @@ function BoardDetailMain({ plot }) {
           </div>
         </div>
       </div>
+      <div
+        id="toggleLikeButton"
+        className={`${plot.isLike === "Y" ? "black" : "white"}`}
+      >
+        <img src="likes.png"></img>
+        <span className={`${plot.isLike === "Y" ? "black" : "white"}`}>{`${
+          plot.isLike === "Y" ? "좋아요" : "취소"
+        }`}</span>
+      </div>
     </div>
   );
 }

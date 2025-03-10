@@ -1,7 +1,8 @@
 #boardDetailMain {
   padding: 76px 106px 80px 102px;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 18px;
   position: relative;
   width: 100%;
@@ -51,4 +52,35 @@
 #extraInfo img {
   width: 20px;
   margin-right: 4px;
+}
+
+#toggleLikeButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  gap: 4px;
+  cursor: pointer;
+  box-shadow: 0px 4px 4px 0px rgba(102, 102, 102, 0.3);
+}
+#toggleLikeButton img {
+  width: 31px;
+  height: 28px;
+}
+#toggleLikeButton.black {
+  background-color: #222;
+  color: #fff;
+}
+#toggleLikeButton.black img {
+  filter: invert(1) brightness(5) contrast(2);
+}
+#toggleLikeButton.white {
+  background-color: #fff;
+  color: #999;
+}
+#toggleLikeButton.white img {
+  transform: rotate(180deg) scaleX(-1);
 }

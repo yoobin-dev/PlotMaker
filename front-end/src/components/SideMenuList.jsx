@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Profile from "../components/Profile";
 import NeedLoginModal from "../components/modal/NeedLoginModal";
 import LoginModal from "../components/modal/LoginModal";
+import MyPage from "../components/modal/MyPage";
 import "../styles/sideMenu.css";
 import { plotmakerLogin } from "../api/login";
 
@@ -99,6 +100,7 @@ function SideMenuList({ nickName, handleClick }) {
         onClose={() => setIsLoginModalOpen(false)}
         onLogin={handleLogin}
       />
+      <MyPage></MyPage>
       <div id="sideMenuContainer" className="bg_gray_2">
         <div id="sideMenuList">
           {menuObj.map((d, i) => (
@@ -111,6 +113,7 @@ function SideMenuList({ nickName, handleClick }) {
                 activeMenu(d.path);
               }}
               navigate={navigate}
+              location={location}
             ></SideMenu>
           ))}
         </div>
@@ -125,28 +128,25 @@ function SideMenuList({ nickName, handleClick }) {
 export default SideMenuList;
 
 function SideMenu({ id, icon, title, onClick, navigate }) {
+  const pathname = location.pathname;
   const boardSubMenu = [
     {
-      id: "all",
       path: "/board",
       text: "전체 작품 보기",
     },
     {
-      id: "best",
       path: "/boardBest",
       text: "베스트 작품 보기",
     },
     {
-      id: "likes",
       path: "/boardLikes",
       text: "내가 좋아요한 게시글 보기",
     },
   ];
-
   // 서브 메뉴 클릭 이벤트
-  const handleSubMenu = (id, path) => {
+  const handleSubMenu = (path) => {
     const items = document.getElementsByClassName("sideMenuSubItem");
-    const target = document.getElementById(id);
+    const target = document.getElementById(pathname);
 
     // 서브 메뉴 선택 효과 초기화
     for (let i of items) {
@@ -154,7 +154,12 @@ function SideMenu({ id, icon, title, onClick, navigate }) {
     }
     target.classList.add("ft_gray_d");
 
-    navigate(path);
+    console.log(path);
+    if (path === "/boardLikes") {
+      alert("서비스 준비중입니다.");
+    } else {
+      navigate(path);
+    }
   };
 
   return (
@@ -169,11 +174,11 @@ function SideMenu({ id, icon, title, onClick, navigate }) {
             {boardSubMenu.map((d, i) => (
               <li
                 key={i}
-                id={d.id}
+                id={d.path}
                 className={`sideMenuSubItem headline_2 ft_gray_6 ${
-                  i === 0 ? "ft_gray_d" : ""
+                  pathname === d.path ? "ft_gray_d" : ""
                 }`}
-                onClick={() => handleSubMenu(d.id, d.path)}
+                onClick={() => handleSubMenu(d.path)}
               >
                 {d.text}
               </li>

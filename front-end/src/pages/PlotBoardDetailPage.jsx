@@ -2,7 +2,7 @@ import "../styles/plotBoardDetailPage.css";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import BoardDetailList from "../components/BoardDetailList";
-import BoardDetailRight from "../components/BoardDetailMain";
+import BoardDetailMain from "../components/BoardDetailMain";
 
 function PlotBoardDetail() {
   const location = useLocation();
@@ -11,7 +11,7 @@ function PlotBoardDetail() {
 
   return (
     <div id="boardDetail">
-      <BoardDetailRight plot={plot}></BoardDetailRight>
+      <BoardDetailMain plot={plot}></BoardDetailMain>
       <BoardDetailList setPlot={setPlot} plotList={plotList}></BoardDetailList>
     </div>
   );
