@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
 import "../styles/profile.css";
-function Profile({ img = "" }) {
+
+function Profile({ setMyPageOn }) {
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+
+  const handleMyPage = () => {
+    setMyPageOn(true);
+  };
+
   return (
-    <div id="userProfile" className="bg_gray_4">
+    <div id="userProfile" className="bg_gray_4" onClick={handleMyPage}>
       <div id="profileImg">
         <img
           className="h-100 w-100"

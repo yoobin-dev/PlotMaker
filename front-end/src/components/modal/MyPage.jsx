@@ -1,16 +1,21 @@
 import "../../styles/modal/MyPage.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-export default function MyPage() {
+
+export default function MyPage({ myPageOn, setMyPageOn }) {
   const [step, setStep] = useState("default");
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   const navigate = useNavigate();
 
+  const handleClose = () => {
+    setMyPageOn(false);
+  };
+
   return (
-    <div id="myPageBackground">
+    <div id="myPageBackground" className={`${myPageOn ? "" : "d-none"}`}>
       <div id="myPageModal">
         <div className="header">
-          <img src="close.png"></img>
+          <img src="close.png" onClick={handleClose}></img>
         </div>
         {step === "default" ? (
           <DefaultMyPage setStep={setStep} userInfo={userInfo}></DefaultMyPage>
