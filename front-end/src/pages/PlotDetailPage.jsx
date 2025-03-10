@@ -74,7 +74,10 @@ function PlotDetailPage() {
             <PlotHeader isDetail={true}></PlotHeader>
           </div>
           <div id="plotDetailLeftBottom" className="h-100 bg_gray_f9 no_scroll">
-            <PlotDetailList setPlot={setPlot}></PlotDetailList>
+            <PlotDetailList
+              setPlot={setPlot}
+              plotList={plotList}
+            ></PlotDetailList>
           </div>
         </div>
         <div id="plotDetailRight" className="no_scroll">

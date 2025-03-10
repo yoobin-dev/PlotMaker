@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import "../styles/plotCardList.css";
 import PlotTag from "./PlotTag";
 import { PlotCardTitleToggle } from "./ToggleMenu";
 import LocaleContext from "../context/LocaleContext"; // LocaleContext import
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function PlotCardList() {
   const { plotList, setPlotList } = useContext(LocaleContext);

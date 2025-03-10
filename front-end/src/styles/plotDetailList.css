@@ -1,12 +1,20 @@
 #plotDetailList {
   padding-top: 210px;
 }
+
+#plotDetailList.board {
+  padding-top: 40px;
+  width: 468px;
+}
+
 .plotDetailCard {
   cursor: pointer;
+  height: 11%;
 }
 .plotDetailCard .body {
   padding-bottom: 16px;
+  margin-top: 6px;
 }
 .plotDetailCard .contents {
-  max-width: 320px;
+  max-width: 300px;
 }

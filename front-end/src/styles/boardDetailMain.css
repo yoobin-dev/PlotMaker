@@ -1,0 +1,53 @@
+#boardDetailMain {
+  padding: 76px 106px 80px 102px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+}
+#backToList {
+  position: absolute;
+  right: 0;
+}
+#boardDetailCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 12px;
+  border: 0.5px solid var(--Grayscale-Gr_B, #bbb);
+  background: var(--Grayscale-WHITE, #fff);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+  padding: 24px 24px 20px 24px;
+  height: calc(100% - 100px);
+  position: relative;
+}
+#boardDetailBody {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: flex-start;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+#plotDetailContents {
+  margin-top: 4px;
+}
+
+#boardDetailFooter {
+  display: flex;
+  justify-content: space-between;
+  border-top: 0.2px solid var(--Grayscale-GRAY, #949494);
+  padding-top: 10px;
+}
+
+#extraInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+#extraInfo img {
+  width: 20px;
+  margin-right: 4px;
+}

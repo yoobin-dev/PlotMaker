@@ -1,0 +1,37 @@
+#boardDetailList {
+  height: 100%;
+  width: 470px;
+  border-radius: 0px 20px 20px 0px;
+  border: 0.5px solid var(--Grayscale-Gr_B, #bbb);
+  background: var(--Grayscale-Gr_F-9, #f9f9f9);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: width 1s ease-in-out;
+}
+
+#boardDetailList.goRight {
+  width: 30px;
+  transition: width 1s ease-in-out;
+}
+#boardDetailList.goRight #detailListButton {
+  transform: rotate(180deg);
+}
+
+#detailListButton {
+  background-color: #111;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: -18px;
+  top: 8px;
+  cursor: pointer;
+}
+
+#detailListButton img {
+  width: 18px;
+  height: 16px;
+}
