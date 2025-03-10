@@ -3,32 +3,10 @@ import { getPlotList } from "../api/plotApi";
 import { useNavigate } from "react-router-dom";
 import "../styles/plotBoardPage.css";
 
-function PlotBoardPage() {
-  const [bestList, setBestList] = useState([]);
+function PlotBoardBestPage() {
+  const [plotList, setPlotList] = useState([]);
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getPlotList(userInfo.socialId, "All");
-
-      setBestList(data);
-    };
-    getData();
-  }, []);
-
-  return (
-    <div id="plotBoardPage">
-      <BoardCategoryRevolving></BoardCategoryRevolving>
-      <FilterButton></FilterButton>
-      <PlotCardTop></PlotCardTop>
-      <BoardTable bestList={bestList}></BoardTable>
-    </div>
-  );
-}
-
-export default PlotBoardPage;
-
-function BoardCategoryRevolving() {
   const categoryArr = [
     {
       code: "T001",
@@ -44,60 +22,37 @@ function BoardCategoryRevolving() {
     },
     {
       code: "T000",
-      code_name: "시놉시스(줄거리)",
+      code_name: "시놉시스",
     },
   ];
-  const [categoryIdx, setCategoryIdx] = useState(0);
-  const nextIdx = categoryIdx + 1 === categoryArr.length ? 0 : categoryIdx + 1;
-  const prevIdx = categoryIdx - 1 < 0 ? 3 : categoryIdx - 1;
 
-  const categoryRevolving = () => {
-    setCategoryIdx(nextIdx);
-  };
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getPlotList(userInfo.socialId, "All");
+
+      setPlotList(data);
+    };
+    getData();
+  }, []);
+
   return (
-    <div id="boardCategory">
-      <div id="prevDisplay" className="label_1 ft_gray_c">
-        {categoryArr[prevIdx].code_name}
+    <div id="plotBoardPage">
+      <div id="plotBoardTop">
+        <FilterButton categoryArr={categoryArr}></FilterButton>
+        <BoardHeader
+          plotList={plotList}
+          setPlotList={setPlotList}
+        ></BoardHeader>
       </div>
-      <button className="revolvingButton" onClick={categoryRevolving}>
-        {" "}
-        &lt;{" "}
-      </button>
-      <div id="selectedDisplay" className="display_2">
-        {categoryArr[categoryIdx]?.code_name}
-      </div>
-      <button className="revolvingButton" onClick={categoryRevolving}>
-        {" "}
-        &gt;{" "}
-      </button>
-      <div id="nextDisplay" className="label_1 ft_gray_c">
-        {categoryArr[nextIdx].code_name}
-      </div>
+      <BoardTable plotList={plotList}></BoardTable>
     </div>
   );
 }
 
-// 필터 버튼
-function FilterButton() {
-  const filterButtonArr = [
-    {
-      id: "today",
-      text: "투데이",
-    },
-    {
-      id: "weekly",
-      text: "주간",
-    },
-    {
-      id: "monthly",
-      text: "월간",
-    },
-    {
-      id: "whole",
-      text: "전체",
-    },
-  ];
+export default PlotBoardBestPage;
 
+// 필터 버튼
+function FilterButton({ categoryArr }) {
   // 필터 클릭 이벤트
   const handleFilterButton = (id) => {
     const items = document.getElementsByClassName("filterItem");
@@ -113,122 +68,42 @@ function FilterButton() {
 
   return (
     <div id="filterButton" className="d-flex bg_gray_e">
-      {filterButtonArr.map((d, i) => (
+      {categoryArr.map((d, i) => (
         <div
           key={i}
-          id={d.id}
+          id={d.code}
           className={`filterItem headline_1 ft_gray_6 ${
             i === 0 ? "selected" : ""
           }`}
-          onClick={() => handleFilterButton(d.id)}
+          onClick={() => handleFilterButton(d.code)}
         >
-          {d.text}
+          {d.code_name}
         </div>
       ))}
     </div>
   );
 }
 
-// 탑 5
-function PlotCardTop() {
-  const topCards = [
-    {
-      rank: 1,
-      title: "붉은 달의 저주",
-      author: "별빛 고양이",
-      genre: "판타지",
-      views: 1234,
-      likes: 1234,
-    },
-    {
-      rank: 2,
-      title: "푸른 바람의 노래",
-      author: "바람 소년",
-      genre: "로맨스",
-      views: 2345,
-      likes: 1567,
-    },
-    {
-      rank: 3,
-      title: "어둠의 그림자",
-      author: "검은 늑대",
-      genre: "미스터리",
-      views: 3456,
-      likes: 1890,
-    },
-    {
-      rank: 4,
-      title: "빛의 전설",
-      author: "하얀 용",
-      genre: "판타지",
-      views: 4567,
-      likes: 2103,
-    },
-    {
-      rank: 5,
-      title: "별들의 속삭임",
-      author: "푸른 별",
-      genre: "SF",
-      views: 5678,
-      likes: 2456,
-    },
-  ];
-
-  return (
-    <div id="topCardList">
-      {topCards.map((d, i) => (
-        <div key={i} className={`topCard ${i === 0 ? "first" : ""}`}>
-          <div className={`rank ${i === 0 ? "display_1" : "display_2"}`}>
-            {i + 1}
-          </div>
-          <div className={`title ${i === 0 ? "title_2" : "title_3"}`}>
-            {d.title}
-          </div>
-          <div className={`author ${i === 0 ? "heading_1" : "heading_2"}`}>
-            {d.author}
-          </div>
-          <div className="footer">
-            <div className={`genre ${i === 0 ? "headline_2" : "label_1"}`}>
-              {d.genre}
-            </div>
-            <div>
-              <img src="view.png" />
-              <span className={`${i === 0 ? "label_1" : "caption_2"}`}>
-                {d.views}
-              </span>
-              <img src="likes.png" />
-              <span className={`${i === 0 ? "label_1" : "caption_2"}`}>
-                {d.likes}
-              </span>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function BoardTable({ bestList }) {
-  console.log(bestList);
+function BoardTable({ plotList }) {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const totalPages = Math.ceil(bestList.length / itemsPerPage);
+  const totalPages = Math.ceil(plotList.length / itemsPerPage);
 
   const goToDetail = (plot) => {
     navigate("/boardDetail", {
-      state: { bestList: bestList, plot: plot },
+      state: { plotList: plotList, plot: plot },
     });
   };
 
   return (
     <div id="boardTableBox">
       <table id="boardTable">
-        <thead className="headline_2 bg_gray_c">
+        <thead className="headline_2 bg_gray_f5">
           <tr>
             <th className="rank" style={{ width: "84px" }}>
-              순위
+              No.
             </th>
             <th className="title">작품</th>
             <th className="author">작가</th>
@@ -239,7 +114,7 @@ function BoardTable({ bestList }) {
           </tr>
         </thead>
         <tbody>
-          {bestList.map((d, i) => (
+          {plotList.map((d, i) => (
             <tr key={i} onClick={() => goToDetail(d)}>
               <td className="rank title_2">{i + 1}</td>
               <td className="title heading_1">{d.title}</td>
@@ -258,6 +133,284 @@ function BoardTable({ bestList }) {
           ))}
         </tbody>
       </table>
+      <div>
+        <img src="button_prev.png"></img>
+        <img src="button_next.png"></img>
+      </div>
+    </div>
+  );
+}
+
+function BoardHeader({ plotList, setPlotList }) {
+  const [sortingOn, setSortingOn] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [sortBy, setSortBy] = useState("createAt");
+  const [sortOrder, setSortOrder] = useState("desc");
+
+  // 검색 및 정렬 버튼 배열
+  const CircleFilterButtonArr = ["searching", "sorting"];
+
+  // 검색 및 정렬 버튼 선택
+  const clickCircleFilterButton = (id) => {
+    const target = document.getElementById(id);
+    const circles = document.getElementsByClassName("circle_filter");
+    const className = target.className;
+
+    // clicked 초기화
+    for (let t of circles) {
+      t.classList.remove("clicked");
+    }
+    // 정렬 토글 메뉴 숨기기
+    if (id === "sorting") setSortingOn(false);
+
+    if (className.includes("clicked")) {
+      // 이미 클릭되어 있는 경우 취소
+      target.classList.remove("clicked");
+    } else {
+      // 클릭되지 않은 경우 clicked 적용
+      target.classList.add("clicked");
+      if (id === "sorting") setSortingOn(true);
+    }
+  };
+
+  // 키워드로 플롯 검색
+  const searchByKeyword = () => {
+    const search = async () => {
+      const data = await searchPlotList(keyword);
+      setPlotList(data);
+    };
+    search();
+  };
+
+  // 엔터 입력 시 키워드 검색
+  const getSearchKeyDown = (e) => {
+    if (e.key === "Enter") {
+      searchByKeyword();
+    }
+  };
+
+  // 검색 버튼 (비)활성화 시키기
+  const activeSearchToggle = (evt, isActive) => {
+    evt.preventDefault();
+    const searchInput = document.querySelector("#search_input");
+    const searchClose = document.querySelector("#search_close");
+    const sortBtn = document.querySelector("#sorting");
+    const container = evt.currentTarget.closest(".search-wrapper");
+
+    if (isActive) {
+      if (!container.classList.contains("active")) {
+        container.classList.add("active");
+        // 정렬 버튼 숨기기
+        sortBtn.classList.add("d-none");
+
+        // placeholer 추가
+        setTimeout(() => {
+          searchInput.placeholder = "제목";
+          searchClose.classList.remove("d-none");
+        }, 550);
+      } else {
+        searchByKeyword();
+      }
+    } else {
+      container.classList.remove("active");
+      container.querySelector(".search-input").value = ""; // 입력값 초기화
+      setTimeout(() => {
+        // 정렬 버튼 보여주기
+        sortBtn.classList.remove("d-none");
+      }, 300);
+      // placeholer 제거
+      searchInput.placeholder = "";
+      searchClose.classList.add("d-none");
+    }
+  };
+
+  // 렌더시 전체 필터 선택
+  useEffect(() => {
+    // 정렬 메뉴 외부 클릭 시 메뉴 닫기
+    const handleClickOutside = (event) => {
+      console.log(event);
+      if (
+        !document.getElementById("boardSortBox").contains(event.target) &&
+        !document.getElementById("sorting").contains(event.target)
+      ) {
+        setSortingOn(false);
+        document.getElementById("sorting").classList.remove("clicked");
+      }
+    };
+    if (sortingOn) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <>
+      <div id="boardFilter">
+        <div className="d-flex" style={{ gap: "8px" }}>
+          <SearchFilterButton
+            id={"searching"}
+            keyword={keyword}
+            setKeyword={setKeyword}
+            activeSearchToggle={activeSearchToggle}
+            getSearchKeyDown={getSearchKeyDown}
+            onClick={clickCircleFilterButton}
+          ></SearchFilterButton>
+
+          <SortingFilterButton
+            id={"sorting"}
+            onClick={clickCircleFilterButton}
+          ></SortingFilterButton>
+        </div>
+      </div>
+      <SortingMenu
+        sortingOn={sortingOn}
+        setSortingOn={setSortingOn}
+        setSortBy={setSortBy}
+        setSortOrder={setSortOrder}
+      ></SortingMenu>
+    </>
+  );
+}
+
+// 검색 버튼
+function SearchFilterButton({
+  keyword,
+  setKeyword,
+  getSearchKeyDown,
+  activeSearchToggle,
+}) {
+  return (
+    <div className="search-wrapper">
+      <div className="input-holder">
+        <input
+          id="search_input"
+          value={keyword}
+          className="search-input headline_2"
+          onChange={(e) => {
+            setKeyword(e.target.value);
+          }}
+          onKeyUp={(e) => getSearchKeyDown(e)}
+        ></input>
+        <div
+          className="search-icon"
+          onClick={(evt) => activeSearchToggle(evt, true)}
+        >
+          <img src="searching.png"></img>
+        </div>
+      </div>
+      <span
+        id="search_close"
+        className="close headline_1 ft_black d-none"
+        onClick={(evt) => activeSearchToggle(evt, false)}
+      >
+        취소
+      </span>
+    </div>
+  );
+}
+// 정렬 버튼
+function SortingFilterButton({ id, onClick }) {
+  return (
+    <div
+      id={id}
+      className="circle_filter bg_gray_e"
+      onClick={() => onClick(id)}
+    >
+      <img src={`/${id}.png`}></img>
+    </div>
+  );
+}
+
+// 정렬 토글 메뉴
+function SortingMenu({ sortingOn, setSortingOn, setSortBy, setSortOrder }) {
+  const sortingArr = [
+    {
+      id: 1,
+      sort: "createAt",
+      order: "desc",
+      text: "작성일 최신 순 정렬",
+    },
+    {
+      id: 2,
+      sort: "createAt",
+      order: "asc",
+      text: "작성일 오래된 순 정렬",
+    },
+    {
+      id: 3,
+      sort: "view",
+      order: "desc",
+      text: "조회수 높은 순 정렬",
+    },
+    {
+      id: 4,
+      sort: "view",
+      order: "asc",
+      text: "조회수 낮은 순 정렬",
+    },
+    {
+      id: 5,
+      sort: "likes",
+      order: "desc",
+      text: "좋아요 많은 순 정렬",
+    },
+    {
+      id: 6,
+      sort: "likes",
+      order: "asc",
+      text: "좋아요 낮은 순 정렬",
+    },
+  ];
+
+  // 정렬 시키기
+  function sortPlotList(sort, order, id) {
+    // 정렬 방식 강조 지우기
+    const items = document.getElementsByClassName("sortMenuItem");
+    const target = document.getElementById(id);
+    const sortIcon = document.getElementById("sorting");
+
+    // 강조 표시 초기화
+    sortIcon.classList.remove("clicked");
+    for (let i of items) {
+      i.classList.remove("bg_gray_c");
+    }
+    // 선택한 정렬 방식 강조
+    target.classList.add("bg_gray_c");
+    // 정렬 모달 닫기
+    setSortingOn(false);
+    // 정렬 방식 변경
+    setSortBy(sort);
+    setSortOrder(order);
+  }
+
+  return (
+    <div
+      id="boardSortBox"
+      className={`shadow_black_10 ${sortingOn ? "" : "d-none"}`}
+    >
+      <div id="sortMenuHeader" className="heading_1 ft_gray_5">
+        작품 정렬
+      </div>
+      <div id="sortMenuBody" className="w-100">
+        {sortingArr.map((d, i) => (
+          <div
+            key={i}
+            id={`${d.sort}_${d.order}`}
+            className={`d-flex sortMenuItem ${d.id == 1 ? "bg_gray_c" : ""}`}
+            onClick={() => {
+              sortPlotList(d.sort, d.order, `${d.sort}_${d.order}`);
+            }}
+          >
+            <div className="sortIconBox">
+              <img className="sortIcon" src={`sort_${d.sort}.png`}></img>
+              <img className="orderIcon" src={`sort_${d.order}.png`}></img>
+            </div>
+            <span className="body_1 ft_gray_5">{d.text}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

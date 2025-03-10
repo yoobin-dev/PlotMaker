@@ -6,6 +6,7 @@ import PlotPromptPage from "../pages/PlotPromptPage";
 import PlotListPage from "../pages/PlotListPage";
 import PlotDetailPage from "../pages/PlotDetailPage";
 import PlotBoardPage from "../pages/PlotBoardPage";
+import PlotBoardBestPage from "../pages/PlotBoardBestPage";
 import PlotBoardDetailPage from "../pages/PlotBoardDetailPage";
 import Layout from "../layouts/Layout";
 import NicknamePage from "../pages/NicknamePage";
@@ -47,6 +48,10 @@ const root = createBrowserRouter([
       {
         path: "/board",
         element: <PlotBoardPage />,
+      },
+      {
+        path: "/boardBest",
+        element: <PlotBoardBestPage />,
       },
       {
         path: "/boardDetail",

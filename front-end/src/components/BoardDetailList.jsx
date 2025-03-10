@@ -1,7 +1,7 @@
 import PlotDetailList from "./PlotDetailList";
 import "../styles/boardDetailList.css";
 
-function BoardDetailList({ setPlot, bestList }) {
+function BoardDetailList({ setPlot, plotList }) {
   const handleListButton = () => {
     const list = document.getElementById("boardDetailList");
     const main = document.getElementById("boardDetailMain");
@@ -22,7 +22,7 @@ function BoardDetailList({ setPlot, bestList }) {
         </div>
         <PlotDetailList
           setPlot={setPlot}
-          plotList={bestList}
+          plotList={plotList}
           isBoard={true}
         ></PlotDetailList>
       </div>

@@ -1,35 +1,43 @@
-#plotBoardPage {
+#plotBoardBestPage {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
-  padding: 45px 76px 0 76px;
+  padding: 0 76px;
+  overflow: auto;
 }
 
-#plotBoardTop {
+#boardCategory {
   display: flex;
-  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  height: 52px;
+  width: 100%;
+  padding: 34px 0 28px 0;
 }
-#boardFilter {
-  height: 44px;
+#selectedDisplay {
+  margin: 0 20px 0 20px;
+  width: 200px;
+  text-align: center;
 }
-#boardSortBox {
+#prevDisplay,
+#nextDisplay {
+  width: 100px;
+  margin: 0 8.5px 0 8.5px;
+  text-align: center;
+}
+.revolvingButton {
   display: flex;
-  flex-direction: column;
-  width: 260px;
-  align-items: start;
-  border: 0.5px solid #ccc;
-  border-radius: 8px;
-  background-color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background-color: #444;
+  color: #fff;
+  cursor: pointer;
+}
 
-  position: absolute;
-  left: 875px;
-  top: 110px;
-  z-index: 999;
-}
-#filterButton .filterItem {
-  width: 70px;
-}
 #filterButton .filterItem.selected {
   border-radius: 12px;
   background: var(--Grayscale-WHITE, #fff);
@@ -128,45 +136,4 @@
 #boardTableBox {
   width: 100%;
   margin-top: 44px;
-}
-#boardTable {
-  width: 100%;
-  margin-bottom: 35px;
-}
-#boardTable thead th {
-  padding: 8px;
-}
-#boardTable tbody tr {
-  cursor: pointer;
-}
-#boardTable tbody tr:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-#boardTable tbody td {
-  text-align: center;
-  height: 39px;
-}
-#boardTable tbody .title {
-  text-align: left;
-}
-#boardTable tbody tr td {
-  padding: 24px 0;
-  border-bottom: 0.5px solid var(--Grayscale-Gr_A, #aaa);
-}
-
-#boardTable tbody .views,
-#boardTable tbody .likes {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#boardTable img {
-  width: 20px;
-  height: 18px;
-  margin-right: 4px;
-}
-
-#pagination {
-  margin-top: 36px;
 }

@@ -6,63 +6,6 @@ import LoginModal from "../components/modal/LoginModal";
 import "../styles/sideMenu.css";
 import { plotmakerLogin } from "../api/login";
 
-function SideMenu({ id, icon, title, onClick }) {
-  const boardSubMenu = [
-    {
-      id: "all",
-      text: "전체 작품 보기",
-    },
-    {
-      id: "best",
-      text: "베스트 작품 보기",
-    },
-    {
-      id: "likes",
-      text: "내가 좋아요한 게시글 보기",
-    },
-  ];
-
-  // 서브 메뉴 클릭 이벤트
-  const handleSubMenu = (id) => {
-    const items = document.getElementsByClassName("sideMenuSubItem");
-    const target = document.getElementById(id);
-
-    // 서브 메뉴 선택 효과 초기화
-    for (let i of items) {
-      i.classList.remove("ft_gray_d");
-    }
-
-    target.classList.add("ft_gray_d");
-  };
-
-  return (
-    <>
-      <div id={id} className="sideMenu" onClick={onClick}>
-        <img src={icon}></img>
-        <span className="heading_2">{title}</span>
-      </div>
-      {id === "/board" && (
-        <div className="sideMenuSub">
-          <ul>
-            {boardSubMenu.map((d, i) => (
-              <li
-                key={i}
-                id={d.id}
-                className={`sideMenuSubItem headline_2 ft_gray_6 ${
-                  i === 0 ? "ft_gray_d" : ""
-                }`}
-                onClick={() => handleSubMenu(d.id)}
-              >
-                {d.text}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </>
-  );
-}
-
 function SideMenuList({ nickName, handleClick }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -122,7 +65,11 @@ function SideMenuList({ nickName, handleClick }) {
     let pathname = location.pathname;
     if (location.pathname === "/plotDetail") {
       pathname = "/plotList";
-    } else if (location.pathname === "/boardDetail") {
+    } else if (
+      location.pathname === "/boardDetail" ||
+      location.pathname === "/boardBest" ||
+      location.pathname === "/boardLikes"
+    ) {
       pathname = "/board";
     }
 
@@ -163,6 +110,7 @@ function SideMenuList({ nickName, handleClick }) {
               onClick={() => {
                 activeMenu(d.path);
               }}
+              navigate={navigate}
             ></SideMenu>
           ))}
         </div>
@@ -175,3 +123,64 @@ function SideMenuList({ nickName, handleClick }) {
 }
 
 export default SideMenuList;
+
+function SideMenu({ id, icon, title, onClick, navigate }) {
+  const boardSubMenu = [
+    {
+      id: "all",
+      path: "/board",
+      text: "전체 작품 보기",
+    },
+    {
+      id: "best",
+      path: "/boardBest",
+      text: "베스트 작품 보기",
+    },
+    {
+      id: "likes",
+      path: "/boardLikes",
+      text: "내가 좋아요한 게시글 보기",
+    },
+  ];
+
+  // 서브 메뉴 클릭 이벤트
+  const handleSubMenu = (id, path) => {
+    const items = document.getElementsByClassName("sideMenuSubItem");
+    const target = document.getElementById(id);
+
+    // 서브 메뉴 선택 효과 초기화
+    for (let i of items) {
+      i.classList.remove("ft_gray_d");
+    }
+    target.classList.add("ft_gray_d");
+
+    navigate(path);
+  };
+
+  return (
+    <>
+      <div id={id} className="sideMenu" onClick={onClick}>
+        <img src={icon}></img>
+        <span className="heading_2">{title}</span>
+      </div>
+      {id === "/board" && (
+        <div className="sideMenuSub">
+          <ul>
+            {boardSubMenu.map((d, i) => (
+              <li
+                key={i}
+                id={d.id}
+                className={`sideMenuSubItem headline_2 ft_gray_6 ${
+                  i === 0 ? "ft_gray_d" : ""
+                }`}
+                onClick={() => handleSubMenu(d.id, d.path)}
+              >
+                {d.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </>
+  );
+}

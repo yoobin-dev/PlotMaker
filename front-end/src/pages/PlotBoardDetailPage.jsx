@@ -7,15 +7,12 @@ import BoardDetailRight from "../components/BoardDetailMain";
 function PlotBoardDetail() {
   const location = useLocation();
   const [plot, setPlot] = useState(location.state.plot);
-  const [bestList, setBestList] = useState(location.state.bestList);
-
-  console.log(plot);
-  console.log(bestList);
+  const [plotList, setPlotList] = useState(location.state.plotList);
 
   return (
     <div id="boardDetail">
       <BoardDetailRight plot={plot}></BoardDetailRight>
-      <BoardDetailList setPlot={setPlot} bestList={bestList}></BoardDetailList>
+      <BoardDetailList setPlot={setPlot} plotList={plotList}></BoardDetailList>
     </div>
   );
 }
