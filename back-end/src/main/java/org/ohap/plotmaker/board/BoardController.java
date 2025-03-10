@@ -32,7 +32,9 @@ public class BoardController {
   */
   @PostMapping("/likes/toggle")
   public ResponseEntity<ApiResponse<String>> toggleLikes(@RequestBody ToggleLikesDTO likes){
-    return null;
+    String result = boardService.toggleLikes(likes);
+    ApiResponse<String> response = ApiResponse.<String>builder().message(result).build();
+    return ResponseEntity.ok().body(response);
   }
 
   @GetMapping("/{promptSeq}")

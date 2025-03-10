@@ -66,4 +66,22 @@
     LIMIT 20
   </select>
 
+  <select id="selectLikes" parameterType="ToggleLikesDTO" returnType="Integer">
+    SELECT COUNT(LIKE_SEQ)
+    FROM TBL_LIKE
+    WHERE PROMPT_SEQ = #{promptSeq}
+    AND SOCIAL_ID = #{socialId}
+  </select>
+
+  <delete id="deleteLike" parameterType="ToggleLikeDTO">
+    DELETE FROM TBL_LIKE
+    WHERE PROMPT_SEQ = #{promptSeq}
+    AND SOCIAL_ID = #{socialId}
+  </delete>
+
+  <insert id="insertLike" parameterType="ToggleLikeDTO">
+    INSERT INTO TBL_LIKE ( PROMPT_SEQ, SOCIAL_ID )
+    VALUES ( #{promptSeq}, #{SocialId} )
+  </insert>
+
 </mapper>
