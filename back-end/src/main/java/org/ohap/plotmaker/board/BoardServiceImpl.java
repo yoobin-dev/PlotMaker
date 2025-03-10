@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.ohap.plotmaker.mapper.BoardMapper;
 import org.ohap.plotmaker.plot.PlotResponseDTO;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,8 +23,16 @@ public class BoardServiceImpl implements BoardService {
     
   }
 
-  public void toggleLikes(ToggleLikesDTO toggleLikesDTO){
-    
+  @Transactional
+  @Override
+  public String toggleLikes(ToggleLikesDTO toggleLikesDTO){
+    if(boardMapper.selectLikes(toggleLikesDTO) != 0){
+      boardMapper.deleteLike(toggleLikesDTO);
+      return "좋아요 취소";
+    } else {
+      boardMapper.insertLike(toggleLikesDTO);
+      return "좋아요 등록";
+    }
   }
 
 }
