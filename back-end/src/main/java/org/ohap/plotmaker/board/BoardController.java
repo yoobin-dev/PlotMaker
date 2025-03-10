@@ -6,15 +6,23 @@ import org.ohap.plotmaker.common.ApiResponse;
 import org.ohap.plotmaker.plot.PlotResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/api/board")
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/board")
 public class BoardController {
   
+  private final BoardService boardService;
+
   /* 
    * RequestBody 형식
    * {
@@ -24,7 +32,9 @@ public class BoardController {
   */
   @PostMapping("/likes/toggle")
   public ResponseEntity<ApiResponse<String>> toggleLikes(@RequestBody ToggleLikesDTO likes){
-    return null;
+    String result = boardService.toggleLikes(likes);
+    ApiResponse<String> response = ApiResponse.<String>builder().message(result).build();
+    return ResponseEntity.ok().body(response);
   }
 
   @GetMapping("/{promptSeq}")
@@ -42,8 +52,11 @@ public class BoardController {
    * /api/board/best?categoryCode=카테고리코드&criteria=위의값
    */
   @GetMapping("/best")
-  public ResponseEntity<ApiResponse<List<PlotResponseDTO>>> getBestList(@RequestParam String categoryCode, @RequestParam String criteria){
-    return null;
+  public ResponseEntity<ApiResponse<List<PlotResponseDTO>>> getBestList(@ModelAttribute BestListDTO request){
+    List<PlotResponseDTO> list = boardService.getBestList(request);
+    ApiResponse<List<PlotResponseDTO>> response = ApiResponse.<List<PlotResponseDTO>>builder()
+      .isSuccess(true).data(list).build();
+    return ResponseEntity.ok().body(response);
   }
 
   /*
