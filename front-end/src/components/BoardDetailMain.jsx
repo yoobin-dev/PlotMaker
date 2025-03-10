@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 function BoardDetailMain({ plot }) {
   const navigate = useNavigate();
-  console.log(plot);
   return (
     <div id="boardDetailMain">
       <div id="boardDetailCard">

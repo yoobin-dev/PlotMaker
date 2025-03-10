@@ -1,4 +1,5 @@
 #boardDetail {
   overflow: hidden;
   display: flex;
+  width: calc(100% - 288px);
 }

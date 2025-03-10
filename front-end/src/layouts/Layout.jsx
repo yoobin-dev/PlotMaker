@@ -1,7 +1,7 @@
 import SideMenuList from "../components/SideMenuList";
 import Main from "./Main";
 import Loading from "../components/Loading";
-import { useDebugValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
@@ -15,7 +15,7 @@ const Layout = () => {
 
   const handleClick = () => {
     setIsLoading(true);
-  }
+  };
 
   return (
     <>
