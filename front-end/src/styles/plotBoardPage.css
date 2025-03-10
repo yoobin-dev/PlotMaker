@@ -1,0 +1,181 @@
+#plotBoardPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 76px;
+  overflow: auto;
+}
+
+#boardCategory {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 52px;
+  width: 100%;
+  padding: 34px 0 28px 0;
+}
+#selectedDisplay {
+  margin: 0 20px 0 20px;
+  width: 300px;
+  text-align: center;
+}
+#prevDisplay,
+#nextDisplay {
+  width: 100px;
+  margin: 0 8.5px 0 8.5px;
+  text-align: center;
+}
+.revolvingButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background-color: #444;
+  color: #fff;
+  cursor: pointer;
+}
+
+#filterButton .filterItem.selected {
+  border-radius: 12px;
+  background: var(--Grayscale-WHITE, #fff);
+  box-shadow: 1px 1px 2px 0px var(--Grayscale-Gr_D, #ddd);
+}
+
+#topCardList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 52px;
+  justify-content: space-between;
+}
+
+.topCard {
+  width: 220px;
+  height: 320px;
+  padding: 24px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--Grayscale-Gr_B, #bbb);
+  background: var(--Grayscale-WHITE, #fff);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.topCard.first {
+  width: 260px;
+  height: 360px;
+  padding: 24px 16px;
+  border-radius: 16px;
+  background: var(--Grayscale-WHITE, #222);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+#topCardList .first .rank {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 12px;
+  border-radius: 999px;
+  background: #ef514a;
+  box-shadow: 0px 4px 4px 0px rgba(102, 102, 102, 0.3);
+}
+#topCardList .first .title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 160px;
+  margin: 12px 0;
+}
+
+#topCardList .rank {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 12px;
+  border-radius: 999px;
+  background: var(--Grayscale-WHITE, #fff);
+  box-shadow: 0px 4px 4px 0px rgba(102, 102, 102, 0.3);
+}
+
+#topCardList .title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 140px;
+  margin: 12px 0;
+}
+
+#topCardList .author {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 46px;
+  margin: 12px 0;
+}
+#topCardList .footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+  margin: 20px 0;
+}
+
+#topCardList .footer img {
+  width: 12px;
+  height: 8.5px;
+  margin: 0 5px;
+}
+
+#boardTableBox {
+  width: 100%;
+  margin-top: 44px;
+}
+
+#boardTable {
+  width: 100%;
+  margin-bottom: 50px;
+}
+#boardTable thead th {
+  padding: 8px;
+}
+#boardTable tbody tr {
+  cursor: pointer;
+}
+#boardTable tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#boardTable tbody td {
+  text-align: center;
+  height: 39px;
+}
+#boardTable tbody .title {
+  text-align: left;
+}
+#boardTable tbody tr td {
+  padding: 24px 0;
+  border-bottom: 0.5px solid var(--Grayscale-Gr_A, #aaa);
+}
+
+#boardTable tbody .views,
+#boardTable tbody .likes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#boardTable img {
+  width: 20px;
+  height: 18px;
+  margin-right: 4px;
+}
+
+#pagination {
+  margin-top: 36px;
+}

@@ -1,13 +1,7 @@
-import { useState, useRef, useEffect, useContext } from "react";
 import "../styles/plotDetailList.css";
 import "../styles/common.css";
-import LocaleContext from "../context/LocaleContext"; // LocaleContext import
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
-function PlotDetailList({ setPlot }) {
-  const { plotList, setPlotList } = useContext(LocaleContext);
-  const [toggleOn, setToggleOn] = useState(false);
-
+function PlotDetailList({ setPlot, plotList, isBoard }) {
   const handleDetailCard = (promptSeq) => {
     const plotTitle = document.getElementById("plotDetailTitle");
     const plotContent = document.getElementById("plotDetailContents");
@@ -23,7 +17,7 @@ function PlotDetailList({ setPlot }) {
   };
 
   return (
-    <div id="plotDetailList" className="no_scroll">
+    <div id="plotDetailList" className={`no_scroll ${isBoard ? "board" : ""}`}>
       {plotList.map((plot, i) => (
         <PlotDetailCard
           key={i}

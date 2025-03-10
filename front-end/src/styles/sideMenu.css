@@ -44,3 +44,15 @@ div.sideMenu {
   flex-direction: column;
   gap: 24px;
 }
+
+.sideMenuSub {
+  padding-left: 70px;
+}
+
+.sideMenuSub ul {
+  list-style-type: disc;
+}
+.sideMenuSub li {
+  margin-bottom: 12px;
+  cursor: pointer;
+}

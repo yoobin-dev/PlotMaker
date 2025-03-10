@@ -7,11 +7,59 @@ import "../styles/sideMenu.css";
 import { plotmakerLogin } from "../api/login";
 
 function SideMenu({ id, icon, title, onClick }) {
+  const boardSubMenu = [
+    {
+      id: "all",
+      text: "전체 작품 보기",
+    },
+    {
+      id: "best",
+      text: "베스트 작품 보기",
+    },
+    {
+      id: "likes",
+      text: "내가 좋아요한 게시글 보기",
+    },
+  ];
+
+  // 서브 메뉴 클릭 이벤트
+  const handleSubMenu = (id) => {
+    const items = document.getElementsByClassName("sideMenuSubItem");
+    const target = document.getElementById(id);
+
+    // 서브 메뉴 선택 효과 초기화
+    for (let i of items) {
+      i.classList.remove("ft_gray_d");
+    }
+
+    target.classList.add("ft_gray_d");
+  };
+
   return (
-    <div id={id} className="sideMenu" onClick={onClick}>
-      <img src={icon}></img>
-      <span className="heading_2">{title}</span>
-    </div>
+    <>
+      <div id={id} className="sideMenu" onClick={onClick}>
+        <img src={icon}></img>
+        <span className="heading_2">{title}</span>
+      </div>
+      {id === "/board" && (
+        <div className="sideMenuSub">
+          <ul>
+            {boardSubMenu.map((d, i) => (
+              <li
+                key={i}
+                id={d.id}
+                className={`sideMenuSubItem headline_2 ft_gray_6 ${
+                  i === 0 ? "ft_gray_d" : ""
+                }`}
+                onClick={() => handleSubMenu(d.id)}
+              >
+                {d.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -74,7 +122,10 @@ function SideMenuList({ nickName, handleClick }) {
     let pathname = location.pathname;
     if (location.pathname === "/plotDetail") {
       pathname = "/plotList";
+    } else if (location.pathname === "/boardDetail") {
+      pathname = "/board";
     }
+
     const path = document.getElementById(pathname);
     const activeMenu = document.getElementsByClassName("active");
 
@@ -110,11 +161,7 @@ function SideMenuList({ nickName, handleClick }) {
               icon={d.icon}
               title={d.title}
               onClick={() => {
-                if (d.path === "/board") {
-                  alert("서비스 준비중입니다.");
-                } else {
-                  activeMenu(d.path);
-                }
+                activeMenu(d.path);
               }}
             ></SideMenu>
           ))}
