@@ -13,7 +13,7 @@ const NaverLoginButton = () => {
     const naver_login_url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${client_id}&redirect_uri=${redirect_uri}&state=${state}`;
     console.log(naver_login_url);
     //window.location.href = naver_login_url;
-  };
+  }
 
   return (
     <div id="naverLogin" onClick={handleLogin}>
