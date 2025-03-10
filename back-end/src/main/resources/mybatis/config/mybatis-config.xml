@@ -22,5 +22,7 @@
     <typeAlias alias="PromptDTO"            type="org.ohap.plotmaker.prompt.PromptDTO" />
     <typeAlias alias="CodeDTO"              type="org.ohap.plotmaker.code.CodeDTO" />
     <typeAlias alias="CommentDTO"           type="org.ohap.plotmaker.comment.CommentDTO" />
+    <typeAlias alias="ToggleLikesDTO"       type="org.ohap.plotmaker.board.ToggleLikesDTO" />
+    <typeAlias alias="BestListDTO"          type="org.ohap.plotmaker.board.BestListDTO" />
   </typeAliases>
 </configuration>
