@@ -51,25 +51,30 @@ function PlotHeader({ isDetail, plotCount }) {
     const target = document.getElementById(id);
     target.classList.add("active");
 
+    if (id.includes("Public")) {
+      setIsPublic("Y");
+    } else if (id.includes("Private")) {
+      setIsPublic("N");
+    } else {
+      setIsPublic("All");
+    }
+  };
+
+  useEffect(() => {
     // 필터에 따른 플롯 가져오기
     const getData = async () => {
-      if (id.includes("Public")) {
-        setIsPublic("Y");
-      } else if (id.includes("Private")) {
-        setIsPublic("N");
-      } else {
-        setIsPublic("All");
-      }
       const data = await getPlotList(
         userInfo.socialId,
         isPublic,
         sortBy,
         sortOrder
       );
+      console.log(isPublic);
+      console.log(data);
       setPlotList(data);
     };
     getData();
-  };
+  }, [isPublic]);
 
   // 검색 및 정렬 버튼 선택
   const clickCircleFilterButton = (id) => {

@@ -13,6 +13,7 @@ function SideMenuList({ nickName, handleClick }) {
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [needLogin, setNeedLogin] = useState(false);
+  const [myPageOn, setMyPageOn] = useState(false);
 
   const menuObj = [
     {
@@ -100,7 +101,8 @@ function SideMenuList({ nickName, handleClick }) {
         onClose={() => setIsLoginModalOpen(false)}
         onLogin={handleLogin}
       />
-      <MyPage></MyPage>
+      <MyPage myPageOn={myPageOn} setMyPageOn={setMyPageOn}></MyPage>
+
       <div id="sideMenuContainer" className="bg_gray_2">
         <div id="sideMenuList">
           {menuObj.map((d, i) => (
@@ -118,7 +120,7 @@ function SideMenuList({ nickName, handleClick }) {
           ))}
         </div>
         <div className="w-100 d-flex" style={{ justifyContent: "center" }}>
-          <Profile name={nickName}></Profile>
+          <Profile setMyPageOn={setMyPageOn}></Profile>
         </div>
       </div>
     </>

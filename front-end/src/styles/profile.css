@@ -4,6 +4,7 @@
   height: 72px;
   border-radius: 16px;
   padding: 11px 10px;
+  cursor: pointer;
 }
 
 #profileImg {

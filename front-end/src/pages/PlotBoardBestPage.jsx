@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { getPlotList } from "../api/plotApi";
+import { getBestList } from "../api/boardApi";
 import { useNavigate } from "react-router-dom";
 import "../styles/plotBoardBestPage.css";
 
 function PlotBoardPage() {
+  const navigate = useNavigate();
   const [bestList, setBestList] = useState([]);
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+  const [categoryIdx, setCategoryIdx] = useState(0);
+  const [criteria, setCriteria] = useState("daily");
 
   const categoryArr = [
     {
@@ -28,7 +31,7 @@ function PlotBoardPage() {
 
   const filterPeriodArr = [
     {
-      id: "today",
+      id: "daily",
       text: "투데이",
     },
     {
@@ -40,36 +43,39 @@ function PlotBoardPage() {
       text: "월간",
     },
     {
-      id: "whole",
+      id: "total",
       text: "전체",
     },
   ];
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getPlotList(userInfo.socialId, "All");
-
+      const data = await getBestList(categoryArr[categoryIdx].code, criteria);
       setBestList(data);
     };
     getData();
-  }, []);
+  }, [categoryIdx, criteria]);
 
   return (
     <div id="plotBoardBestPage">
       <BoardCategoryRevolving
         categoryArr={categoryArr}
+        categoryIdx={categoryIdx}
+        setCategoryIdx={setCategoryIdx}
       ></BoardCategoryRevolving>
-      <FilterButton filterArr={filterPeriodArr}></FilterButton>
-      <PlotCardTop></PlotCardTop>
-      <BoardTable bestList={bestList}></BoardTable>
+      <FilterButton
+        filterArr={filterPeriodArr}
+        setCriteria={setCriteria}
+      ></FilterButton>
+      <PlotCardTop bestList={bestList} navigate={navigate}></PlotCardTop>
+      <BoardTable bestList={bestList} navigate={navigate}></BoardTable>
     </div>
   );
 }
 
 export default PlotBoardPage;
 
-function BoardCategoryRevolving({ categoryArr }) {
-  const [categoryIdx, setCategoryIdx] = useState(0);
+function BoardCategoryRevolving({ categoryArr, categoryIdx, setCategoryIdx }) {
   const nextIdx = categoryIdx + 1 === categoryArr.length ? 0 : categoryIdx + 1;
   const prevIdx = categoryIdx - 1 < 0 ? 3 : categoryIdx - 1;
 
@@ -100,7 +106,7 @@ function BoardCategoryRevolving({ categoryArr }) {
 }
 
 // 필터 버튼
-function FilterButton({ filterArr }) {
+function FilterButton({ filterArr, setCriteria }) {
   // 필터 클릭 이벤트
   const handleFilterButton = (id) => {
     const items = document.getElementsByClassName("filterItem");
@@ -112,6 +118,8 @@ function FilterButton({ filterArr }) {
     }
 
     target.classList.add("selected");
+
+    setCriteria(id);
   };
 
   return (
@@ -133,49 +141,11 @@ function FilterButton({ filterArr }) {
 }
 
 // 탑 5
-function PlotCardTop() {
-  const topCards = [
-    {
-      rank: 1,
-      title: "붉은 달의 저주",
-      author: "별빛 고양이",
-      genre: "판타지",
-      views: 1234,
-      likes: 1234,
-    },
-    {
-      rank: 2,
-      title: "푸른 바람의 노래",
-      author: "바람 소년",
-      genre: "로맨스",
-      views: 2345,
-      likes: 1567,
-    },
-    {
-      rank: 3,
-      title: "어둠의 그림자",
-      author: "검은 늑대",
-      genre: "미스터리",
-      views: 3456,
-      likes: 1890,
-    },
-    {
-      rank: 4,
-      title: "빛의 전설",
-      author: "하얀 용",
-      genre: "판타지",
-      views: 4567,
-      likes: 2103,
-    },
-    {
-      rank: 5,
-      title: "별들의 속삭임",
-      author: "푸른 별",
-      genre: "SF",
-      views: 5678,
-      likes: 2456,
-    },
-  ];
+function PlotCardTop({ bestList }) {
+  const topCards = [];
+  for (let i = 0; i < 5; i++) {
+    topCards.push(bestList[i]);
+  }
 
   return (
     <div id="topCardList">
@@ -185,23 +155,23 @@ function PlotCardTop() {
             {i + 1}
           </div>
           <div className={`title ${i === 0 ? "title_2" : "title_3"}`}>
-            {d.title}
+            {d?.title}
           </div>
           <div className={`author ${i === 0 ? "heading_1" : "heading_2"}`}>
-            {d.author}
+            {d?.author}
           </div>
           <div className="footer">
             <div className={`genre ${i === 0 ? "headline_2" : "label_1"}`}>
-              {d.genre}
+              {d?.genre}
             </div>
             <div>
               <img src="view.png" />
               <span className={`${i === 0 ? "label_1" : "caption_2"}`}>
-                {d.views}
+                {d?.views}
               </span>
               <img src="likes.png" />
               <span className={`${i === 0 ? "label_1" : "caption_2"}`}>
-                {d.likes}
+                {d?.likes}
               </span>
             </div>
           </div>
@@ -211,18 +181,17 @@ function PlotCardTop() {
   );
 }
 
-function BoardTable({ bestList }) {
-  const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  const totalPages = Math.ceil(bestList.length / itemsPerPage);
-
+function BoardTable({ bestList, navigate }) {
   const goToDetail = (plot) => {
     navigate("/boardDetail", {
       state: { bestList: bestList, plot: plot },
     });
   };
+
+  const tableList = [];
+  for (let i = 5; i < bestList.length; i++) {
+    tableList.push(bestList[i]);
+  }
 
   return (
     <div id="boardTableBox">
@@ -243,7 +212,7 @@ function BoardTable({ bestList }) {
         <tbody>
           {bestList.map((d, i) => (
             <tr key={i} onClick={() => goToDetail(d)}>
-              <td className="rank title_2">{i + 1}</td>
+              <td className="rank title_2">{i + 6}</td>
               <td className="title heading_1">{d.title}</td>
               <td className="author headline_2">황금빛여우</td>
               <td className="genre headline_2">판타지</td>
