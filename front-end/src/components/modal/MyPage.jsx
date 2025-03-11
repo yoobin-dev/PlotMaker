@@ -66,9 +66,21 @@ function DefaultMyPage({ setStep, userInfo }) {
 
 function LogoutPage({ setStep, navigate }) {
   const handleLogout = () => {
-    sessionStorage.removeItem("userInfo");
-    navigate("/");
-  };
+    sessionStorage.setItem("userInfo", null);
+    navigate("/", {replace: true});
+  }
+
+  useEffect(() => {
+    const handlePopState = () => {
+      navigate("/", { replace: true });
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
 
   return (
     <div id="logoutMyPage">
