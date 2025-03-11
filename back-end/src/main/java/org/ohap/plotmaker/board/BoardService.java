@@ -10,5 +10,6 @@ public interface BoardService {
   public String toggleLikes(ToggleLikesDTO toggleLikesDTO);
   public ApiResponse<List<BoardPlotDTO>> getBoardList(BoardListDTO request);
   public BoardPlotDTO getPlotDetail(String promptSeq);
+  public String increaseView(String promptSeq);
   
 }

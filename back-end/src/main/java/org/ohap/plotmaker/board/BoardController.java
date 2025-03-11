@@ -31,7 +31,7 @@ public class BoardController {
   @PostMapping("/likes/toggle")
   public ResponseEntity<ApiResponse<String>> toggleLikes(@RequestBody ToggleLikesDTO likes){
     String result = boardService.toggleLikes(likes);
-    ApiResponse<String> response = ApiResponse.<String>builder().message(result).build();
+    ApiResponse<String> response = ApiResponse.<String>builder().message(result).isSuccess(true).build();
     return ResponseEntity.ok().body(response);
   }
 
@@ -65,6 +65,13 @@ public class BoardController {
   @GetMapping("")
   public ResponseEntity<ApiResponse<List<BoardPlotDTO>>> getPlotList(@ModelAttribute BoardListDTO request){
     ApiResponse<List<BoardPlotDTO>> response = boardService.getBoardList(request);
+    return ResponseEntity.ok().body(response);
+  }
+
+  @PostMapping("/view")
+  public ResponseEntity<ApiResponse<String>> increaseView(@RequestBody String promptSeq){
+    String result = boardService.increaseView(promptSeq);
+    ApiResponse<String> response = ApiResponse.<String>builder().message(result).isSuccess(true).build();
     return ResponseEntity.ok().body(response);
   }
 
