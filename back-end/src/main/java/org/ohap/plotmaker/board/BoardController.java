@@ -60,11 +60,19 @@ public class BoardController {
   }
 
   /*
-   * /api/board?categoryCode=카테고리코드&page=페이지
+   * /api/board?categoryCode=카테고리코드&page=페이지&socialId=소셜아이디&sortBy=정렬기준&sortOrder=정렬순서
+   * 정렬기준 1. createAt 2. view 3. likes
+   * 정렬순서 DESC, ASC
    */
   @GetMapping("")
   public ResponseEntity<ApiResponse<List<BoardPlotDTO>>> getPlotList(@ModelAttribute BoardListDTO request){
     ApiResponse<List<BoardPlotDTO>> response = boardService.getBoardList(request);
+    return ResponseEntity.ok().body(response);
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<ApiResponse<List<BoardPlotDTO>>> searchBoard(@ModelAttribute BoardSearchParamDTO search){
+    ApiResponse<List<BoardPlotDTO>> response = boardService.searchBoard(search);
     return ResponseEntity.ok().body(response);
   }
 

@@ -1,6 +1,7 @@
 package org.ohap.plotmaker.board;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.ohap.plotmaker.common.ApiResponse;
 import org.ohap.plotmaker.common.PagingInfo;
@@ -52,7 +53,8 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public ApiResponse<List<BoardPlotDTO>> getBoardList(BoardListDTO request){
     int totalCount = boardMapper.selectBoardPlotCount(request);
-    int page = Integer.parseInt(request.getPage());
+    Optional<String> pageOpt = Optional.ofNullable(request.getPage());
+    int page = Integer.parseInt(pageOpt.orElse("1"));
     PageUtil pageUtil = new PageUtil();
     pageUtil.setPageUtil(page, totalCount, 10);
     int totalPage = pageUtil.getTotalPage();
@@ -84,6 +86,29 @@ public class BoardServiceImpl implements BoardService {
       return null;
     }
     return "조회수 증가 성공";
+  }
+
+  @Override
+  public ApiResponse<List<BoardPlotDTO>> searchBoard(BoardSearchParamDTO param){
+    int totalCount = boardMapper.selectBoardSearchCount(param);
+    Optional<String> pageOpt = Optional.ofNullable(param.getPage());
+    int page = Integer.parseInt(pageOpt.orElse("1"));
+    PageUtil pageUtil = new PageUtil();
+    pageUtil.setPageUtil(page, totalCount, 10);
+    int totalPage = pageUtil.getTotalPage();
+    int begin = pageUtil.getBegin();
+    PagingInfo paging = PagingInfo.builder()
+      .currentPage(page).size(10).totalCount(totalCount).totalPage(totalPage)
+      .build();
+    param.setBegin(begin);
+    List<BoardPlotDTO> list = boardMapper.selectBoardPlotListwithParam(param);
+    String socialId = param.getSocialId();
+    for(BoardPlotDTO plot : list){
+      settingIsLiked(plot, socialId);
+    }
+    ApiResponse<List<BoardPlotDTO>> response = ApiResponse.<List<BoardPlotDTO>>builder()
+      .isSuccess(true).message("조회 성공").data(list).paging(paging).build();
+    return response;
   }
 
 }
