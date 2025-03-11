@@ -68,11 +68,7 @@
             PL.PLOT_SEQ, PL.PLOT_CONTENT, PR.CREATE_AT, C_T.CODE_NAME, C_G.CODE_NAME,
             C_F.CODE_NAME, C_M.CODE_NAME, PRD.GENRE, PRD.TIMEFRAME, PRD.THEME
     ORDER BY (COALESCE(COUNT(DISTINCT LK.LIKE_SEQ), 0) * 0.4 + COALESCE(PR.VIEW, 0) * 0.6) DESC
-<<<<<<< HEAD
-    LIMIT 20
-=======
     LIMIT 10
->>>>>>> main
   </select>
 
   <select id="selectLikes" parameterType="ToggleLikesDTO">
@@ -146,9 +142,6 @@
             PR.EVENT, PR.CHARACTERS, PR.TELL_TYPE, PR.CUSTOM, PR.TITLE, PR.IS_PUBLIC,
             PL.PLOT_SEQ, PL.PLOT_CONTENT, PR.CREATE_AT, C_T.CODE_NAME, C_G.CODE_NAME,
             C_F.CODE_NAME, C_M.CODE_NAME, PRD.GENRE, PRD.TIMEFRAME, PRD.THEME
-<<<<<<< HEAD
-    <if test="begin != null and begin != ''">
-=======
     <if test="sortBy != null and sortOrder != null">
       ORDER BY
         <choose>
@@ -161,7 +154,6 @@
         ${sortOrder}
     </if>
     <if test="begin != null">
->>>>>>> main
       LIMIT #{begin}, 10
     </if>
   </select>
@@ -186,8 +178,6 @@
     </where>
   </select>
 
-<<<<<<< HEAD
-=======
   <select id="selectBoardSearchCount" parameterType="BoardSearchParamDTO" resultType="int">
     SELECT COUNT(DISTINCT PR.PROMPT_SEQ)
     FROM TBL_PROMPT PR
@@ -272,7 +262,6 @@
     </if>
   </select>
 
->>>>>>> main
   <select id="selectBoardDetail" parameterType="String" resultType="BoardPlotDTO">
     SELECT DISTINCT PR.PROMPT_SEQ                   AS PROMPT_SEQ,
           PR.TYPE_CODE                     AS CATEGORY_CODE,
@@ -329,8 +318,6 @@
     WHERE PROMPT_SEQ = #{promptSeq}
   </update>
 
-<<<<<<< HEAD
-=======
   <select id="selectIsLiked" parameterType="String" resultType="int">
     SELECT COUNT(LIKE_SEQ)
     FROM TBL_LIKE
@@ -338,5 +325,4 @@
     AND PROMPT_SEQ = #{promptSeq}
   </select>
 
->>>>>>> main
 </mapper>

@@ -66,30 +66,6 @@ public class ClovaService {
   }
 
   @SuppressWarnings("null")
-<<<<<<< HEAD
-  public String requestClova2(String categoryCode, String messageContent){
-
-    List<Message> messages = new ArrayList<>();
-    String systemMsg = null;
-    switch (categoryCode) {
-      case "T000":
-        systemMsg = "";
-        break;
-      
-      case "T001":
-        systemMsg = "";
-        break;
-      
-      case "T002":
-        systemMsg = "";
-        break;
-    }
-
-    Message system = Message.builder().role("system").content(systemMsg).build();
-    messages.add(system);
-    Message input = Message.builder().role("system").content(messageContent).build();
-    messages.add(input);
-=======
   public String requestSummary(String plot){
     String result = null;
     List<String> texts = new ArrayList<>();
@@ -151,7 +127,6 @@ public class ClovaService {
     messages.add(system);
     Message user = Message.builder().role("user").content(messageContent).build();
     messages.add(user);
->>>>>>> main
 
     ClovaRequestDTO request = ClovaRequestDTO.createWithApiKey(apiKey, messages);
     HttpHeaders headers = new HttpHeaders();
@@ -162,20 +137,12 @@ public class ClovaService {
         apiUrl, HttpMethod.POST, entity, ClovaResponseDTO.class);
       
       Message resMessage = response.getBody().getResult().getMessage();
-<<<<<<< HEAD
-      StringBuilder sb = new StringBuilder();
-      sb.append(resMessage.getContent());
-
-      if(!categoryCode.equals("T000")){
-        while(sb.length() < 1800){
-=======
       String message = resMessage.getContent();
       StringBuilder sb2 = new StringBuilder();
       sb2.append(message);
 
       if(!categoryCode.equals("T000")){
         while(sb2.length() < 1800){
->>>>>>> main
           resMessage.setRole("assistant");
           messages.add(resMessage);
           messages.add(Message.builder().role("user").content("화수 표시나 제목없이 지금까지의 내용을 유지하면서 자연스럽게 이어지는 내용을 써줘.").build());
@@ -184,19 +151,11 @@ public class ClovaService {
           ResponseEntity<ClovaResponseDTO> repeatRes = restTemplate.exchange(
             apiUrl, HttpMethod.POST, repeatEntity, ClovaResponseDTO.class);
           resMessage = repeatRes.getBody().getResult().getMessage();
-<<<<<<< HEAD
-          sb.append(" " + repeatRes.getBody().getResult().getMessage().getContent());
-        }
-      }
-
-      String plot = sb.toString();
-=======
           sb2.append(" " + repeatRes.getBody().getResult().getMessage().getContent());
         }
       }
 
       String plot = sb2.toString();
->>>>>>> main
       String plotContent = plot.substring(0, plot.lastIndexOf(".") + 1);
       return plotContent;
     } catch(Exception e){

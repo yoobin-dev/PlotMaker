@@ -31,13 +31,10 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public List<BoardPlotDTO> getBestList(BestListDTO request) {
     List<BoardPlotDTO> list = boardMapper.selectBestPlot(request);
-<<<<<<< HEAD
-=======
     String socialId = request.getSocialId();
     for(BoardPlotDTO plot : list) {
       plot = settingIsLiked(plot, socialId);
     }
->>>>>>> main
     return list;
     
   }
@@ -57,12 +54,8 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public ApiResponse<List<BoardPlotDTO>> getBoardList(BoardListDTO request){
     int totalCount = boardMapper.selectBoardPlotCount(request);
-<<<<<<< HEAD
-    int page = Integer.parseInt(request.getPage());
-=======
     Optional<String> pageOpt = Optional.ofNullable(request.getPage());
     int page = Integer.parseInt(pageOpt.orElse("1"));
->>>>>>> main
     PageUtil pageUtil = new PageUtil();
     pageUtil.setPageUtil(page, totalCount, 10);
     int totalPage = pageUtil.getTotalPage();
@@ -72,27 +65,20 @@ public class BoardServiceImpl implements BoardService {
       .build();
     request.setBegin(begin);
     List<BoardPlotDTO> list = boardMapper.selectBoardPlotList(request);
-<<<<<<< HEAD
-=======
     String socialId = request.getSocialId();
     for(BoardPlotDTO plot : list) {
       plot = settingIsLiked(plot, socialId);
     }
->>>>>>> main
     ApiResponse<List<BoardPlotDTO>> response = ApiResponse.<List<BoardPlotDTO>>builder()
       .isSuccess(true).message("조회 성공").data(list).paging(paging).build();
     return response;
   }
 
   @Override
-<<<<<<< HEAD
-  public BoardPlotDTO getPlotDetail(String promptSeq){
-=======
   public BoardPlotDTO getPlotDetail(String promptSeq, String socialId){
     BoardPlotDTO plot = boardMapper.selectBoardDetail(promptSeq);
     plot = settingIsLiked(plot, socialId);
->>>>>>> main
-    return boardMapper.selectBoardDetail(promptSeq);
+    return plot;
   }
 
   // 수정사항: 실패 Exception 처리
@@ -105,8 +91,6 @@ public class BoardServiceImpl implements BoardService {
     return "조회수 증가 성공";
   }
 
-<<<<<<< HEAD
-=======
   @Override
   public ApiResponse<List<BoardPlotDTO>> searchBoard(BoardSearchParamDTO param){
     int totalCount = boardMapper.selectBoardSearchCount(param);
@@ -130,5 +114,4 @@ public class BoardServiceImpl implements BoardService {
     return response;
   }
 
->>>>>>> main
 }

@@ -65,7 +65,8 @@ public class UserController {
   }
 
   @PostMapping("/leave")
-  public ResponseEntity<ApiResponse<String>> deleteUser(@RequestBody String socialId){
+  public ResponseEntity<ApiResponse<String>> deleteUser(@RequestBody LoginDTO request){
+    String socialId = request.getSocialId();
     int delete = userService.deleteUser(socialId);
     if(delete != 1){
       throw new RuntimeException();

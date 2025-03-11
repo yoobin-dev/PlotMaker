@@ -6,10 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.ohap.plotmaker.board.BestListDTO;
 import org.ohap.plotmaker.board.BoardListDTO;
 import org.ohap.plotmaker.board.BoardPlotDTO;
-<<<<<<< HEAD
-=======
 import org.ohap.plotmaker.board.BoardSearchParamDTO;
->>>>>>> main
 import org.ohap.plotmaker.board.ToggleLikesDTO;
 
 @Mapper
@@ -23,11 +20,8 @@ public interface BoardMapper {
   public int selectBoardPlotCount(BoardListDTO request);
   public BoardPlotDTO selectBoardDetail(String promptSeq);
   public int increaseView(String promptSeq);
-<<<<<<< HEAD
-=======
   public int selectIsLiked(String socialId, String promptSeq);
   public List<BoardPlotDTO> selectBoardPlotListwithParam(BoardSearchParamDTO param);
   public int selectBoardSearchCount(BoardSearchParamDTO param);
->>>>>>> main
 
 }
