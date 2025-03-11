@@ -26,5 +26,6 @@
     <typeAlias alias="BoardPlotDTO"         type="org.ohap.plotmaker.board.BoardPlotDTO" />
     <typeAlias alias="BestListDTO"          type="org.ohap.plotmaker.board.BestListDTO" />
     <typeAlias alias="BoardListDTO"         type="org.ohap.plotmaker.board.BoardListDTO" />
+    <typeAlias alias="BoardSearchParamDTO"  type="org.ohap.plotmaker.board.BoardSearchParamDTO" />
   </typeAliases>
 </configuration>

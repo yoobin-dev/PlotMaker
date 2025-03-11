@@ -11,5 +11,6 @@ public interface BoardService {
   public ApiResponse<List<BoardPlotDTO>> getBoardList(BoardListDTO request);
   public BoardPlotDTO getPlotDetail(String promptSeq);
   public String increaseView(String promptSeq);
+  public ApiResponse<List<BoardPlotDTO>> searchBoard(BoardSearchParamDTO param);
   
 }
