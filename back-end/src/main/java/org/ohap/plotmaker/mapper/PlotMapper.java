@@ -21,4 +21,7 @@ public interface PlotMapper {
   public List<PlotResponseDTO> selectPlotBySearchParam(PlotSearchParamDTO param);
   public int insertPlotResult(PlotDTO plot);
 
+  public String selectPrevPlot(String promptSeq);
+  public PlotRequestDTO selectPrevPlotRequest(String promptSeq);
+
 }
