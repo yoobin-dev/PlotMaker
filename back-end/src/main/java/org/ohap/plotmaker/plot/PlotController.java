@@ -40,9 +40,16 @@ public class PlotController {
     return ResponseEntity.ok().body(response);
   }
 
-  @PostMapping("/make")
+  @PostMapping("/make2")
   public ResponseEntity <ApiResponse<PlotResponseDTO>> makePlot(@RequestBody PlotRequestDTO request){
     PlotResponseDTO plot = plotService.makePlot(request);
+    ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
+    return ResponseEntity.ok().body(response);
+  }
+
+  @PostMapping("/make")
+  public ResponseEntity <ApiResponse<PlotResponseDTO>> makePlot2(@RequestBody PlotRequestDTO request){
+    PlotResponseDTO plot = plotService.makePlot2(request);
     ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
     return ResponseEntity.ok().body(response);
   }
@@ -52,6 +59,13 @@ public class PlotController {
     @RequestBody PlotResponseDTO request)
   {
     PlotResponseDTO plot = plotService.savePlot(socialId, request);
+    ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
+    return ResponseEntity.ok().body(response);
+  }
+
+  @PostMapping("/make/next")
+  public ResponseEntity<ApiResponse<PlotResponseDTO>> makeNextPlot(@RequestBody String promptSeq){
+    PlotResponseDTO plot = plotService.makeNextPlot(promptSeq);
     ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
     return ResponseEntity.ok().body(response);
   }
