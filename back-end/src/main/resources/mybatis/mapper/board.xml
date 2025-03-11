@@ -223,4 +223,11 @@
     WHERE PROMPT_SEQ = #{promptSeq}
   </update>
 
+  <select id="selectIsLiked" parameterType="String" resultType="int">
+    SELECT COUNT(LIKE_SEQ)
+    FROM TBL_LIKE
+    WHERE SOCIAL_ID = #{socialId}
+    AND PROMPT_SEQ = #{promptSeq}
+  </select>
+
 </mapper>

@@ -17,9 +17,22 @@ public class BoardServiceImpl implements BoardService {
   
   private final BoardMapper boardMapper;
 
+  private void settingIsLiked(BoardPlotDTO plot, String socialId){
+    String promptSeq = plot.getPromptSeq() + "";
+    if(boardMapper.selectIsLiked(socialId, promptSeq) == 0){
+      plot.setLiked(false);
+    } else {
+      plot.setLiked(true);
+    }
+  }
+
   @Override
   public List<BoardPlotDTO> getBestList(BestListDTO request) {
     List<BoardPlotDTO> list = boardMapper.selectBestPlot(request);
+    String socialId = request.getSocialId();
+    for(BoardPlotDTO plot : list) {
+      settingIsLiked(plot, socialId);
+    }
     return list;
     
   }
@@ -49,6 +62,10 @@ public class BoardServiceImpl implements BoardService {
       .build();
     request.setBegin(begin);
     List<BoardPlotDTO> list = boardMapper.selectBoardPlotList(request);
+    String socialId = request.getSocialId();
+    for(BoardPlotDTO plot : list) {
+      settingIsLiked(plot, socialId);
+    }
     ApiResponse<List<BoardPlotDTO>> response = ApiResponse.<List<BoardPlotDTO>>builder()
       .isSuccess(true).message("조회 성공").data(list).paging(paging).build();
     return response;
