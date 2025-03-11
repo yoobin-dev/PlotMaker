@@ -217,4 +217,10 @@
             C_F.CODE_NAME, C_M.CODE_NAME, PRD.GENRE, PRD.TIMEFRAME, PRD.THEME, CM.COMMENT_SEQ
   </select>
 
+  <update id="increaseView" parameterType="String">
+    UPDATE TBL_PROMPT
+    SET VIEW = VIEW + 1
+    WHERE PROMPT_SEQ = #{promptSeq}
+  </update>
+
 </mapper>

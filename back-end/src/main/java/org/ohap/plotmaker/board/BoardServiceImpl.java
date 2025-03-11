@@ -59,4 +59,14 @@ public class BoardServiceImpl implements BoardService {
     return boardMapper.selectBoardDetail(promptSeq);
   }
 
+  // 수정사항: 실패 Exception 처리
+  @Override
+  public String increaseView(String promptSeq) {
+    int update = boardMapper.increaseView(promptSeq);
+    if(update == 0){
+      return null;
+    }
+    return "조회수 증가 성공";
+  }
+
 }
