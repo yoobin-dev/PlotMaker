@@ -2,9 +2,10 @@ package org.ohap.plotmaker.board;
 
 import java.util.List;
 
+import org.ohap.plotmaker.common.ApiResponse;
+import org.ohap.plotmaker.common.PagingInfo;
 import org.ohap.plotmaker.mapper.BoardMapper;
-import org.ohap.plotmaker.plot.PlotResponseDTO;
-import org.springframework.security.access.method.P;
+import org.ohap.plotmaker.util.PageUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +18,8 @@ public class BoardServiceImpl implements BoardService {
   private final BoardMapper boardMapper;
 
   @Override
-  public List<PlotResponseDTO> getBestList(BestListDTO request) {
-    List<PlotResponseDTO> list = boardMapper.selectBestPlot(request);
+  public List<BoardPlotDTO> getBestList(BestListDTO request) {
+    List<BoardPlotDTO> list = boardMapper.selectBestPlot(request);
     return list;
     
   }
@@ -33,6 +34,29 @@ public class BoardServiceImpl implements BoardService {
       boardMapper.insertLike(toggleLikesDTO);
       return "좋아요 등록";
     }
+  }
+
+  @Override
+  public ApiResponse<List<BoardPlotDTO>> getBoardList(BoardListDTO request){
+    int totalCount = boardMapper.selectBoardPlotCount(request);
+    int page = Integer.parseInt(request.getPage());
+    PageUtil pageUtil = new PageUtil();
+    pageUtil.setPageUtil(page, totalCount, 10);
+    int totalPage = pageUtil.getTotalPage();
+    int begin = pageUtil.getBegin();
+    PagingInfo paging = PagingInfo.builder()
+      .currentPage(page).size(10).totalCount(totalCount).totalPage(totalPage)
+      .build();
+    request.setBegin(begin);
+    List<BoardPlotDTO> list = boardMapper.selectBoardPlotList(request);
+    ApiResponse<List<BoardPlotDTO>> response = ApiResponse.<List<BoardPlotDTO>>builder()
+      .isSuccess(true).message("조회 성공").data(list).paging(paging).build();
+    return response;
+  }
+
+  @Override
+  public BoardPlotDTO getPlotDetail(String promptSeq){
+    return boardMapper.selectBoardDetail(promptSeq);
   }
 
 }

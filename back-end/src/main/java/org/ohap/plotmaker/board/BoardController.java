@@ -3,7 +3,6 @@ package org.ohap.plotmaker.board;
 import java.util.List;
 
 import org.ohap.plotmaker.common.ApiResponse;
-import org.ohap.plotmaker.plot.PlotResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -38,8 +36,10 @@ public class BoardController {
   }
 
   @GetMapping("/{promptSeq}")
-  public ResponseEntity<ApiResponse<PlotResponseDTO>> getPlotDetail(@PathVariable String promptSeq){
-    return null;
+  public ResponseEntity<ApiResponse<BoardPlotDTO>> getPlotDetail(@PathVariable String promptSeq){
+    BoardPlotDTO result = boardService.getPlotDetail(promptSeq);
+    ApiResponse<BoardPlotDTO> response = ApiResponse.<BoardPlotDTO>builder().isSuccess(true).data(result).build();
+    return ResponseEntity.ok().body(response);
   }
 
   /*
@@ -52,9 +52,9 @@ public class BoardController {
    * /api/board/best?categoryCode=카테고리코드&criteria=위의값
    */
   @GetMapping("/best")
-  public ResponseEntity<ApiResponse<List<PlotResponseDTO>>> getBestList(@ModelAttribute BestListDTO request){
-    List<PlotResponseDTO> list = boardService.getBestList(request);
-    ApiResponse<List<PlotResponseDTO>> response = ApiResponse.<List<PlotResponseDTO>>builder()
+  public ResponseEntity<ApiResponse<List<BoardPlotDTO>>> getBestList(@ModelAttribute BestListDTO request){
+    List<BoardPlotDTO> list = boardService.getBestList(request);
+    ApiResponse<List<BoardPlotDTO>> response = ApiResponse.<List<BoardPlotDTO>>builder()
       .isSuccess(true).data(list).build();
     return ResponseEntity.ok().body(response);
   }
@@ -63,8 +63,9 @@ public class BoardController {
    * /api/board?categoryCode=카테고리코드&page=페이지
    */
   @GetMapping("")
-  public ResponseEntity<ApiResponse<List<PlotResponseDTO>>> getPlotList(@RequestParam String categoryCode, @RequestParam String page){
-    return null;
+  public ResponseEntity<ApiResponse<List<BoardPlotDTO>>> getPlotList(@ModelAttribute BoardListDTO request){
+    ApiResponse<List<BoardPlotDTO>> response = boardService.getBoardList(request);
+    return ResponseEntity.ok().body(response);
   }
 
 }
