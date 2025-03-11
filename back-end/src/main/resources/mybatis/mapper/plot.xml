@@ -41,11 +41,11 @@
           PR.TITLE                         AS TITLE,
           PR.IS_PUBLIC                     AS IS_PUBLIC,
           PR.VIEW                          AS VIEW,
-          COUNT(DISTINCT LK.LIKE_SEQ)      AS LIKES,
+          (SELECT COUNT(DISTINCT LK.LIKE_SEQ) FROM TBL_LIKE LK WHERE LK.PROMPT_SEQ = PR.PROMPT_SEQ) AS LIKES,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
-          COUNT(CM.COMMENT_SEQ)            AS COMMENT
+          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT,
     FROM TBL_PROMPT PR
       LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
       LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
@@ -100,11 +100,11 @@
           PR.TITLE                         AS TITLE,
           PR.IS_PUBLIC                     AS IS_PUBLIC,
           PR.VIEW                          AS VIEW,
-          COUNT(DISTINCT LK.LIKE_SEQ)      AS LIKES,
+          (SELECT COUNT(DISTINCT LK.LIKE_SEQ) FROM TBL_LIKE LK WHERE LK.PROMPT_SEQ = PR.PROMPT_SEQ) AS LIKES,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
-          COUNT(CM.COMMENT_SEQ)            AS COMMENT
+          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT,
     FROM TBL_PROMPT PR
       LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
       LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
@@ -150,11 +150,11 @@
           PR.TITLE                         AS TITLE,
           PR.IS_PUBLIC                     AS IS_PUBLIC,
           PR.VIEW                          AS VIEW,
-          COUNT(DISTINCT LK.LIKE_SEQ)      AS LIKES,
+          (SELECT COUNT(DISTINCT LK.LIKE_SEQ) FROM TBL_LIKE LK WHERE LK.PROMPT_SEQ = PR.PROMPT_SEQ) AS LIKES,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
-          COUNT(CM.COMMENT_SEQ)            AS COMMENT
+          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT,
     FROM TBL_PROMPT PR
       LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
       LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
@@ -197,10 +197,11 @@
           PR.TITLE                         AS TITLE,
           PR.IS_PUBLIC                     AS IS_PUBLIC,
           PR.VIEW                          AS VIEW,
+          (SELECT COUNT(DISTINCT LK.LIKE_SEQ) FROM TBL_LIKE LK WHERE LK.PROMPT_SEQ = PR.PROMPT_SEQ) AS LIKES,
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
-          COUNT(CM.COMMENT_SEQ)            AS COMMENT
+          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT,
     FROM TBL_PROMPT PR
       LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
       LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
@@ -209,6 +210,7 @@
       LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
       LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
       LEFT JOIN TBL_COMMENT CM ON PR.PROMPT_SEQ = CM.PROMPT_SEQ
+      LEFT JOIN TBL_LIKE LK ON PR.PROMPT_SEQ = LK.PROMPT_SEQ
     WHERE 1=1
     <if test="socialId != null and socialId !=''">
       AND PR.SOCIAL_ID = #{socialId}
