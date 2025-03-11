@@ -141,16 +141,28 @@ function FilterButton({ filterArr, setCriteria }) {
 }
 
 // 탑 5
-function PlotCardTop({ bestList }) {
+function PlotCardTop({ bestList, navigate }) {
   const topCards = [];
   for (let i = 0; i < 5; i++) {
     topCards.push(bestList[i]);
   }
 
+  console.log(topCards);
+
+  const goToDetail = (plot) => {
+    navigate("/boardDetail", {
+      state: { plotList: bestList, plot: plot },
+    });
+  };
+
   return (
     <div id="topCardList">
       {topCards.map((d, i) => (
-        <div key={i} className={`topCard ${i === 0 ? "first" : ""}`}>
+        <div
+          key={i}
+          className={`topCard ${i === 0 ? "first" : ""}`}
+          onClick={() => goToDetail(d)}
+        >
           <div className={`rank ${i === 0 ? "display_1" : "display_2"}`}>
             {i + 1}
           </div>
@@ -167,7 +179,7 @@ function PlotCardTop({ bestList }) {
             <div>
               <img src="view.png" />
               <span className={`${i === 0 ? "label_1" : "caption_2"}`}>
-                {d?.views}
+                {d?.view}
               </span>
               <img src="likes.png" />
               <span className={`${i === 0 ? "label_1" : "caption_2"}`}>
@@ -184,7 +196,7 @@ function PlotCardTop({ bestList }) {
 function BoardTable({ bestList, navigate }) {
   const goToDetail = (plot) => {
     navigate("/boardDetail", {
-      state: { bestList: bestList, plot: plot },
+      state: { plotList: bestList, plot: plot },
     });
   };
 
@@ -214,15 +226,15 @@ function BoardTable({ bestList, navigate }) {
             <tr key={i} onClick={() => goToDetail(d)}>
               <td className="rank title_2">{i + 6}</td>
               <td className="title heading_1">{d.title}</td>
-              <td className="author headline_2">황금빛여우</td>
-              <td className="genre headline_2">판타지</td>
+              <td className="author headline_2">{d.nickname}</td>
+              <td className="genre headline_2">{d.genre}</td>
               <td className="veiws">
                 <img src="view.png" />
-                <span className="heading_2">1234</span>
+                <span className="heading_2">{d.view}</span>
               </td>
               <td className="likes">
                 <img src="likes.png" />
-                <span className="heading_2">1234</span>
+                <span className="heading_2">{d.likes}</span>
               </td>
               <td className="createAt label_2">{d.createAt}</td>
             </tr>

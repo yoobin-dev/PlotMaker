@@ -20,7 +20,7 @@ export const makePlot = async (promptObj) => {
 export const savePlot = async (socialId, promptObj) => {
   try {
     const res = await axios.post(`${prefix}/plot/${socialId}/save`, promptObj);
-    console.log(res);
+
     if (res.status === 200) {
       return res.data.data;
     } else {

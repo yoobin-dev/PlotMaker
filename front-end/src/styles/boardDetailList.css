@@ -1,17 +1,21 @@
 #boardDetailList {
   height: 100%;
   width: 470px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border-radius: 0px 20px 20px 0px;
   border: 0.5px solid var(--Grayscale-Gr_B, #bbb);
   background: var(--Grayscale-Gr_F-9, #f9f9f9);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
   position: relative;
-  transition: width 1s ease-in-out;
+  transition: width 0.5s ease-in-out;
+  padding-bottom: 10px;
 }
 
 #boardDetailList.goRight {
   width: 30px;
-  transition: width 1s ease-in-out;
+  transition: width 0.5s ease-in-out;
 }
 #boardDetailList.goRight #detailListButton {
   transform: rotate(180deg);
@@ -34,4 +38,54 @@
 #detailListButton img {
   width: 18px;
   height: 16px;
+}
+#boardDetailCard {
+  width: 100%;
+}
+
+.boardDetailCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 24px;
+  border-bottom: 0.5px solid var(--Grayscale-Gr_B, #bbb);
+}
+.boardDetailCard .header {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.boardDetailCard .body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.boardDetailCard .body .extra_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+}
+.boardDetailCard .body .extra_info img {
+  width: 15px;
+}
+.boardDetailCard .tag {
+  width: max-content;
+  background-color: #eee;
+  padding: 4px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.boardDetailCard .title,
+.boardDetailCard .contents {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+.boardDetailCard.selected {
+  background-color: #fff;
+  border-top: 0.5px solid var(--Grayscale-Gr_5, #555);
+  border-bottom: 0.5px solid var(--Grayscale-Gr_5, #555);
 }

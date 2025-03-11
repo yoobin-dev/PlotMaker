@@ -22,6 +22,10 @@ const LoginModal = ({
   const isLoginActive = id && pw;
 
   const handleSubmitLogin = () => {
+    if (pw.length < 1 || id.length < 1) {
+      alert("로그인 정보를 입력해주세요");
+      return;
+    }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(id)) {
       alert("이메일 형식을 확인해주세요.");
       return;
@@ -227,7 +231,6 @@ const LoginModal = ({
             <LoginButton
               onClick={handleSubmitLogin}
               title={"이메일로 로그인"}
-              disabled={!isLoginActive}
             />
             <div id="loginModalFooter">
               <span className="label_2 ft_gray_8">회원이 아니신가요?</span>

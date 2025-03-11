@@ -10,6 +10,7 @@ function PlotPromptRight({
   setCreate,
   promptValues,
   setPromptValues,
+  setReturnData,
   isContinue,
 }) {
   const buildPlot = () => {
@@ -51,7 +52,7 @@ function PlotPromptRight({
     const plotTitle = document.getElementById("plotPromptResultTitle");
     const plotContent = document.getElementById("plotPromptResultContents");
     const returnData = await makePlot(promptValues);
-    setPromptValues(returnData);
+    setReturnData(returnData);
     plotContent.innerText = returnData.plotContent;
     plotTitle.innerText = returnData.category;
     setCreate("finish");

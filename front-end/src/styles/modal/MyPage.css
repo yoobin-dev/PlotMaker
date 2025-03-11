@@ -1,3 +1,25 @@
+.footer .button.white {
+  background-color: #f3f3f3;
+  color: #111;
+}
+.footer .button.white:hover {
+  background-color: #111;
+  color: #f3f3f3;
+}
+
+.footer .button.black:hover {
+  background-color: #f3f3f3;
+  color: #111;
+}
+.footer .button.red {
+  border: 1px solid #ca3737 !important;
+  color: #ca3737;
+}
+.footer .button.red:hover {
+  background-color: #ca3737;
+  color: #111;
+}
+
 #myPageBackground {
   background-color: rgba(0, 0, 0, 0.2);
   width: 100%;
@@ -61,19 +83,6 @@
   border: 1px solid #fff;
   border-radius: 999px;
 }
-#myPageModal .footer .white {
-  background-color: #f3f3f3;
-  color: #111;
-}
-#myPageModal .footer .white:hover {
-  background-color: #111;
-  color: #f3f3f3;
-}
-
-#myPageModal .footer .button.black:hover {
-  background-color: #f3f3f3;
-  color: #111;
-}
 
 #logoutMyPage .body {
   padding-top: 30%;
@@ -93,11 +102,39 @@
   padding-top: 15%;
 }
 
-#withdrawMyPage .footer .button.red {
-  border: 1px solid #ca3737;
-  color: #ca3737;
+#downloadMyPage {
+  margin-top: 15%;
 }
-#withdrawMyPage .footer .button.red:hover {
-  background-color: #ca3737;
-  color: #111;
+#downloadMyPage .body {
+  gap: 16px;
+}
+#downloadMyPage .downloadButton {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+#downloadMyPage .downloadButton {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  margin-top: 8px;
+}
+#downloadMyPage .password {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 25%;
+  margin-bottom: 15%;
+}
+
+#withdrawCompleteMyPage {
+  height: calc(100% - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: calc(50% - 25px);
+  gap: 24px;
 }

@@ -2,7 +2,7 @@ import "../../styles/modal/plotInsertModal.css";
 import { useEffect, useState } from "react";
 import { savePlot } from "../../api/plotApi";
 
-function PlotInsertModal({ promptValues, setPromptValues }) {
+function PlotInsertModal({ returnData, setReturnData }) {
   const [step, setStep] = useState("title");
   const [plotTitle, setPlotTitle] = useState("");
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -10,13 +10,13 @@ function PlotInsertModal({ promptValues, setPromptValues }) {
   useEffect(() => {
     if (step === "folder") {
       const save = async () => {
-        console.log(userInfo);
-        const result = await savePlot(userInfo.socialId, promptValues);
+        console.log(returnData);
+        const result = await savePlot(userInfo.socialId, returnData);
       };
       save();
 
       // "저장 및 이어쓰기" 시 실행할 API
-      if (promptValues.isContinue) {
+      if (returnData.isContinue) {
         alert("이어쓰기");
       }
 
@@ -34,29 +34,29 @@ function PlotInsertModal({ promptValues, setPromptValues }) {
             setStep={setStep}
             plotTitle={plotTitle}
             setPlotTitle={setPlotTitle}
-            promptValues={promptValues}
-            setPromptValues={setPromptValues}
+            returnData={returnData}
+            setReturnData={setReturnData}
           ></PlotInsertTitle>
         ) : step === "public" ? (
           <PlotInsertPublic
             setStep={setStep}
-            promptValues={promptValues}
-            setPromptValues={setPromptValues}
+            returnData={returnData}
+            setReturnData={setReturnData}
           ></PlotInsertPublic>
         ) : (
           // step === "folder" ? (
           //   <PlotInsertFolder
           //     setStep={setStep}
-          //     promptValues={promptValues}
-          //     setPromptValues={setPromptValues}
+          //     returnData={returnData}
+          //     setReturnData={setReturnData}
           //   ></PlotInsertFolder>
           // ) :
           <PlotInsertTitle
             setStep={setStep}
             plotTitle={plotTitle}
             setPlotTitle={setPlotTitle}
-            promptValues={promptValues}
-            setPromptValues={setPromptValues}
+            returnData={returnData}
+            setReturnData={setReturnData}
           ></PlotInsertTitle>
         )}
       </div>
@@ -68,12 +68,12 @@ function PlotInsertTitle({
   setStep,
   plotTitle,
   setPlotTitle,
-  promptValues,
-  setPromptValues,
+  returnData,
+  setReturnData,
 }) {
   const stepAfterTitle = () => {
     const title = document.getElementById("title_name");
-    setPromptValues((prev) => ({ ...prev, title: title.value }));
+    setReturnData((prev) => ({ ...prev, title: title.value }));
     setStep("public");
   };
 
@@ -113,9 +113,9 @@ function PlotInsertTitle({
   );
 }
 
-function PlotInsertPublic({ setStep, promptValues, setPromptValues }) {
+function PlotInsertPublic({ setStep, returnData, setReturnData }) {
   const stepAfterPublic = (isPublic) => {
-    setPromptValues((prev) => ({ ...prev, isPublic: isPublic }));
+    setReturnData((prev) => ({ ...prev, isPublic: isPublic }));
     setStep("folder");
   };
 
@@ -139,7 +139,7 @@ function PlotInsertPublic({ setStep, promptValues, setPromptValues }) {
   );
 }
 
-function PlotInsertFolder({ setStep, promptValues, setPromptValues }) {
+function PlotInsertFolder({ setStep, returnData, setReturnData }) {
   const stepAfterPublic = () => {
     // setStep("name");
     const modal = document.getElementById("plotInsertModalBackground");

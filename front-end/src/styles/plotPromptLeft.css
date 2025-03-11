@@ -69,8 +69,18 @@
 .promptTitleSkip {
   height: 32px;
   min-width: 69px;
-  background: url("skip.png") no-repeat 95% 50%/68px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  gap: 6px;
+  border-radius: 999px;
+  background-color: #000;
   cursor: pointer;
+}
+.promptTitleSkip img {
+  height: 13px;
+  width: 13px;
 }
 
 .promptTitleWrite {

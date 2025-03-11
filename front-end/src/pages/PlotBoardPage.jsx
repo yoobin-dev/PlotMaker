@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
-import { getPlotList } from "../api/plotApi";
+import { use, useEffect, useState } from "react";
+import { getTotalList, getSearchTotalList } from "../api/boardApi";
 import { useNavigate } from "react-router-dom";
 import "../styles/plotBoardPage.css";
+import Pagination from "../components/Pagination";
 
-function PlotBoardBestPage() {
+function PlotBoardPage() {
   const [plotList, setPlotList] = useState([]);
+  const [categoryCode, setCategoryCode] = useState("T001");
+  const [totalPage, setTotalPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(10);
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
   const categoryArr = [
@@ -28,31 +33,42 @@ function PlotBoardBestPage() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getPlotList(userInfo.socialId, "All");
-
-      setPlotList(data);
+      const data = await getTotalList(categoryCode, currentPage);
+      setPlotList(data.data);
+      setTotalPage(data.paging.totalPage);
+      setMaxPage(Math.ceil(currentPage / 10) * 10);
     };
     getData();
-  }, []);
+  }, [categoryCode, currentPage]);
 
   return (
     <div id="plotBoardPage">
       <div id="plotBoardTop">
-        <FilterButton categoryArr={categoryArr}></FilterButton>
+        <FilterButton
+          categoryArr={categoryArr}
+          setCategoryCode={setCategoryCode}
+          setCurrentPage={setCurrentPage}
+        ></FilterButton>
         <BoardHeader
           plotList={plotList}
           setPlotList={setPlotList}
         ></BoardHeader>
       </div>
-      <BoardTable plotList={plotList}></BoardTable>
+      <BoardTable
+        plotList={plotList}
+        totalPage={totalPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        maxPage={maxPage}
+      ></BoardTable>
     </div>
   );
 }
 
-export default PlotBoardBestPage;
+export default PlotBoardPage;
 
 // 필터 버튼
-function FilterButton({ categoryArr }) {
+function FilterButton({ categoryArr, setCategoryCode, setCurrentPage }) {
   // 필터 클릭 이벤트
   const handleFilterButton = (id) => {
     const items = document.getElementsByClassName("filterItem");
@@ -64,6 +80,9 @@ function FilterButton({ categoryArr }) {
     }
 
     target.classList.add("selected");
+
+    setCategoryCode(id);
+    setCurrentPage(1);
   };
 
   return (
@@ -84,12 +103,14 @@ function FilterButton({ categoryArr }) {
   );
 }
 
-function BoardTable({ plotList }) {
+function BoardTable({
+  plotList,
+  totalPage,
+  currentPage,
+  setCurrentPage,
+  maxPage,
+}) {
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  const totalPages = Math.ceil(plotList.length / itemsPerPage);
 
   const goToDetail = (plot) => {
     navigate("/boardDetail", {
@@ -116,27 +137,29 @@ function BoardTable({ plotList }) {
         <tbody>
           {plotList.map((d, i) => (
             <tr key={i} onClick={() => goToDetail(d)}>
-              <td className="rank title_2">{i + 1}</td>
+              <td className="rank title_2">{i + 1 + (currentPage - 1) * 10}</td>
               <td className="title heading_1">{d.title}</td>
-              <td className="author headline_2">황금빛여우</td>
-              <td className="genre headline_2">판타지</td>
+              <td className="author headline_2">{d.nickname}</td>
+              <td className="genre headline_2">{d.genre}</td>
               <td className="veiws">
                 <img src="view.png" />
-                <span className="heading_2">1234</span>
+                <span className="heading_2">{d.view}</span>
               </td>
               <td className="likes">
                 <img src="likes.png" />
-                <span className="heading_2">1234</span>
+                <span className="heading_2">{d.likes}</span>
               </td>
               <td className="createAt label_2">{d.createAt}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div>
-        <img src="button_prev.png"></img>
-        <img src="button_next.png"></img>
-      </div>
+      <Pagination
+        maxPage={maxPage}
+        totalPage={totalPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      ></Pagination>
     </div>
   );
 }
@@ -176,7 +199,7 @@ function BoardHeader({ plotList, setPlotList }) {
   // 키워드로 플롯 검색
   const searchByKeyword = () => {
     const search = async () => {
-      const data = await searchPlotList(keyword);
+      const data = await getSearchTotalList(keyword);
       setPlotList(data);
     };
     search();
