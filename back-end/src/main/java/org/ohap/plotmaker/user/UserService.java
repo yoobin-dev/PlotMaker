@@ -8,4 +8,7 @@ public interface UserService {
   public boolean isEmailDupl(String email);
   public UserDTO addUser(UserRequestDTO user);
 
+  public boolean isPasswordCorrect(String socialId, String userPw);
+  public int deleteUser(String socialId);
+
 }
