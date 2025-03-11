@@ -19,5 +19,6 @@ public interface BoardMapper {
   public int selectBoardPlotCount(BoardListDTO request);
   public BoardPlotDTO selectBoardDetail(String promptSeq);
   public int increaseView(String promptSeq);
+  public int selectIsLiked(String socialId, String promptSeq);
 
 }

@@ -68,7 +68,9 @@
         <choose>
           <when test="sortBy == 'createAt'">PR.CREATE_AT</when>
           <when test="sortBy == 'view'">PR.VIEW</when>
-          <when test="sortBy == 'likes'"></when>
+          <when test="sortBy == 'likes'">
+            (SELECT COUNT(DISTINCT LK.LIKE_SEQ) FROM TBL_LIKE LK WHERE LK.PROMPT_SEQ = PR.PROMPT_SEQ)
+          </when>
         </choose>
         ${sortOrder}
     </if>

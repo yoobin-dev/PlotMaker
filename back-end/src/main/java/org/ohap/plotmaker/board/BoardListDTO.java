@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BoardListDTO {
   
+  private String socialId;
   private String categoryCode;
   private String page;
   private int begin;
