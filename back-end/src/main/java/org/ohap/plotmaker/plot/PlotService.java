@@ -10,5 +10,6 @@ public interface PlotService {
   public PlotResponseDTO makePlot2(PlotRequestDTO request);
   public PlotResponseDTO savePlot(String socialId, PlotResponseDTO response);
   public List<PlotResponseDTO> searchPlot(PlotSearchParamDTO param);
+  public String makeHtml(long promptSeq);
   
 }

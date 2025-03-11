@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,8 @@ public class BoardController {
   }
 
   @GetMapping("/{promptSeq}")
-  public ResponseEntity<ApiResponse<BoardPlotDTO>> getPlotDetail(@PathVariable String promptSeq){
-    BoardPlotDTO result = boardService.getPlotDetail(promptSeq);
+  public ResponseEntity<ApiResponse<BoardPlotDTO>> getPlotDetail(@PathVariable String promptSeq, @RequestParam String socialId){
+    BoardPlotDTO result = boardService.getPlotDetail(promptSeq, socialId);
     ApiResponse<BoardPlotDTO> response = ApiResponse.<BoardPlotDTO>builder().isSuccess(true).data(result).build();
     return ResponseEntity.ok().body(response);
   }
@@ -77,7 +78,8 @@ public class BoardController {
   }
 
   @PostMapping("/view")
-  public ResponseEntity<ApiResponse<String>> increaseView(@RequestBody String promptSeq){
+  public ResponseEntity<ApiResponse<String>> increaseView(@RequestBody BoardPromptSeqDTO request){
+    String promptSeq = request.getPromptSeq();
     String result = boardService.increaseView(promptSeq);
     ApiResponse<String> response = ApiResponse.<String>builder().message(result).isSuccess(true).build();
     return ResponseEntity.ok().body(response);
