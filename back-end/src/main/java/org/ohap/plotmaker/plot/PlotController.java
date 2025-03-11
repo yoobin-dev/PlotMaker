@@ -1,5 +1,6 @@
 package org.ohap.plotmaker.plot;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import org.ohap.plotmaker.common.ApiResponse;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itextpdf.html2pdf.HtmlConverter;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -68,6 +70,14 @@ public class PlotController {
     PlotResponseDTO plot = plotService.makeNextPlot(promptSeq);
     ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
     return ResponseEntity.ok().body(response);
+  }
+  
+  @GetMapping("/{promptSeq}/exportPdf")
+  public byte[] generatePdf(@PathVariable long promptSeq){
+    String htmlContent = plotService.makeHtml(promptSeq);
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    HtmlConverter.convertToPdf(htmlContent, outputStream);
+    return outputStream.toByteArray();
   }
 
 }
