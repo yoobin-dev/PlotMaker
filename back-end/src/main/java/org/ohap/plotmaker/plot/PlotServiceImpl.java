@@ -50,6 +50,7 @@ public class PlotServiceImpl implements PlotService {
       return result;
   }
 
+  @Override
   public PlotResponseDTO makePlot(PlotRequestDTO request){
     codeDefine(request);
     PlotResponseDTO plot = makePlotResponseDTObyPlotRequestDTO(request);
@@ -73,6 +74,23 @@ public class PlotServiceImpl implements PlotService {
     plot.setPlotContent(plotContent);
     
     return plot;
+  }
+
+  public PlotResponseDTO makePlot2(PlotRequestDTO request){
+    codeDefine(request);
+    PlotResponseDTO plot = makePlotResponseDTObyPlotRequestDTO(request);
+    
+    String categoryCode = request.getCategoryCode();
+    StringBuilder sb = new StringBuilder();
+    sb.append("\n배경: ").append(request.getTimeframe())
+    .append("\n테마: ").append(request.getTheme())
+    .append("\n사건: ").append(request.getEvent())
+    .append("\n고유설정: ").append(request.getCustom())
+    .append("\n너의 성격: ").append(request.getTellType());
+
+    String plotContent = clovaService.requestClova2(categoryCode, sb.toString());
+    plot.setPlotContent(plotContent);
+    return null;
   }
 
   private void codeNameDefine(PlotResponseDTO response){
