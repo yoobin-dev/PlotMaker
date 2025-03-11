@@ -69,8 +69,6 @@ function PlotHeader({ isDetail, plotCount }) {
         sortBy,
         sortOrder
       );
-      console.log(isPublic);
-      console.log(data);
       setPlotList(data);
     };
     getData();

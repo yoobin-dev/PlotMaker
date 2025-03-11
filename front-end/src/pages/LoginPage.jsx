@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import NaverLoginButton from "../components/NaverLoginButton";
@@ -14,6 +14,13 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+
+  useEffect(() => {
+    if (userInfo?.socialId) {
+      navigate("/prompt");
+    }
+  }, []);
 
   const handleLogin = async (id, pw) => {
     try {
@@ -53,8 +60,8 @@ const LoginPage = () => {
             <div className="main_1">이야기가 필요한 순간,</div>
             <div className="main_2">
               <span>당신을 위한 보조작가</span>
-              <span className="main_3" style={{ color: "#FC3A89" }}>
-                플롯 메이커
+              <span className="main_1" style={{ color: "#FC3A89" }}>
+                &nbsp;&nbsp;플롯 메이커
               </span>
             </div>
           </div>

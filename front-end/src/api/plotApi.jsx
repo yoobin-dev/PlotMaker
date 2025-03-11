@@ -16,6 +16,7 @@ export const makePlot = async (promptObj) => {
     console.error(e);
   }
 };
+
 // 플롯 저장하기
 export const savePlot = async (socialId, promptObj) => {
   try {
@@ -46,6 +47,20 @@ export const getPlotList = async (
 
   try {
     const res = await axios.get(url);
+    if (res.status === 200) {
+      return res.data.data;
+    } else {
+      alert("시스템 오류가 발생했습니다.");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+// 이어쓰기
+export const writeNextPlot = async (promptSeq) => {
+  try {
+    const res = await axios.post(`${prefix}/plot/make/next`, promptSeq);
     if (res.status === 200) {
       return res.data.data;
     } else {
@@ -108,7 +123,6 @@ export const updatePlotTitle = async (promptSeq, title) => {
     const res = await axios.post(`${prefix}/prompt/${promptSeq}/title`, {
       title,
     });
-    console.log(res.data.data);
     if (res.status === 200) {
       return res.data.data;
     } else {

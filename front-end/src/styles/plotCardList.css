@@ -6,9 +6,9 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  border: 0.5px solid #ccc;
+  border: 0.5px solid var(--Grayscale-Gr_F-3, #f3f3f3);
   border-radius: 8px;
-  box-shadow: 0px 4px 4px 0px rgba(102, 102, 102, 0.1);
+  box-shadow: 1px 1px 2px 0px #ddd;
   padding: 4px 0;
 }
 .plotCardAdd {
@@ -20,6 +20,7 @@
   border-radius: 8px;
   cursor: pointer;
   padding: 4px 0;
+  box-shadow: 1px 1px 2px 0px #ddd;
 }
 .plotCardAdd > img {
   width: 104px;

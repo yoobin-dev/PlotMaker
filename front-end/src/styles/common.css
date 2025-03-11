@@ -592,7 +592,7 @@ body * {
 .react-select__control {
   width: 100%;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 8px !important;
   border-color: #222 !important;
   box-shadow: 0 0 0.5px #222 !important;
 }

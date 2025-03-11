@@ -182,7 +182,7 @@ select::-ms-expand {
   background: linear-gradient(
     90deg,
     #a487ee 5%,
-    rgba(150, 200, 223, 0.82) 90.67%,
+    rgba(150, 200, 223, 0.82) 100%,
     var(--Grayscale-Gr_E, #eee) 100%
   ) !important;
   color: white !important;

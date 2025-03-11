@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.ohap.plotmaker.mapper.CodeMapper;
 import org.ohap.plotmaker.mapper.PlotMapper;
+import org.ohap.plotmaker.util.MakeHtmlUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class PlotServiceImpl implements PlotService {
   private final PlotMapper plotMapper;
   private final CodeMapper codeMapper;
   private final ClovaService clovaService;
+  private final MakeHtmlUtil makeHtmlUtil;
 
   public List<PlotResponseDTO> getPlotList(String socialId, PlotOrderParamDTO order){
     order.setSocialId(socialId);
@@ -72,7 +74,37 @@ public class PlotServiceImpl implements PlotService {
     
     String plotContent = clovaService.requestClova(isSynopsis, sb.toString());
     plot.setPlotContent(plotContent);
-    
+    return plot;
+  }
+
+  @Override
+  public PlotResponseDTO makePlot2(PlotRequestDTO request){
+    codeDefine(request);
+    PlotResponseDTO plot = makePlotResponseDTObyPlotRequestDTO(request);
+    String categoryCode = request.getCategoryCode();
+    StringBuilder sb = new StringBuilder();
+    sb.append("장르: ").append(request.getGenre())
+    .append("\n배경: ").append(request.getTimeframe())
+    .append("\n테마: ").append(request.getTheme())
+    .append("\n사건: ").append(request.getEvent())
+    .append("\n고유설정: ").append(request.getCustom())
+    .append("\n너의 성격: ").append(request.getTellType());
+
+    String plotContent = clovaService.requestClova2(categoryCode, sb.toString());
+    plot.setPlotContent(plotContent);
+    return plot;
+  }
+
+  public PlotResponseDTO makeNextPlot(String promptSeq){
+    String prevPlot = plotMapper.selectPrevPlot(promptSeq);
+    String summary = clovaService.requestSummary(prevPlot);
+    PlotRequestDTO request = plotMapper.selectPrevPlotRequest(promptSeq);
+    PlotResponseDTO plot = makePlotResponseDTObyPlotRequestDTO(request);
+    StringBuilder sb = new StringBuilder();
+    sb.append("다음 내용에 이어서 계속 글을 써줘.")
+      .append("\n내용: ").append(summary);
+    String plotContent = clovaService.requestClova(false, sb.toString());
+    plot.setPlotContent(plotContent);
     return plot;
   }
 
@@ -197,6 +229,22 @@ public class PlotServiceImpl implements PlotService {
         throw new RuntimeException(e.getMessage());
       }
 
+  }
+
+  @Override
+  public String makeHtml(long promptSeq) {
+    PlotResponseDTO plot = plotMapper.selectPlotByPromptSeq(promptSeq);
+    String category = plot.getCategory();
+    String genre = plot.getGenre();
+    String timeframe = plot.getTimeframe();
+    String theme = plot.getTheme();
+    String event = plot.getEvent();
+    String tellType = plot.getTellType();
+    String custom = plot.getCustom();
+    String title = plot.getTitle();
+    String plotContent = plot.getPlotContent();
+    String htmlString = makeHtmlUtil.makePlotHtml(category, genre, timeframe, theme, event, tellType, custom, title, plotContent);
+    return htmlString;
   }
 
 }

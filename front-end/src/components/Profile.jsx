@@ -13,10 +13,7 @@ function Profile({ setMyPageOn }) {
   return (
     <div id="userProfile" className="bg_gray_4" onClick={handleMyPage}>
       <div id="profileImg">
-        <img
-          className="h-100 w-100"
-          src="https://png.pngtree.com/png-clipart/20220112/ourmid/pngtree-cartoon-hand-drawn-default-avatar-png-image_4154232.png"
-        ></img>
+        <img className="h-100 w-100" src="profile_default.png"></img>
       </div>
       <div id="profileText">
         <span className="headline2 ft_white">

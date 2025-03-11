@@ -1,6 +1,7 @@
 package org.ohap.plotmaker.user;
 
 import org.ohap.plotmaker.common.ApiResponse;
+import org.ohap.plotmaker.login.LoginDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +51,26 @@ public class UserController {
     }
     UserDTO userInfo = userService.setNickname(socialId, nickname);
     ApiResponse<UserDTO> response = ApiResponse.<UserDTO>builder().isSuccess(true).data(userInfo).build();
+    return ResponseEntity.ok().body(response);
+  }
+
+  @PostMapping("/leave/password")
+  public ResponseEntity<ApiResponse<String>> checkPwBeforeLeave(@RequestBody LoginDTO request){
+    boolean passwordCorrect = userService.isPasswordCorrect(request.getSocialId(), request.getUserPw());
+    if(!passwordCorrect){
+      throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+    }
+    ApiResponse<String> response = ApiResponse.<String>builder().isSuccess(true).message("비밀번호가 일치합니다.").build();
+    return ResponseEntity.ok().body(response);
+  }
+
+  @PostMapping("/leave")
+  public ResponseEntity<ApiResponse<String>> deleteUser(@RequestBody String socialId){
+    int delete = userService.deleteUser(socialId);
+    if(delete != 1){
+      throw new RuntimeException();
+    }
+    ApiResponse<String> response = ApiResponse.<String>builder().isSuccess(true).message("회원탈퇴 완료").build();
     return ResponseEntity.ok().body(response);
   }
 

@@ -3,7 +3,7 @@ import { getBestList } from "../api/boardApi";
 import { useNavigate } from "react-router-dom";
 import "../styles/plotBoardBestPage.css";
 
-function PlotBoardPage() {
+function PlotBoardBestPage() {
   const navigate = useNavigate();
   const [bestList, setBestList] = useState([]);
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -67,13 +67,21 @@ function PlotBoardPage() {
         filterArr={filterPeriodArr}
         setCriteria={setCriteria}
       ></FilterButton>
-      <PlotCardTop bestList={bestList} navigate={navigate}></PlotCardTop>
-      <BoardTable bestList={bestList} navigate={navigate}></BoardTable>
+      <PlotCardTop
+        bestList={bestList}
+        navigate={navigate}
+        criteria={criteria}
+      ></PlotCardTop>
+      <BoardTable
+        bestList={bestList}
+        navigate={navigate}
+        criteria={criteria}
+      ></BoardTable>
     </div>
   );
 }
 
-export default PlotBoardPage;
+export default PlotBoardBestPage;
 
 function BoardCategoryRevolving({ categoryArr, categoryIdx, setCategoryIdx }) {
   const nextIdx = categoryIdx + 1 === categoryArr.length ? 0 : categoryIdx + 1;
@@ -141,17 +149,20 @@ function FilterButton({ filterArr, setCriteria }) {
 }
 
 // 탑 5
-function PlotCardTop({ bestList, navigate }) {
+function PlotCardTop({ bestList, navigate, criteria }) {
   const topCards = [];
   for (let i = 0; i < 5; i++) {
     topCards.push(bestList[i]);
   }
 
-  console.log(topCards);
-
   const goToDetail = (plot) => {
     navigate("/boardDetail", {
-      state: { plotList: bestList, plot: plot },
+      state: {
+        plotList: bestList,
+        plot: plot,
+        isBest: true,
+        criteria: criteria,
+      },
     });
   };
 
@@ -193,10 +204,15 @@ function PlotCardTop({ bestList, navigate }) {
   );
 }
 
-function BoardTable({ bestList, navigate }) {
+function BoardTable({ bestList, navigate, criteria }) {
   const goToDetail = (plot) => {
     navigate("/boardDetail", {
-      state: { plotList: bestList, plot: plot },
+      state: {
+        plotList: bestList,
+        plot: plot,
+        isBest: true,
+        criteria: criteria,
+      },
     });
   };
 
@@ -222,7 +238,7 @@ function BoardTable({ bestList, navigate }) {
           </tr>
         </thead>
         <tbody>
-          {bestList.map((d, i) => (
+          {tableList.map((d, i) => (
             <tr key={i} onClick={() => goToDetail(d)}>
               <td className="rank title_2">{i + 6}</td>
               <td className="title heading_1">{d.title}</td>

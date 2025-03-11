@@ -36,8 +36,13 @@ public class BoardController {
   }
 
   @GetMapping("/{promptSeq}")
+<<<<<<< HEAD
   public ResponseEntity<ApiResponse<BoardPlotDTO>> getPlotDetail(@PathVariable String promptSeq){
     BoardPlotDTO result = boardService.getPlotDetail(promptSeq);
+=======
+  public ResponseEntity<ApiResponse<BoardPlotDTO>> getPlotDetail(@PathVariable String promptSeq, @RequestParam String socialId){
+    BoardPlotDTO result = boardService.getPlotDetail(promptSeq, socialId);
+>>>>>>> main
     ApiResponse<BoardPlotDTO> response = ApiResponse.<BoardPlotDTO>builder().isSuccess(true).data(result).build();
     return ResponseEntity.ok().body(response);
   }
@@ -60,7 +65,9 @@ public class BoardController {
   }
 
   /*
-   * /api/board?categoryCode=카테고리코드&page=페이지
+   * /api/board?categoryCode=카테고리코드&page=페이지&socialId=소셜아이디&sortBy=정렬기준&sortOrder=정렬순서
+   * 정렬기준 1. createAt 2. view 3. likes
+   * 정렬순서 DESC, ASC
    */
   @GetMapping("")
   public ResponseEntity<ApiResponse<List<BoardPlotDTO>>> getPlotList(@ModelAttribute BoardListDTO request){
@@ -68,8 +75,20 @@ public class BoardController {
     return ResponseEntity.ok().body(response);
   }
 
+<<<<<<< HEAD
   @PostMapping("/view")
   public ResponseEntity<ApiResponse<String>> increaseView(@RequestBody String promptSeq){
+=======
+  @GetMapping("/search")
+  public ResponseEntity<ApiResponse<List<BoardPlotDTO>>> searchBoard(@ModelAttribute BoardSearchParamDTO search){
+    ApiResponse<List<BoardPlotDTO>> response = boardService.searchBoard(search);
+    return ResponseEntity.ok().body(response);
+  }
+
+  @PostMapping("/view")
+  public ResponseEntity<ApiResponse<String>> increaseView(@RequestBody BoardPromptSeqDTO request){
+    String promptSeq = request.getPromptSeq();
+>>>>>>> main
     String result = boardService.increaseView(promptSeq);
     ApiResponse<String> response = ApiResponse.<String>builder().message(result).isSuccess(true).build();
     return ResponseEntity.ok().body(response);

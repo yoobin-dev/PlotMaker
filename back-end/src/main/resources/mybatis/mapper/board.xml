@@ -68,7 +68,11 @@
             PL.PLOT_SEQ, PL.PLOT_CONTENT, PR.CREATE_AT, C_T.CODE_NAME, C_G.CODE_NAME,
             C_F.CODE_NAME, C_M.CODE_NAME, PRD.GENRE, PRD.TIMEFRAME, PRD.THEME
     ORDER BY (COALESCE(COUNT(DISTINCT LK.LIKE_SEQ), 0) * 0.4 + COALESCE(PR.VIEW, 0) * 0.6) DESC
+<<<<<<< HEAD
     LIMIT 20
+=======
+    LIMIT 10
+>>>>>>> main
   </select>
 
   <select id="selectLikes" parameterType="ToggleLikesDTO">
@@ -142,7 +146,22 @@
             PR.EVENT, PR.CHARACTERS, PR.TELL_TYPE, PR.CUSTOM, PR.TITLE, PR.IS_PUBLIC,
             PL.PLOT_SEQ, PL.PLOT_CONTENT, PR.CREATE_AT, C_T.CODE_NAME, C_G.CODE_NAME,
             C_F.CODE_NAME, C_M.CODE_NAME, PRD.GENRE, PRD.TIMEFRAME, PRD.THEME
+<<<<<<< HEAD
     <if test="begin != null and begin != ''">
+=======
+    <if test="sortBy != null and sortOrder != null">
+      ORDER BY
+        <choose>
+          <when test="sortBy == 'createAt'">PR.CREATE_AT</when>
+          <when test="sortBy == 'view'">PR.VIEW</when>
+          <when test="sortBy == 'likes'">
+            (SELECT COUNT(DISTINCT LK.LIKE_SEQ) FROM TBL_LIKE LK WHERE LK.PROMPT_SEQ = PR.PROMPT_SEQ)
+          </when>
+        </choose>
+        ${sortOrder}
+    </if>
+    <if test="begin != null">
+>>>>>>> main
       LIMIT #{begin}, 10
     </if>
   </select>
@@ -167,6 +186,93 @@
     </where>
   </select>
 
+<<<<<<< HEAD
+=======
+  <select id="selectBoardSearchCount" parameterType="BoardSearchParamDTO" resultType="int">
+    SELECT COUNT(DISTINCT PR.PROMPT_SEQ)
+    FROM TBL_PROMPT PR
+      LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
+      LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
+      LEFT JOIN TBL_CODE C_F ON PR.TIMEFRAME_CODE = C_F.CODE
+      LEFT JOIN TBL_CODE C_M ON PR.THEME_CODE = C_M.CODE
+      LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
+      LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
+      LEFT JOIN TBL_COMMENT CM ON PR.PROMPT_SEQ = CM.PROMPT_SEQ
+      LEFT JOIN TBL_LIKE LK ON PR.PROMPT_SEQ = LK.PROMPT_SEQ
+      LEFT JOIN TBL_USER UR ON PR.SOCIAL_ID = UR.SOCIAL_ID
+    <where>
+      PR.IS_PUBLIC = 'Y'
+      <if test="categoryCode != null">
+        AND PR.TYPE_CODE = #{categoryCode}
+      </if>
+      <if test="title != null">
+        AND PR.TITLE LIKE CONCAT ('%', #{title}, '%')
+      </if>
+    </where>
+  </select>
+
+  <select id="selectBoardPlotListwithParam" parameterType="BoardSearchParamDTO" resultType="BoardPlotDTO">
+    SELECT PR.PROMPT_SEQ                   AS PROMPT_SEQ,
+          PR.TYPE_CODE                     AS CATEGORY_CODE,
+          C_T.CODE_NAME                    AS CATEGORY,
+          PR.GENRE_CODE                    AS GENRE_CODE,
+          CASE
+            WHEN PR.GENRE_CODE = 'G999' THEN PRD.GENRE
+            ELSE C_G.CODE_NAME
+          END                              AS GENRE,
+          PR.TIMEFRAME_CODE                AS TIMEFRAME_CODE,
+          CASE
+            WHEN PR.TIMEFRAME_CODE = 'F999' THEN PRD.TIMEFRAME
+            ELSE C_F.CODE_NAME
+          END                              AS TIMEFRAME,
+          PR.THEME_CODE                    AS THEME_CODE,
+          CASE
+            WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
+            ELSE C_M.CODE_NAME
+          END                              AS THEME,
+          PR.EVENT                         AS EVENT,
+          PR.CHARACTERS                    AS CHARACTERS,
+          PR.TELL_TYPE                     AS TELL_TYPE,
+          PR.CUSTOM                        AS CUSTOM,
+          PR.TITLE                         AS TITLE,
+          PR.IS_PUBLIC                     AS IS_PUBLIC,
+          PR.VIEW                          AS VIEW,
+          (SELECT COUNT(DISTINCT LK.LIKE_SEQ) FROM TBL_LIKE LK WHERE LK.PROMPT_SEQ = PR.PROMPT_SEQ) AS LIKES,
+          PL.PLOT_SEQ                      AS PLOT_SEQ,
+          PL.PLOT_CONTENT                  AS PLOT_CONTENT,
+          PR.CREATE_AT                     AS CREATE_AT,
+          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT,
+          UR.SOCIAL_ID                     AS SOCIAL_ID,
+          UR.NICKNAME                      AS NICKNAME
+    FROM TBL_PROMPT PR
+      LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
+      LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
+      LEFT JOIN TBL_CODE C_F ON PR.TIMEFRAME_CODE = C_F.CODE
+      LEFT JOIN TBL_CODE C_M ON PR.THEME_CODE = C_M.CODE
+      LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
+      LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
+      LEFT JOIN TBL_COMMENT CM ON PR.PROMPT_SEQ = CM.PROMPT_SEQ
+      LEFT JOIN TBL_LIKE LK ON PR.PROMPT_SEQ = LK.PROMPT_SEQ
+      LEFT JOIN TBL_USER UR ON PR.SOCIAL_ID = UR.SOCIAL_ID
+    <where>
+      PR.IS_PUBLIC = 'Y'
+      <if test="categoryCode != null">
+        AND PR.TYPE_CODE = #{categoryCode}
+      </if>
+      <if test="title != null">
+        AND PR.TITLE LIKE CONCAT ('%', #{title}, '%')
+      </if>
+    </where>
+    GROUP BY PR.PROMPT_SEQ, PR.TYPE_CODE, PR.GENRE_CODE, PR.TIMEFRAME_CODE, PR.THEME_CODE,
+            PR.EVENT, PR.CHARACTERS, PR.TELL_TYPE, PR.CUSTOM, PR.TITLE, PR.IS_PUBLIC,
+            PL.PLOT_SEQ, PL.PLOT_CONTENT, PR.CREATE_AT, C_T.CODE_NAME, C_G.CODE_NAME,
+            C_F.CODE_NAME, C_M.CODE_NAME, PRD.GENRE, PRD.TIMEFRAME, PRD.THEME
+    <if test="begin != null">
+      LIMIT #{begin}, 10
+    </if>
+  </select>
+
+>>>>>>> main
   <select id="selectBoardDetail" parameterType="String" resultType="BoardPlotDTO">
     SELECT DISTINCT PR.PROMPT_SEQ                   AS PROMPT_SEQ,
           PR.TYPE_CODE                     AS CATEGORY_CODE,
@@ -223,4 +329,14 @@
     WHERE PROMPT_SEQ = #{promptSeq}
   </update>
 
+<<<<<<< HEAD
+=======
+  <select id="selectIsLiked" parameterType="String" resultType="int">
+    SELECT COUNT(LIKE_SEQ)
+    FROM TBL_LIKE
+    WHERE SOCIAL_ID = #{socialId}
+    AND PROMPT_SEQ = #{promptSeq}
+  </select>
+
+>>>>>>> main
 </mapper>

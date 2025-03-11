@@ -1,6 +1,7 @@
 package org.ohap.plotmaker.board;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.ohap.plotmaker.common.ApiResponse;
 import org.ohap.plotmaker.common.PagingInfo;
@@ -17,9 +18,26 @@ public class BoardServiceImpl implements BoardService {
   
   private final BoardMapper boardMapper;
 
+  private BoardPlotDTO settingIsLiked(BoardPlotDTO plot, String socialId){
+    String promptSeq = plot.getPromptSeq() + "";
+    if(boardMapper.selectIsLiked(socialId, promptSeq) == 0){
+      plot.setLiked(false);
+    } else {
+      plot.setLiked(true);
+    }
+    return plot;
+  }
+
   @Override
   public List<BoardPlotDTO> getBestList(BestListDTO request) {
     List<BoardPlotDTO> list = boardMapper.selectBestPlot(request);
+<<<<<<< HEAD
+=======
+    String socialId = request.getSocialId();
+    for(BoardPlotDTO plot : list) {
+      plot = settingIsLiked(plot, socialId);
+    }
+>>>>>>> main
     return list;
     
   }
@@ -39,7 +57,12 @@ public class BoardServiceImpl implements BoardService {
   @Override
   public ApiResponse<List<BoardPlotDTO>> getBoardList(BoardListDTO request){
     int totalCount = boardMapper.selectBoardPlotCount(request);
+<<<<<<< HEAD
     int page = Integer.parseInt(request.getPage());
+=======
+    Optional<String> pageOpt = Optional.ofNullable(request.getPage());
+    int page = Integer.parseInt(pageOpt.orElse("1"));
+>>>>>>> main
     PageUtil pageUtil = new PageUtil();
     pageUtil.setPageUtil(page, totalCount, 10);
     int totalPage = pageUtil.getTotalPage();
@@ -49,13 +72,26 @@ public class BoardServiceImpl implements BoardService {
       .build();
     request.setBegin(begin);
     List<BoardPlotDTO> list = boardMapper.selectBoardPlotList(request);
+<<<<<<< HEAD
+=======
+    String socialId = request.getSocialId();
+    for(BoardPlotDTO plot : list) {
+      plot = settingIsLiked(plot, socialId);
+    }
+>>>>>>> main
     ApiResponse<List<BoardPlotDTO>> response = ApiResponse.<List<BoardPlotDTO>>builder()
       .isSuccess(true).message("조회 성공").data(list).paging(paging).build();
     return response;
   }
 
   @Override
+<<<<<<< HEAD
   public BoardPlotDTO getPlotDetail(String promptSeq){
+=======
+  public BoardPlotDTO getPlotDetail(String promptSeq, String socialId){
+    BoardPlotDTO plot = boardMapper.selectBoardDetail(promptSeq);
+    plot = settingIsLiked(plot, socialId);
+>>>>>>> main
     return boardMapper.selectBoardDetail(promptSeq);
   }
 
@@ -69,4 +105,30 @@ public class BoardServiceImpl implements BoardService {
     return "조회수 증가 성공";
   }
 
+<<<<<<< HEAD
+=======
+  @Override
+  public ApiResponse<List<BoardPlotDTO>> searchBoard(BoardSearchParamDTO param){
+    int totalCount = boardMapper.selectBoardSearchCount(param);
+    Optional<String> pageOpt = Optional.ofNullable(param.getPage());
+    int page = Integer.parseInt(pageOpt.orElse("1"));
+    PageUtil pageUtil = new PageUtil();
+    pageUtil.setPageUtil(page, totalCount, 10);
+    int totalPage = pageUtil.getTotalPage();
+    int begin = pageUtil.getBegin();
+    PagingInfo paging = PagingInfo.builder()
+      .currentPage(page).size(10).totalCount(totalCount).totalPage(totalPage)
+      .build();
+    param.setBegin(begin);
+    List<BoardPlotDTO> list = boardMapper.selectBoardPlotListwithParam(param);
+    String socialId = param.getSocialId();
+    for(BoardPlotDTO plot : list){
+      plot = settingIsLiked(plot, socialId);
+    }
+    ApiResponse<List<BoardPlotDTO>> response = ApiResponse.<List<BoardPlotDTO>>builder()
+      .isSuccess(true).message("조회 성공").data(list).paging(paging).build();
+    return response;
+  }
+
+>>>>>>> main
 }

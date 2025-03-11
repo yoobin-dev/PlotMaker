@@ -1,13 +1,14 @@
 .active {
-  background-color: #f9f9f9;
+  background-color: #fff;
   color: #000000 !important;
+  box-shadow: 1px 1px 2px 0px #ddd;
 }
 .clicked {
   filter: brightness(1) invert(1);
 }
 #plotHeader {
   position: relative;
-  padding-left: 11px;
+  padding-left: 23px;
 }
 #plotCount {
   padding: 0 15px;
@@ -27,6 +28,8 @@
   padding: 4px 8px;
   border-radius: 12px;
   gap: 20px;
+  box-shadow: 0px 2px 2px 0px rgba(68, 68, 68, 0.25) inset;
+  background: (--Grayscale-Gr_F-3, #f3f3f3) !important;
 }
 
 #filterButton div {
