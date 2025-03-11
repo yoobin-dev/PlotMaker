@@ -36,3 +36,23 @@ export const postAddUser = async (form) => {
   const response = await axios.post(`${prefix}`, form);
   return response.data;
 }
+
+export const postLeavePw = async(socialId, userPw) => {
+  try {
+    const response = await axios.post(`${prefix}/leave/password`, {socialId, userPw});
+    return response.data;
+  } catch(error) {
+    return error.response.data;
+  }
+}
+
+export const postLeave = async(socialId) => {
+  try {
+    const response = await axios.post(`${prefix}/leave`, {socialId});
+    console.log('js success: ', response);
+    return response.data;
+  } catch(error) {
+    console.log('js fail: ', error.response);
+    return error.response.data;
+  }
+}
