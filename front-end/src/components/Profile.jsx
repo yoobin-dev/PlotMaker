@@ -5,7 +5,9 @@ function Profile({ setMyPageOn }) {
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
   const handleMyPage = () => {
-    setMyPageOn(true);
+    if (userInfo?.socialId) {
+      setMyPageOn(true);
+    }
   };
 
   return (
@@ -18,7 +20,7 @@ function Profile({ setMyPageOn }) {
       </div>
       <div id="profileText">
         <span className="headline2 ft_white">
-          {userInfo?.nickname ? userInfo?.nickname : "비회원 작가"}
+          {userInfo?.nickname ? userInfo?.nickname : "무명 작가"}
         </span>{" "}
         <br />
         <span className="body_2 ft_gray_b">Lv.1 플롯 메이커</span>

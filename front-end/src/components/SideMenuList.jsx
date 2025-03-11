@@ -7,7 +7,7 @@ import MyPage from "../components/modal/MyPage";
 import "../styles/sideMenu.css";
 import { plotmakerLogin } from "../api/login";
 
-function SideMenuList({ nickName, handleClick }) {
+function SideMenuList({ handleClick }) {
   const navigate = useNavigate();
   const location = useLocation();
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -101,7 +101,9 @@ function SideMenuList({ nickName, handleClick }) {
         onClose={() => setIsLoginModalOpen(false)}
         onLogin={handleLogin}
       />
-      <MyPage myPageOn={myPageOn} setMyPageOn={setMyPageOn}></MyPage>
+      {userInfo?.socialId && (
+        <MyPage myPageOn={myPageOn} setMyPageOn={setMyPageOn}></MyPage>
+      )}
 
       <div id="sideMenuContainer" className="bg_gray_2">
         <div id="sideMenuList">
@@ -148,7 +150,7 @@ function SideMenu({ id, icon, title, onClick, navigate }) {
   // 서브 메뉴 클릭 이벤트
   const handleSubMenu = (path) => {
     const items = document.getElementsByClassName("sideMenuSubItem");
-    const target = document.getElementById(pathname);
+    const target = document.getElementById(path);
 
     // 서브 메뉴 선택 효과 초기화
     for (let i of items) {
@@ -156,7 +158,6 @@ function SideMenu({ id, icon, title, onClick, navigate }) {
     }
     target.classList.add("ft_gray_d");
 
-    console.log(path);
     if (path === "/boardLikes") {
       alert("서비스 준비중입니다.");
     } else {
@@ -177,9 +178,9 @@ function SideMenu({ id, icon, title, onClick, navigate }) {
               <li
                 key={i}
                 id={d.path}
-                className={`sideMenuSubItem headline_2 ft_gray_6 ${
-                  pathname === d.path ? "ft_gray_d" : ""
-                }`}
+                className={`sideMenuSubItem headline_2 ft_gray_6 
+                  ${pathname === d.path ? "ft_gray_d" : ""} 
+                  ${pathname.includes("/board") ? "" : "d-none"}`}
                 onClick={() => handleSubMenu(d.path)}
               >
                 {d.text}

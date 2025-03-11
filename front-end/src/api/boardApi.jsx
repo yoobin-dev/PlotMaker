@@ -3,6 +3,36 @@ import { API_SERVER } from "./apiSetting";
 
 const prefix = `${API_SERVER}`;
 
+// 전체 글 가져오기
+export const getTotalList = async (categoryCode, page) => {
+  let url = `${prefix}/board?categoryCode=${categoryCode}&page=${page}`;
+  try {
+    const res = await axios.get(url);
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      alert("시스템 오류가 발생했습니다.");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+// 전체 글 제목 검색
+export const getSearchTotalList = async (categoryCode, page) => {
+  let url = `${prefix}/board?categoryCode=${categoryCode}&page=${page}`;
+  try {
+    const res = await axios.get(url);
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      alert("시스템 오류가 발생했습니다.");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 // 베스트 가져오기
 export const getBestList = async (categoryCode, criteria) => {
   let url = `${prefix}/board/best?categoryCode=${categoryCode}&criteria=${criteria}`;
@@ -18,11 +48,11 @@ export const getBestList = async (categoryCode, criteria) => {
   }
 };
 
-// 플롯 검색
-export const searchPlotList = async (socialId, title) => {
-  let url = `${prefix}/plot/${socialId}/search`;
+// promptSeq로 가져오기
+export const getPrompt = async (socialId, promptSeq) => {
+  let url = `${prefix}/board/${promptSeq}?socialId=${socialId}`;
   try {
-    const res = await axios.get(url, { params: { title: title } });
+    const res = await axios.get(url);
     if (res.status === 200) {
       return res.data.data;
     } else {
@@ -33,29 +63,15 @@ export const searchPlotList = async (socialId, title) => {
   }
 };
 
-// 프롬프트 코드 가져오기
-export const getPromptCode = async () => {
+// 좋아요 토글
+export const toggleLike = async (socialId, promptSeq) => {
   try {
-    const response = await axios.get(`${prefix}/code`);
-    if (response.data.success) {
-      return response.data.data;
-    } else {
-      throw new Error(response.data.message);
-    }
-  } catch (error) {
-    console.error("프롬프트 코드 불러오기 실패 : ", error);
-    throw error;
-  }
-};
-
-// 공개 비공개 설정
-export const updatePlotPublic = async (promptSeq, isPublic) => {
-  try {
-    const res = await axios.post(`${prefix}/prompt/${promptSeq}/status`, {
-      isPublic,
+    const res = await axios.post(`${prefix}/board/likes/toggle`, {
+      socialId,
+      promptSeq,
     });
     if (res.status === 200) {
-      return res.data.data;
+      return res.data;
     } else {
       alert("시스템 오류가 발생했습니다.");
     }
@@ -64,28 +80,13 @@ export const updatePlotPublic = async (promptSeq, isPublic) => {
   }
 };
 
-// 제목 설정
-export const updatePlotTitle = async (promptSeq, title) => {
+// 조회수 증가
+export const addBoardView = async (promptSeq) => {
+  console.log(promptSeq);
   try {
-    const res = await axios.post(`${prefix}/prompt/${promptSeq}/title`, {
-      title,
-    });
-    console.log(res.data.data);
+    const res = await axios.post(`${prefix}/board/view`, { promptSeq });
     if (res.status === 200) {
-      return res.data.data;
-    } else {
-      alert("시스템 오류가 발생했습니다.");
-    }
-  } catch (e) {
-    console.error(e);
-  }
-};
-// 플롯 삭제
-export const deletePlot = async (promptSeq) => {
-  try {
-    const res = await axios.post(`${prefix}/prompt/${promptSeq}/delete`);
-    if (res.status === 200) {
-      return res.data.data;
+      return res.data;
     } else {
       alert("시스템 오류가 발생했습니다.");
     }

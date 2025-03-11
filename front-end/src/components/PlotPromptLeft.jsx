@@ -93,6 +93,7 @@ function PlotPromptInputBox({
   percent,
   promptValues,
   setPromptValues,
+  setReturnData,
   makePlotPrompt,
   isContinue,
 }) {
@@ -125,13 +126,15 @@ function PlotPromptInputBox({
             </div>
             <div
               id={`skip_${d.id}`}
-              className={`promptTitleSkip ${
+              className={`promptTitleSkip lable_1 ${
                 d.id === "category" ? "d-none" : ""
               }`}
               onClick={() => {
                 handleSkip(true, `${d.id}`);
               }}
-            ></div>
+            >
+              Skip <img src="play.png"></img>
+            </div>
           </div>
           <div id={`prompt_${d.id}`}>
             <div className={`promptInput`}>
@@ -166,6 +169,7 @@ function PlotPromptLeft({
   setCreate,
   promptValues,
   setPromptValues,
+  setReturnData,
   isContinue,
 }) {
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
@@ -364,9 +368,8 @@ function PlotPromptLeft({
 
       // 우측 화면 작성으로 변경
       setCreate("reWrite");
-
       const returnData = await makePlot(promptValues);
-      setPromptValues(returnData);
+      setReturnData(returnData);
       plotContent.innerText = returnData.plotContent;
       plotTitle.innerText = returnData.category;
       e.target.innerText = "다시쓰기";

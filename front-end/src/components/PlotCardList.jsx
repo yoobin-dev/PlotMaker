@@ -154,6 +154,7 @@ function PlotCard({
         likes={info.likes * 1}
         comment={info.comment * 1}
         createAt={info.createAt}
+        plot={info}
       ></PlotCardFooter>
     </div>
   );
@@ -177,18 +178,24 @@ function PlotCardAdd({ goToWrite }) {
   );
 }
 
-function PlotCardFooter({ view = 0, likes = 0, comment = 0, createAt }) {
+function PlotCardFooter({ plot, view = 0, likes = 0, comment = 0, createAt }) {
   return (
     <div className="plotCardFooter caption_2 ft_gray_94">
       <div className="plotCardFooterCount">
-        <div>
-          <img src="view.png"></img>
-          <span>{view ? view : 0}</span>
-        </div>
-        <div>
-          <img src="likes.png"></img>
-          <span>{likes ? likes : 0}</span>
-        </div>
+        {plot.isPublic === "Y" ? (
+          <>
+            <div>
+              <img src="view.png"></img>
+              <span>{view ? view : 0}</span>
+            </div>
+            <div>
+              <img src="likes.png"></img>
+              <span>{likes ? likes : 0}</span>
+            </div>
+          </>
+        ) : (
+          <div className="caption_2">비공개</div>
+        )}
         <div>
           <img src="comment.png"></img>
           <span>{comment ? comment : 0}</span>

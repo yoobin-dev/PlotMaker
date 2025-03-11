@@ -127,7 +127,13 @@
 
 #boardTableBox {
   width: 100%;
-  margin-top: 44px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 40px 0 7px 0;
 }
 #boardTable {
   width: 100%;
@@ -165,8 +171,4 @@
   width: 20px;
   height: 18px;
   margin-right: 4px;
-}
-
-#pagination {
-  margin-top: 36px;
 }

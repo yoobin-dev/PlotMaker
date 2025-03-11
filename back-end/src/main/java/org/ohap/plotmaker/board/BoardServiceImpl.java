@@ -78,7 +78,7 @@ public class BoardServiceImpl implements BoardService {
   public BoardPlotDTO getPlotDetail(String promptSeq, String socialId){
     BoardPlotDTO plot = boardMapper.selectBoardDetail(promptSeq);
     plot = settingIsLiked(plot, socialId);
-    return boardMapper.selectBoardDetail(promptSeq);
+    return plot;
   }
 
   // 수정사항: 실패 Exception 처리

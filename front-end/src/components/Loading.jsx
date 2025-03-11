@@ -5,7 +5,7 @@ function Loading() {
         id="loadingBackground"
         className="h-100"
         style={{
-          width: "calc(100% - 370px)",
+          width: "100%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
