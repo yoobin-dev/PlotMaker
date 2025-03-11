@@ -18,5 +18,6 @@ public interface BoardMapper {
   public List<BoardPlotDTO> selectBoardPlotList(BoardListDTO request);
   public int selectBoardPlotCount(BoardListDTO request);
   public BoardPlotDTO selectBoardDetail(String promptSeq);
+  public int increaseView(String promptSeq);
 
 }
