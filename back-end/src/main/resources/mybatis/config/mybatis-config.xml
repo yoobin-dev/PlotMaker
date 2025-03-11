@@ -10,7 +10,6 @@
   </settings>
 
   <typeAliases>
-    <typeAlias alias="TempDTO"              type="org.ohap.plotmaker.temporary.TempDTO" />
     <typeAlias alias="LoginDTO"             type="org.ohap.plotmaker.login.LoginDTO" />
     <typeAlias alias="UserDTO"              type="org.ohap.plotmaker.user.UserDTO" />
     <typeAlias alias="UserRequestDTO"       type="org.ohap.plotmaker.user.UserRequestDTO" />
@@ -26,5 +25,6 @@
     <typeAlias alias="BoardPlotDTO"         type="org.ohap.plotmaker.board.BoardPlotDTO" />
     <typeAlias alias="BestListDTO"          type="org.ohap.plotmaker.board.BestListDTO" />
     <typeAlias alias="BoardListDTO"         type="org.ohap.plotmaker.board.BoardListDTO" />
+    <typeAlias alias="BoardSearchParamDTO"  type="org.ohap.plotmaker.board.BoardSearchParamDTO" />
   </typeAliases>
 </configuration>

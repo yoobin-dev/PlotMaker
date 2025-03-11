@@ -36,10 +36,11 @@ public class BoardPlotDTO {
   private int likes;
   private long plotSeq;
   private String plotContent;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
   private Timestamp createAt;
 
   private int comment;
 
+  private boolean isLiked;
 
 }

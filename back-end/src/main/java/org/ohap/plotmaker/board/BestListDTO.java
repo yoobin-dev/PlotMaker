@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BestListDTO {
   
+  private String socialId;
   private String categoryCode;
   private String criteria;
 

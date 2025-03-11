@@ -47,10 +47,10 @@ public class ClovaRequestDTO {
 
     @PostConstruct
     public void initDefaults() {
-        if (this.temperature == 0) this.temperature = 1.0;
-        if (this.topK == 0) this.topK = 33;
-        if (this.topP == 0) this.topP = 0.57;
-        if (this.repeatPenalty == 0) this.repeatPenalty = 5.3;
+        if (this.temperature == 0) this.temperature = 0.65;
+        if (this.topK == 0) this.topK = 0;
+        if (this.topP == 0) this.topP = 0.8;
+        if (this.repeatPenalty == 0) this.repeatPenalty = 5;
         if (this.stopBefore == null) this.stopBefore = new ArrayList<>();
         if (this.maxToken == 0) this.maxToken = 4096;
         this.includeAiFilter = false;

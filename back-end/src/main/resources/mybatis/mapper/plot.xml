@@ -45,7 +45,7 @@
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
-          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT,
+          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT
     FROM TBL_PROMPT PR
       LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
       LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
@@ -68,7 +68,9 @@
         <choose>
           <when test="sortBy == 'createAt'">PR.CREATE_AT</when>
           <when test="sortBy == 'view'">PR.VIEW</when>
-          <when test="sortBy == 'likes'"></when>
+          <when test="sortBy == 'likes'">
+            (SELECT COUNT(DISTINCT LK.LIKE_SEQ) FROM TBL_LIKE LK WHERE LK.PROMPT_SEQ = PR.PROMPT_SEQ)
+          </when>
         </choose>
         ${sortOrder}
     </if>
@@ -104,7 +106,7 @@
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
-          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT,
+          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT
     FROM TBL_PROMPT PR
       LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
       LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
@@ -154,7 +156,7 @@
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
-          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT,
+          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT
     FROM TBL_PROMPT PR
       LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
       LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
@@ -169,6 +171,38 @@
             PR.EVENT, PR.CHARACTERS, PR.TELL_TYPE, PR.CUSTOM, PR.TITLE, PR.IS_PUBLIC,
             PL.PLOT_SEQ, PL.PLOT_CONTENT, PR.CREATE_AT, C_T.CODE_NAME, C_G.CODE_NAME,
             C_F.CODE_NAME, C_M.CODE_NAME, PRD.GENRE, PRD.TIMEFRAME, PRD.THEME
+  </select>
+
+  <select id="selectPrevPlotRequest" parameterType="String" resultType="PlotRequestDTO">
+    SELECT PR.TYPE_CODE                     AS CATEGORY_CODE,
+          C_T.CODE_NAME                    AS CATEGORY,
+          PR.GENRE_CODE                    AS GENRE_CODE,
+          CASE
+            WHEN PR.GENRE_CODE = 'G999' THEN PRD.GENRE
+            ELSE C_G.CODE_NAME
+          END                              AS GENRE,
+          PR.TIMEFRAME_CODE                AS TIMEFRAME_CODE,
+          CASE
+            WHEN PR.TIMEFRAME_CODE = 'F999' THEN PRD.TIMEFRAME
+            ELSE C_F.CODE_NAME
+          END                              AS TIMEFRAME,
+          PR.THEME_CODE                    AS THEME_CODE,
+          CASE
+            WHEN PR.THEME_CODE = 'M999' THEN PRD.THEME
+            ELSE C_M.CODE_NAME
+          END                              AS THEME,
+          PR.EVENT                         AS EVENT,
+          PR.CHARACTERS                    AS CHARACTERS,
+          PR.TELL_TYPE                     AS TELL_TYPE,
+          PR.CUSTOM                        AS CUSTOM
+    FROM TBL_PROMPT PR
+      LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
+      LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
+      LEFT JOIN TBL_CODE C_F ON PR.TIMEFRAME_CODE = C_F.CODE
+      LEFT JOIN TBL_CODE C_M ON PR.THEME_CODE = C_M.CODE
+      LEFT JOIN TBL_PROMPT_DETAIL PRD ON PR.PROMPT_SEQ = PRD.PROMPT_SEQ
+      LEFT JOIN TBL_PLOT PL ON PR.PROMPT_SEQ = PL.PROMPT_SEQ
+    WHERE PR.PROMPT_SEQ = #{promptSeq}
   </select>
 
   <select id="selectPlotBySearchParam" parameterType="PlotSearchParamDTO" resultType="PlotResponseDTO">
@@ -201,7 +235,7 @@
           PL.PLOT_SEQ                      AS PLOT_SEQ,
           PL.PLOT_CONTENT                  AS PLOT_CONTENT,
           PR.CREATE_AT                     AS CREATE_AT,
-          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT,
+          (SELECT COUNT(CM.COMMENT_SEQ) FROM TBL_COMMENT CM WHERE CM.PROMPT_SEQ = PR.PROMPT_SEQ) AS COMMENT
     FROM TBL_PROMPT PR
       LEFT JOIN TBL_CODE C_T ON PR.TYPE_CODE = C_T.CODE
       LEFT JOIN TBL_CODE C_G ON PR.GENRE_CODE = C_G.CODE
@@ -228,5 +262,11 @@
     INSERT INTO TBL_PLOT ( PLOT_CONTENT, PROMPT_SEQ, CREATE_AT )
     VALUES ( #{plotContent}, #{promptSeq}, NOW() )
   </insert>
+
+  <select id="selectPrevPlot" parameterType="String" resultType="String">
+    SELECT PLOT_CONTENT
+    FROM TBL_PLOT
+    WHERE PROMPT_SEQ = #{promptSeq}
+  </select>
 
 </mapper>

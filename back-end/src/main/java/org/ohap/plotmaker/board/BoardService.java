@@ -9,7 +9,8 @@ public interface BoardService {
   public List<BoardPlotDTO> getBestList(BestListDTO request);
   public String toggleLikes(ToggleLikesDTO toggleLikesDTO);
   public ApiResponse<List<BoardPlotDTO>> getBoardList(BoardListDTO request);
-  public BoardPlotDTO getPlotDetail(String promptSeq);
+  public BoardPlotDTO getPlotDetail(String promptSeq, String socialId);
   public String increaseView(String promptSeq);
+  public ApiResponse<List<BoardPlotDTO>> searchBoard(BoardSearchParamDTO param);
   
 }
