@@ -71,7 +71,7 @@ public class PlotController {
     ApiResponse<PlotResponseDTO> response = ApiResponse.<PlotResponseDTO>builder().isSuccess(true).data(plot).build();
     return ResponseEntity.ok().body(response);
   }
-  
+
   @GetMapping("/{promptSeq}/exportPdf")
   public byte[] generatePdf(@PathVariable long promptSeq){
     String htmlContent = plotService.makeHtml(promptSeq);

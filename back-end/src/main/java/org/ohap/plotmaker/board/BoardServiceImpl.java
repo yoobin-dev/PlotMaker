@@ -18,13 +18,14 @@ public class BoardServiceImpl implements BoardService {
   
   private final BoardMapper boardMapper;
 
-  private void settingIsLiked(BoardPlotDTO plot, String socialId){
+  private BoardPlotDTO settingIsLiked(BoardPlotDTO plot, String socialId){
     String promptSeq = plot.getPromptSeq() + "";
     if(boardMapper.selectIsLiked(socialId, promptSeq) == 0){
       plot.setLiked(false);
     } else {
       plot.setLiked(true);
     }
+    return plot;
   }
 
   @Override
@@ -32,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
     List<BoardPlotDTO> list = boardMapper.selectBestPlot(request);
     String socialId = request.getSocialId();
     for(BoardPlotDTO plot : list) {
-      settingIsLiked(plot, socialId);
+      plot = settingIsLiked(plot, socialId);
     }
     return list;
     
@@ -66,7 +67,7 @@ public class BoardServiceImpl implements BoardService {
     List<BoardPlotDTO> list = boardMapper.selectBoardPlotList(request);
     String socialId = request.getSocialId();
     for(BoardPlotDTO plot : list) {
-      settingIsLiked(plot, socialId);
+      plot = settingIsLiked(plot, socialId);
     }
     ApiResponse<List<BoardPlotDTO>> response = ApiResponse.<List<BoardPlotDTO>>builder()
       .isSuccess(true).message("조회 성공").data(list).paging(paging).build();
@@ -74,7 +75,9 @@ public class BoardServiceImpl implements BoardService {
   }
 
   @Override
-  public BoardPlotDTO getPlotDetail(String promptSeq){
+  public BoardPlotDTO getPlotDetail(String promptSeq, String socialId){
+    BoardPlotDTO plot = boardMapper.selectBoardDetail(promptSeq);
+    plot = settingIsLiked(plot, socialId);
     return boardMapper.selectBoardDetail(promptSeq);
   }
 
@@ -104,7 +107,7 @@ public class BoardServiceImpl implements BoardService {
     List<BoardPlotDTO> list = boardMapper.selectBoardPlotListwithParam(param);
     String socialId = param.getSocialId();
     for(BoardPlotDTO plot : list){
-      settingIsLiked(plot, socialId);
+      plot = settingIsLiked(plot, socialId);
     }
     ApiResponse<List<BoardPlotDTO>> response = ApiResponse.<List<BoardPlotDTO>>builder()
       .isSuccess(true).message("조회 성공").data(list).paging(paging).build();

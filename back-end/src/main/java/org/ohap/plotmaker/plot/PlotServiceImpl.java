@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.ohap.plotmaker.mapper.CodeMapper;
 import org.ohap.plotmaker.mapper.PlotMapper;
+import org.ohap.plotmaker.util.MakeHtmlUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class PlotServiceImpl implements PlotService {
   private final PlotMapper plotMapper;
   private final CodeMapper codeMapper;
   private final ClovaService clovaService;
+  private final MakeHtmlUtil makeHtmlUtil;
 
   public List<PlotResponseDTO> getPlotList(String socialId, PlotOrderParamDTO order){
     order.setSocialId(socialId);
@@ -210,6 +212,22 @@ public class PlotServiceImpl implements PlotService {
         throw new RuntimeException(e.getMessage());
       }
 
+  }
+
+  @Override
+  public String makeHtml(long promptSeq) {
+    PlotResponseDTO plot = plotMapper.selectPlotByPromptSeq(promptSeq);
+    String category = plot.getCategory();
+    String genre = plot.getGenre();
+    String timeframe = plot.getTimeframe();
+    String theme = plot.getTheme();
+    String event = plot.getEvent();
+    String tellType = plot.getTellType();
+    String custom = plot.getCustom();
+    String title = plot.getTitle();
+    String plotContent = plot.getPlotContent();
+    String htmlString = makeHtmlUtil.makePlotHtml(category, genre, timeframe, theme, event, tellType, custom, title, plotContent);
+    return htmlString;
   }
 
 }
