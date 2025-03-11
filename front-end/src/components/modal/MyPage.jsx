@@ -1,6 +1,7 @@
 import "../../styles/modal/MyPage.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { postLeave, postLeavePw } from "../../api/user";
 
 export default function MyPage({ myPageOn, setMyPageOn }) {
   const [step, setStep] = useState("default");
@@ -125,6 +126,22 @@ function WithdrawPage({ setStep, navigate }) {
 }
 
 function WithdrawDownloadPage({ setStep, navigate, userInfo }) {
+  const [userPw, setUserPw] = useState('');
+  
+  const handleCheckPw = async () => {
+    const result = await postLeavePw(userInfo?.socialId, userPw);
+    if(result.success){
+      const leave = await postLeave(userInfo?.socialId);
+      if(leave.success){
+        setStep("complete");
+      } else {
+        alert('회원탈퇴 실패: 관리자에게 문의하세요.');
+      }
+    } else {
+      alert(result.message);
+    }
+  }
+
   return (
     <div id="downloadMyPage">
       <div className="body body_1 ft_gray_e">
@@ -156,13 +173,15 @@ function WithdrawDownloadPage({ setStep, navigate, userInfo }) {
             name="userPw"
             className="loginInput label_2 ft_gray_6"
             placeholder="영문, 숫자, 특수문자 조합 8자리 이상"
+            value={userPw}
+            onChange={(e) => setUserPw(e.target.value)}
           />
         </div>
       </div>
       <div className="footer">
         <div
           className="button red headline_2 ft_white"
-          onClick={() => setStep("complete")}
+          onClick={handleCheckPw}
         >
           탈퇴하기
         </div>
