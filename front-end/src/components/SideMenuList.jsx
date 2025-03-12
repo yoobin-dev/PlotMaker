@@ -106,20 +106,23 @@ function SideMenuList({ handleClick }) {
       )}
 
       <div id="sideMenuContainer" className="bg_gray_2">
-        <div id="sideMenuList">
-          {menuObj.map((d, i) => (
-            <SideMenu
-              key={i}
-              id={d.path}
-              icon={d.icon}
-              title={d.title}
-              onClick={() => {
-                activeMenu(d.path);
-              }}
-              navigate={navigate}
-              location={location}
-            ></SideMenu>
-          ))}
+        <div id="sideMenuContainerTop">
+          <img src="plotmaker_logo.png"></img>
+          <div id="sideMenuList">
+            {menuObj.map((d, i) => (
+              <SideMenu
+                key={i}
+                id={d.path}
+                icon={d.icon}
+                title={d.title}
+                onClick={() => {
+                  activeMenu(d.path);
+                }}
+                navigate={navigate}
+                location={location}
+              ></SideMenu>
+            ))}
+          </div>
         </div>
         <div className="w-100 d-flex" style={{ justifyContent: "center" }}>
           <Profile setMyPageOn={setMyPageOn}></Profile>
@@ -152,17 +155,17 @@ function SideMenu({ id, icon, title, onClick, navigate }) {
     const items = document.getElementsByClassName("sideMenuSubItem");
     const target = document.getElementById(path);
 
+    if (path === "/boardLikes") {
+      alert("서비스 준비중입니다.");
+      return;
+    }
+
     // 서브 메뉴 선택 효과 초기화
     for (let i of items) {
       i.classList.remove("ft_gray_d");
     }
     target.classList.add("ft_gray_d");
-
-    if (path === "/boardLikes") {
-      alert("서비스 준비중입니다.");
-    } else {
-      navigate(path);
-    }
+    navigate(path);
   };
 
   return (

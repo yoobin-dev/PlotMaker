@@ -5,9 +5,8 @@
 #plotDetailLeft {
   min-width: 471.5px;
   max-width: 471.5px;
-  height: calc(100% - 5px);
+  height: calc(100% - 3px);
   background-color: #f9f9f9;
-  padding: 0 10px 0 24px;
   overflow: auto;
   position: relative;
 
@@ -24,8 +23,8 @@
 #plotHeader.onDetail {
   position: fixed;
   background-color: #f9f9f9;
-  padding: 61px 0 38px 5px;
-  width: 476.5px;
+  padding: 61px 0 38px 20px;
+  width: 452.5px;
   border-radius: 0px 20px 0px 0px;
   border-right: 0.5px solid var(--Grayscale-Gr_B, #bbb);
 }
@@ -49,7 +48,8 @@
 .plotDetailCard {
   display: flex;
   flex-direction: column;
-  padding: 14px 12px 2px 12px;
+  gap: 6px;
+  padding: 14px 20px 14px 20px;
   border-bottom: 0.5px solid var(--Grayscale-Gr_B, #bbb);
 }
 .plotDetailCard .header {

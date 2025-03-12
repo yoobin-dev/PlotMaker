@@ -10,6 +10,8 @@ function PlotBoardPage() {
   const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPage, setMaxPage] = useState(10);
+  const [sortBy, setSortBy] = useState("createAt");
+  const [sortOrder, setSortOrder] = useState("desc");
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
   const categoryArr = [
@@ -33,26 +35,49 @@ function PlotBoardPage() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getTotalList(categoryCode, currentPage);
+      const data = await getTotalList(
+        categoryCode,
+        currentPage,
+        userInfo.socialId,
+        sortBy,
+        sortOrder
+      );
       setPlotList(data.data);
       setTotalPage(data.paging.totalPage);
       setMaxPage(Math.ceil(currentPage / 10) * 10);
     };
     getData();
-  }, [categoryCode, currentPage]);
+  }, [categoryCode, currentPage, sortBy, sortOrder]);
 
   return (
     <div id="plotBoardPage">
       <div id="plotBoardTop">
-        <FilterButton
-          categoryArr={categoryArr}
-          setCategoryCode={setCategoryCode}
-          setCurrentPage={setCurrentPage}
-        ></FilterButton>
-        <BoardHeader
-          plotList={plotList}
-          setPlotList={setPlotList}
-        ></BoardHeader>
+        <div id="plotBoardTopLeft">
+          <FilterButton
+            categoryArr={categoryArr}
+            setCategoryCode={setCategoryCode}
+            setCurrentPage={setCurrentPage}
+          ></FilterButton>
+          <BoardHeader
+            plotList={plotList}
+            setPlotList={setPlotList}
+            userInfo={userInfo}
+            categoryCode={categoryCode}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+          ></BoardHeader>
+        </div>
+        <div
+          id="randomButton"
+          onClick={() => {
+            alert("서비스 준비중입니다.");
+          }}
+        >
+          <img src="randomPlay.png"></img>
+          <span className="headline_2 ft_gray_e">랜덤 플레이</span>
+        </div>
       </div>
       <BoardTable
         plotList={plotList}
@@ -164,11 +189,18 @@ function BoardTable({
   );
 }
 
-function BoardHeader({ plotList, setPlotList }) {
+function BoardHeader({
+  plotList,
+  setPlotList,
+  userInfo,
+  categoryCode,
+  sortBy,
+  setSortBy,
+  sortOrder,
+  setSortOrder,
+}) {
   const [sortingOn, setSortingOn] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const [sortBy, setSortBy] = useState("createAt");
-  const [sortOrder, setSortOrder] = useState("desc");
 
   // 검색 및 정렬 버튼 배열
   const CircleFilterButtonArr = ["searching", "sorting"];
@@ -199,8 +231,13 @@ function BoardHeader({ plotList, setPlotList }) {
   // 키워드로 플롯 검색
   const searchByKeyword = () => {
     const search = async () => {
-      const data = await getSearchTotalList(keyword);
-      setPlotList(data);
+      const data = await getSearchTotalList(
+        userInfo.socialId,
+        categoryCode,
+        "1",
+        keyword
+      );
+      setPlotList(data.data);
     };
     search();
   };
@@ -251,7 +288,6 @@ function BoardHeader({ plotList, setPlotList }) {
   useEffect(() => {
     // 정렬 메뉴 외부 클릭 시 메뉴 닫기
     const handleClickOutside = (event) => {
-      console.log(event);
       if (
         !document.getElementById("boardSortBox").contains(event.target) &&
         !document.getElementById("sorting").contains(event.target)

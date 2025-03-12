@@ -22,7 +22,7 @@ function PlotCardList() {
 
       tagBox.addEventListener("mousedown", (e) => {
         isDown = true;
-        tagBox.classList.add("active");
+        // tagBox.classList.add("active");
         startX = e.pageX - tagBox.offsetLeft;
         scrollLeft = tagBox.scrollLeft;
         tagBox.style.cursor = "grabbing";
@@ -173,7 +173,7 @@ function PlotCardTagBox({ tags }) {
 function PlotCardAdd({ goToWrite }) {
   return (
     <div className="plotCardAdd bg_gray_5 shadow_gray_30" onClick={goToWrite}>
-      <img src="plus_square.svg"></img>
+      <img src="plus_square.png"></img>
     </div>
   );
 }

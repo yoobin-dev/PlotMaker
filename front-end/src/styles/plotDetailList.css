@@ -12,8 +12,8 @@
   height: 11%;
 }
 .plotDetailCard .body {
-  padding-bottom: 16px;
-  margin-top: 6px;
+  /* padding-bottom: 16px;
+  margin-top: 6px; */
 }
 .plotDetailCard .contents {
   max-width: 300px;

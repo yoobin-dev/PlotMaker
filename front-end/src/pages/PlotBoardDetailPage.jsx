@@ -10,14 +10,16 @@ function PlotBoardDetail() {
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
   const [promptSeq, setPromptSeq] = useState(location.state.plot.promptSeq);
   const [plotList, setPlotList] = useState(location.state.plotList);
-  const [liked, setLiked] = useState(true);
+  const [liked, setLiked] = useState(false);
   const [plot, setPlot] = useState(location.state.plot);
+  const isBest = location.state.isBest;
+  const criteria = location.state.criteria;
 
   useEffect(() => {
     const getData = async () => {
       const data = await getPrompt(userInfo.socialId, promptSeq);
       setPlot(data);
-      console.log(data);
+      setLiked(data.liked);
     };
     getData();
   }, [liked]);
@@ -26,7 +28,6 @@ function PlotBoardDetail() {
   useEffect(() => {
     const addView = async () => {
       const result = await addBoardView(promptSeq);
-      console.log(result);
     };
     addView();
   }, []);
@@ -44,6 +45,8 @@ function PlotBoardDetail() {
         setPlot={setPlot}
         plotList={plotList}
         setPlotList={setPlotList}
+        isBest={isBest}
+        criteria={criteria}
       ></BoardDetailList>
     </div>
   );

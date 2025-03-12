@@ -44,7 +44,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #111;
+  background-color: #000;
   position: relative;
   overflow: hidden;
 }
@@ -95,7 +95,7 @@
   align-items: center;
   flex-shrink: 0;
   border-radius: 8px;
-  border: 1px solid #762662;
+  border: 1px solid rgba(50, 153, 127, 0.5);
   cursor: pointer;
 }
 #naverLogin:hover {

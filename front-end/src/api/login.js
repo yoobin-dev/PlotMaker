@@ -18,7 +18,6 @@ export const naverLogin = async (code, state) => {
 };
 
 export const plotmakerLogin = async (socialId, userPw) => {
-  console.log(socialId, userPw);
   const response = await axios.post(`${prefix}/pm`, { socialId, userPw });
   console.log("res: ", response.data);
   return response.data;

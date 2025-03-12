@@ -1,7 +1,7 @@
 import "../styles/plotPromptLeft.css";
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import { getPromptCode, makePlot } from "../api/plotApi";
+import { getPromptCode, makePlot, writeNextPlot } from "../api/plotApi";
 
 // 직접 입력할 프롬프트
 const textPrpt = ["event", "tellType", "custom"];
@@ -402,10 +402,9 @@ function PlotPromptLeft({
     if (isContinue) {
       // 우측 화면 작성으로 변경
       setCreate(true);
-      console.log(isContinue);
       const continuePlot = async () => {
-        const returnData = await makePlot(isContinue);
-        setPromptValues(returnData);
+        const returnData = await writeNextPlot(isContinue.promptSeq);
+        setReturnData(returnData);
         const plotTitle = document.getElementById("plotPromptResultTitle");
         const plotContent = document.getElementById("plotPromptResultContents");
 

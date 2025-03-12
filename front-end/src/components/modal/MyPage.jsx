@@ -43,7 +43,7 @@ function DefaultMyPage({ setStep, userInfo }) {
   return (
     <div id="defaultMyPage">
       <div className="body">
-        <img src="https://png.pngtree.com/png-clipart/20220112/ourmid/pngtree-cartoon-hand-drawn-default-avatar-png-image_4154232.png" />
+        <img src="profile_default.png" />
         <span className="heading_2 ft_white">
           {userInfo?.nickname ? userInfo.nickname : "무명 작가"}
         </span>

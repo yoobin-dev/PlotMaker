@@ -24,7 +24,6 @@ export const saveComment = async (promptSeq, commentContent) => {
     const res = await axios.post(`${prefix}/comment/${promptSeq}`, {
       commentContent,
     });
-    console.log(res.data);
     if (res.status === 200) {
       return res.data.data;
     } else {

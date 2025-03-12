@@ -8,9 +8,8 @@ function PlotInsertModal({ returnData, setReturnData }) {
   const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
   useEffect(() => {
-    if (step === "folder") {
+    if (step === "finish") {
       const save = async () => {
-        console.log(returnData);
         const result = await savePlot(userInfo.socialId, returnData);
       };
       save();
@@ -43,6 +42,12 @@ function PlotInsertModal({ returnData, setReturnData }) {
             returnData={returnData}
             setReturnData={setReturnData}
           ></PlotInsertPublic>
+        ) : step === "complete" ? (
+          <PlotInsertComplete
+            setStep={setStep}
+            returnData={returnData}
+            setReturnData={setReturnData}
+          ></PlotInsertComplete>
         ) : (
           // step === "folder" ? (
           //   <PlotInsertFolder
@@ -116,7 +121,7 @@ function PlotInsertTitle({
 function PlotInsertPublic({ setStep, returnData, setReturnData }) {
   const stepAfterPublic = (isPublic) => {
     setReturnData((prev) => ({ ...prev, isPublic: isPublic }));
-    setStep("folder");
+    setStep("complete");
   };
 
   return (
@@ -140,12 +145,6 @@ function PlotInsertPublic({ setStep, returnData, setReturnData }) {
 }
 
 function PlotInsertFolder({ setStep, returnData, setReturnData }) {
-  const stepAfterPublic = () => {
-    // setStep("name");
-    const modal = document.getElementById("plotInsertModalBackground");
-    modal.classList.add("d-none");
-  };
-
   return (
     <>
       <div className="title heading_1">저장 경로</div>
@@ -161,6 +160,30 @@ function PlotInsertFolder({ setStep, returnData, setReturnData }) {
         <button className="whiteBtn" onClick={() => setStep("public ")}>
           이전
         </button>
+      </div>
+    </>
+  );
+}
+
+function PlotInsertComplete({ setStep, returnData, setReturnData }) {
+  useEffect(() => {
+    const modal = document.getElementById("plotInsertModal");
+    modal.classList.add("noback");
+
+    setTimeout(() => {
+      const modal = document.getElementById("plotInsertModalBackground");
+      modal?.classList.add("d-none");
+      setStep("finish");
+    }, 3000);
+  });
+
+  return (
+    <>
+      <div id="insertCompleteImg">
+        <img
+          src="save_action.gif"
+          style={{ width: "302px", height: "302px" }}
+        ></img>
       </div>
     </>
   );

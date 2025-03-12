@@ -1,21 +1,38 @@
 import "../styles/boardDetailList.css";
 import Pagination from "../components/Pagination";
-import { getTotalList } from "../api/boardApi";
+import { getTotalList, getBestList } from "../api/boardApi";
 import { useState, useEffect } from "react";
 
-function BoardDetailList({ plot, setPlot, plotList, setPlotList }) {
+function BoardDetailList({
+  plot,
+  setPlot,
+  plotList,
+  setPlotList,
+  isBest,
+  criteria,
+}) {
   const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPage, setMaxPage] = useState(10);
   const [categoryCode, setCategoryCode] = useState(plot.categoryCode);
-
-  console.log(plotList);
+  const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getTotalList(plot.categoryCode, currentPage);
-      setPlotList(data.data);
-      setTotalPage(data.paging.totalPage);
+      let data;
+      if (isBest) {
+        data = await getBestList(plot.categoryCode, criteria);
+        setPlotList(data);
+      } else {
+        data = await getTotalList(
+          plot.categoryCode,
+          currentPage,
+          userInfo.socialId
+        );
+        setPlotList(data.data);
+      }
+
+      setTotalPage(data.paging?.totalPage ? data.paging?.totalPage : 1);
       setMaxPage(Math.ceil(currentPage / 10) * 10);
     };
     getData();
@@ -50,7 +67,7 @@ function BoardDetailList({ plot, setPlot, plotList, setPlotList }) {
   return (
     <>
       <div id="boardDetailList">
-        <div>
+        <div id="boardDetailListBox">
           <div id="detailListButton" onClick={handleListButton}>
             <img src="play.png" />
           </div>
